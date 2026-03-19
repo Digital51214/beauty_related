@@ -1,5 +1,6 @@
 import 'package:beauty_related/auth_screens/login.dart';
 import 'package:beauty_related/auth_screens/privacy_policy.dart';
+import 'package:beauty_related/auth_screens/select_role_screen.dart';
 import 'package:beauty_related/auth_screens/terms_conditions.dart';
 import 'package:beauty_related/bottom_screens/search_screen.dart';
 import 'package:beauty_related/onboarding_screen.dart';
@@ -38,7 +39,7 @@ class MyApp extends StatelessWidget {
         // tested with just a hot reload.
         colorScheme: .fromSeed(seedColor: Colors.deepPurple),
       ),
-      home: OnboardingScreen()
+      home: SplashScreen()
     );
   }
 }

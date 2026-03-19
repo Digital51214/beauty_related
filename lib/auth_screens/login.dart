@@ -1,3 +1,5 @@
+import 'package:beauty_related/auth_screens/select_role_screen.dart';
+import 'package:beauty_related/bottom_screens/home_screen.dart';
 import 'package:beauty_related/custom_widgets/custom_button.dart';
 import 'package:beauty_related/custom_widgets/custom_textformfield.dart';
 import 'package:flutter/material.dart';
@@ -21,6 +23,7 @@ class _LoginState extends State<Login> {
     final w = size.width;
     final baseSize = size.shortestSide;
     return Scaffold(
+      backgroundColor: Colors.transparent,
       resizeToAvoidBottomInset: false,
       body: Container(
         width: double.infinity,
@@ -126,7 +129,7 @@ class _LoginState extends State<Login> {
               ),
               SizedBox(height: h*0.025),
               CustomButton(title: 'Sign In', onPressed:(){
-
+                Navigator.push(context, MaterialPageRoute(builder: (context) => HomeScreen()));
               } ),
               SizedBox(height: h*0.04),
               Row(
@@ -143,10 +146,10 @@ class _LoginState extends State<Login> {
                   ),
                   GestureDetector(
                     onTap: () {
-                      // Navigator.push(
-                      //   context,
-                      //   MaterialPageRoute(builder: (context) => SignUp()),
-                      // );
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => SelectRoleScreen()),
+                      );
                     },
                     child: Text(
                       'Sign Up',
