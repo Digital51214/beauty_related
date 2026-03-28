@@ -21,7 +21,7 @@ class Customcontainer extends StatelessWidget {
       width: width, // 👈 direct use
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(30),
-        color: Color(0xFFF3F9F061).withOpacity(0.38)
+        color: Colors.white.withOpacity(0.38)
       ),
       child: Center(
         child: Text(title),

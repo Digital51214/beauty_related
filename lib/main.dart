@@ -2,9 +2,18 @@ import 'package:beauty_related/auth_screens/login.dart';
 import 'package:beauty_related/auth_screens/privacy_policy.dart';
 import 'package:beauty_related/auth_screens/select_role_screen.dart';
 import 'package:beauty_related/auth_screens/terms_conditions.dart';
+import 'package:beauty_related/bottom_screens/account_setting.dart';
+import 'package:beauty_related/bottom_screens/bookings_screens.dart';
+import 'package:beauty_related/bottom_screens/bottomnavigation_screen.dart';
+import 'package:beauty_related/bottom_screens/edit_profile.dart';
+import 'package:beauty_related/bottom_screens/liked_screens.dart';
+import 'package:beauty_related/bottom_screens/notification_screen.dart';
+import 'package:beauty_related/bottom_screens/profile_screen.dart';
+import 'package:beauty_related/bottom_screens/reviews_screen.dart';
 import 'package:beauty_related/bottom_screens/search_screen.dart';
 import 'package:beauty_related/onboarding_screen.dart';
 import 'package:beauty_related/portfolio_screen.dart';
+import 'package:beauty_related/provider_bottom_screens/provider_home_screen.dart';
 import 'package:beauty_related/splash_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -39,7 +48,7 @@ class MyApp extends StatelessWidget {
         // tested with just a hot reload.
         colorScheme: .fromSeed(seedColor: Colors.deepPurple),
       ),
-      home: SplashScreen()
+      home:SplashScreen()
     );
   }
 }

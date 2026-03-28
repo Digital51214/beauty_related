@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-class SearchScreen extends StatefulWidget {
-  const SearchScreen({super.key});
+class FeatureExpertsScreens extends StatefulWidget {
+  const FeatureExpertsScreens({super.key});
 
   @override
-  State<SearchScreen> createState() => _SearchScreenState();
+  State<FeatureExpertsScreens> createState() => _FeatureExpertsScreensState();
 }
 
-class _SearchScreenState extends State<SearchScreen> {
+class _FeatureExpertsScreensState extends State<FeatureExpertsScreens> {
   List<bool> isLiked = [false, false, false, false];
   Widget _productCard(double h, double w, String imagePath, int index) {
     return Container(
@@ -137,67 +137,6 @@ class _SearchScreenState extends State<SearchScreen> {
                     radius: 25,
                     backgroundColor: Colors.transparent,
                     backgroundImage: AssetImage('assets/images/liked1.png'),
-                  ),
-                ],
-              ),
-
-              SizedBox(height: h * 0.03),
-
-              // Bottom Row: TextFormField + Search Button
-              Row(
-                children: [
-                  // TextFormField
-                  Expanded(
-                    child: TextFormField(
-                      decoration: InputDecoration(
-                        prefixIcon: Padding(
-                          padding: const EdgeInsets.all(14.0),
-                          child: Image.asset(
-                            'assets/images/homeicon1.png',
-                            width: baseSize * 0.05,
-                            height: baseSize * 0.05,
-                          ),
-                        ),
-                        hintText: 'Search...',
-                        hintStyle: TextStyle(
-                          color: Colors.white,
-                          fontSize: baseSize * 0.04,
-                        ),
-                        contentPadding: EdgeInsets.symmetric(
-                          vertical: baseSize * 0.02,
-                          horizontal: baseSize * 0.04,
-                        ),
-                        focusedBorder: OutlineInputBorder(
-                          borderSide: BorderSide(color: Colors.white, width: 0.5),
-                          borderRadius: BorderRadius.circular(30),
-                        ),
-                        enabledBorder: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(30),
-                          borderSide: BorderSide(color: Colors.white, width: 0.5),
-                        ),
-                      ),
-                      style: TextStyle(color: Colors.white),
-                    ),
-                  ),
-                  SizedBox(width: 10),
-
-                  // Search Button Container
-                  Container(
-                    height: baseSize * 0.14,
-                    width: baseSize * 0.14,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      image: DecorationImage(
-                        image: AssetImage('assets/images/homeicon.png'),
-                        fit: BoxFit.cover,
-                      ),
-                    ),
-                    child: Padding(
-                      padding: EdgeInsets.all(baseSize * 0.03),
-                      child: Image.asset(
-                        'assets/images/search2.png',
-                      ),
-                    ),
                   ),
                 ],
               ),

@@ -1,3 +1,6 @@
+import 'package:beauty_related/bottom_screens/feature_experts_screens.dart';
+import 'package:beauty_related/bottom_screens/notification_screen.dart';
+import 'package:beauty_related/bottom_screens/search_screen.dart';
 import 'package:beauty_related/custom_widgets/customcontainer.dart';
 import 'package:flutter/material.dart';
 
@@ -206,20 +209,24 @@ class _HomeScreenState extends State<HomeScreen> {
                     backgroundImage: AssetImage('assets/images/home2.jpg'),
                   ),
                   Spacer(),
-                  Container(
-                    height: h * 0.15,
-                    width: w * 0.15,
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      image: DecorationImage(
-                        image: AssetImage('assets/images/homeicon.png'),
-                        fit: BoxFit.cover,
+                  GestureDetector(onTap: (){
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => SearchScreen(),));
+                  },
+                    child: Container(
+                      height: h * 0.15,
+                      width: w * 0.15,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        image: DecorationImage(
+                          image: AssetImage('assets/images/homeicon.png'),
+                          fit: BoxFit.cover,
+                        ),
                       ),
-                    ),
-                    child: Padding(
-                      padding: const EdgeInsets.all(16.0),
-                      child: Image(
-                        image: AssetImage('assets/images/homeicon1.png'),
+                      child: Padding(
+                        padding: const EdgeInsets.all(16.0),
+                        child: Image(
+                          image: AssetImage('assets/images/homeicon1.png'),
+                        ),
                       ),
                     ),
                   ),
@@ -234,10 +241,14 @@ class _HomeScreenState extends State<HomeScreen> {
                         fit: BoxFit.cover,
                       ),
                     ),
-                    child: Icon(
-                      Icons.notifications,
-                      color: Colors.white,
-                      size: 30,
+                    child: GestureDetector(onTap: (){
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => NotificationScreen(),));
+                    },
+                      child: Icon(
+                        Icons.notifications,
+                        color: Colors.white,
+                        size: 30,
+                      ),
                     ),
                   ),
                 ],
@@ -305,11 +316,15 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ),
                   Spacer(),
-                  Text(
-                    'View All',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.w500,
+                  GestureDetector(onTap: (){
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => FeatureExpertsScreens(),));
+                  },
+                    child: Text(
+                      'View All',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.w500,
+                      ),
                     ),
                   ),
                 ],

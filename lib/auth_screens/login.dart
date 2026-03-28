@@ -1,4 +1,5 @@
 import 'package:beauty_related/auth_screens/select_role_screen.dart';
+import 'package:beauty_related/bottom_screens/bottomnavigation_screen.dart';
 import 'package:beauty_related/bottom_screens/home_screen.dart';
 import 'package:beauty_related/custom_widgets/custom_button.dart';
 import 'package:beauty_related/custom_widgets/custom_textformfield.dart';
@@ -129,7 +130,7 @@ class _LoginState extends State<Login> {
               ),
               SizedBox(height: h*0.025),
               CustomButton(title: 'Sign In', onPressed:(){
-                Navigator.push(context, MaterialPageRoute(builder: (context) => HomeScreen()));
+                Navigator.push(context, MaterialPageRoute(builder: (context) => BottomNavigationScreen()));
               } ),
               SizedBox(height: h*0.04),
               Row(
