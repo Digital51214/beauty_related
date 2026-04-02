@@ -1,5 +1,8 @@
-import 'package:beauty_related/auth_screens/login.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:video_player/video_player.dart';
+import 'dart:ui';
+import 'app_routes.dart';
 
 class OnboardingScreen extends StatefulWidget {
   const OnboardingScreen({super.key});
@@ -11,15 +14,10 @@ class OnboardingScreen extends StatefulWidget {
 class _OnboardingScreenState extends State<OnboardingScreen> {
   final PageController _controller = PageController();
   int currentIndex = 0;
-
-  final List<String> images = [
-    'assets/images/onbdng1.png',
-    'assets/images/onbdng2.png',
-    'assets/images/onbdng3.png',
-  ];
+  late VideoPlayerController _videoController;
 
   final List<String> titles = [
-    "Discover Trusted Beauty\nExperts",
+    "Discover Trusted\nBeautyExperts",
     "Real Reviews. Real Experiences",
     "Book with\nConfidence"
   ];
@@ -31,118 +29,165 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   ];
 
   @override
+  void initState() {
+    super.initState();
+    _videoController = VideoPlayerController.asset('assets/images/vedio.mp4')
+      ..initialize().then((_) {
+        setState(() {});
+        _videoController.setLooping(true);
+        _videoController.setVolume(0);
+        _videoController.play();
+      });
+  }
+
+  @override
+  void dispose() {
+    _videoController.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
+    final width = size.width;
+    final height = size.height;
+
+    double responsiveFont(double base) {
+      return (width / 375) * base;
+    }
+
     return Scaffold(
-      backgroundColor: Colors.transparent,
+      backgroundColor: Colors.black,
       body: Stack(
         children: [
-          /// 🔹 PageView with background images
+          /// Background Video
+          if (_videoController.value.isInitialized)
+            SizedBox.expand(
+              child: FittedBox(
+                fit: BoxFit.cover,
+                child: SizedBox(
+                  width: _videoController.value.size.width,
+                  height: _videoController.value.size.height,
+                  child: VideoPlayer(_videoController),
+                ),
+              ),
+            ),
+
+          /// PageView — swipe gesture only, no text here
           PageView.builder(
             controller: _controller,
-            itemCount: images.length,
+            itemCount: titles.length,
             onPageChanged: (index) {
               setState(() {
                 currentIndex = index;
               });
             },
             itemBuilder: (context, index) {
-              return Stack(
-                children: [
-                  /// Background Image
-                  SizedBox.expand(
-                    child: Image.asset(images[index], fit: BoxFit.cover),
-                  ),
-
-                  /// 🔹 Title & Subtitle (Added)
-                  Positioned(
-                    bottom: 150,
-                    left: 20,
-                    right: 20,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Text(
-                          titles[index],
-                          textAlign: TextAlign.center, // 👈 ADD THIS
-                          style: const TextStyle(
-                            color: Colors.white,
-                            fontSize: 28,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        const SizedBox(height: 10),
-                        Text(
-                          subtitles[index],
-                          textAlign: TextAlign.center,
-                          style: const TextStyle(
-                            color: Colors.white70,
-                            fontSize: 16,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
-              );
+              return const SizedBox.expand();
             },
           ),
 
-          /// 🔹 Bottom Button with Circular Progress
+          /// Bottom Sheet with Blur + Black Opacity
           Positioned(
-            bottom: 40,
+            bottom: 0,
             left: 0,
             right: 0,
-            child: Center(
-              child: Stack(
-                alignment: Alignment.center,
-                children: [
-
-                  /// 🔹 Circular Progress Indicator
-                  SizedBox(
-                    width: 70,
-                    height: 70,
-                    child: CircularProgressIndicator(
-                      value: (currentIndex + 1) / images.length,
-                      strokeWidth: 2,
-                      valueColor: const AlwaysStoppedAnimation<Color>(Colors.white),
+            child: ClipRRect(
+              borderRadius: const BorderRadius.only(
+                topLeft: Radius.circular(35),
+                topRight: Radius.circular(35),
+              ),
+              child: BackdropFilter(
+                filter: ImageFilter.blur(sigmaX: 15, sigmaY: 15),
+                child: Container(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: width * 0.07,
+                    vertical: height * 0.04,
+                  ),
+                  decoration: BoxDecoration(
+                    border: Border.all(color: Colors.white.withOpacity(0.3)),
+                    color: Colors.black.withOpacity(0.1),
+                    borderRadius: const BorderRadius.only(
+                      topLeft: Radius.circular(28),
+                      topRight: Radius.circular(28),
                     ),
                   ),
-
-                  /// 🔹 Button
-                  GestureDetector(
-                    onTap: () {
-                      if (currentIndex == images.length - 1) {
-                        Navigator.pushReplacement(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) =>  Login(),
-                          ),
-                        );
-                      } else {
-                        _controller.nextPage(
-                          duration: const Duration(milliseconds: 300),
-                          curve: Curves.easeIn,
-                        );
-                      }
-                    },
-
-                    child: Container(
-                      width: 60,
-                      height: 60,
-                      decoration: const BoxDecoration(
-                        shape: BoxShape.circle,
-                        image: DecorationImage(
-                          image: AssetImage('assets/images/onbdng4.png'),
-                          fit: BoxFit.cover,
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      /// Title
+                      Text(
+                        titles[currentIndex],
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: responsiveFont(28),
+                          fontWeight: FontWeight.bold,
+                          fontFamily: 'A',
                         ),
                       ),
-                      child: const Icon(
-                        Icons.arrow_forward,
-                        color: Colors.white,
+                      SizedBox(height: height * 0.012),
+
+                      /// Subtitle
+                      Text(
+                        subtitles[currentIndex],
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color: Colors.white70,
+                          fontSize: responsiveFont(16),
+                        ),
                       ),
-                    ),
+                      SizedBox(height: height * 0.035),
+
+                      /// Arrow Button with Circular Progress
+                      Stack(
+                        alignment: Alignment.center,
+                        children: [
+                          SizedBox(
+                            width: width * 0.18,
+                            height: width * 0.18,
+                            child: CircularProgressIndicator(
+                              value: (currentIndex + 1) / titles.length,
+                              strokeWidth: 2,
+                              valueColor: const AlwaysStoppedAnimation<Color>(
+                                Colors.white,
+                              ),
+                            ),
+                          ),
+                          GestureDetector(
+                            onTap: () {
+                              if (currentIndex == titles.length - 1) {
+                                Get.offAllNamed(AppRoutes.login,);
+                              } else {
+                                _controller.nextPage(
+                                  duration: const Duration(milliseconds: 300),
+                                  curve: Curves.easeIn,
+                                );
+                              }
+                            },
+                            child: Container(
+                              width: width * 0.155,
+                              height: width * 0.155,
+                              decoration: const BoxDecoration(
+                                shape: BoxShape.circle,
+                                image: DecorationImage(
+                                  image: AssetImage('assets/images/onbdng4.png'),
+                                  fit: BoxFit.cover,
+                                ),
+                              ),
+                              child: Icon(
+                                Icons.arrow_forward,
+                                color: Colors.white,
+                                size: responsiveFont(24),
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: height * 0.04),
+                    ],
                   ),
-                ],
+                ),
               ),
             ),
           ),

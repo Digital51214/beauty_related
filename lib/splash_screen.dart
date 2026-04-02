@@ -1,5 +1,6 @@
 import 'dart:async';
-
+import 'package:get/get.dart';
+import 'app_routes.dart';
 import 'package:beauty_related/onboarding_screen.dart';
 import 'package:flutter/material.dart';
 
@@ -16,7 +17,7 @@ class _SplashScreenState extends State<SplashScreen> {
     // TODO: implement initState
     super.initState();
     Timer(Duration(seconds: 5),(){
-      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => OnboardingScreen()));
+      Get.offNamed(AppRoutes.onboarding);
     });
   }
   @override

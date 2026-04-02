@@ -1,13 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:get/get_navigation/src/extension_navigation.dart';
 
-class PrivacyPolicy extends StatefulWidget {
-  const PrivacyPolicy({super.key});
+class PrivacyPolicyScreen extends StatefulWidget {
+  const PrivacyPolicyScreen({super.key});
 
   @override
-  State<PrivacyPolicy> createState() => _PrivacyPolicyState();
+  State<PrivacyPolicyScreen> createState() => _PrivacyPolicyScreenState();
 }
 
-class _PrivacyPolicyState extends State<PrivacyPolicy> {
+class _PrivacyPolicyScreenState extends State<PrivacyPolicyScreen> {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
@@ -26,18 +28,23 @@ class _PrivacyPolicyState extends State<PrivacyPolicy> {
           children: [
             Row(
               children: [
-                Container(
-                  height: baseSize * 0.14,
-                  width: baseSize * 0.14,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    image: DecorationImage(
-                      image: AssetImage('assets/images/privacy.png'),
+                GestureDetector(
+                  onTap: (){
+                   Get.back();
+                  },
+                  child: Container(
+                    height: baseSize * 0.14,
+                    width: baseSize * 0.14,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      image: DecorationImage(
+                        image: AssetImage('assets/images/privacy.png'),
+                      ),
                     ),
-                  ),
-                  child: Padding(
-                    padding: EdgeInsets.only(left: w * 0.02),
-                    child: Icon(Icons.arrow_back_ios, color: Colors.white,size: baseSize*0.055,),
+                    child: Padding(
+                      padding: EdgeInsets.only(left: w * 0.02),
+                      child: Icon(Icons.arrow_back_ios, color: Colors.white,size: baseSize*0.055,),
+                    ),
                   ),
                 ),
                 SizedBox(width: w * 0.07),
@@ -45,6 +52,10 @@ class _PrivacyPolicyState extends State<PrivacyPolicy> {
                   'Privacy & Policy',
                   style: TextStyle(color: Colors.white, fontSize: 18,fontWeight: FontWeight.w700),
                 ),
+                Spacer(),
+                Image.asset("assets/images/MainLogo.png",
+                height: baseSize*0.15,
+                width: baseSize*0.15,)
               ],
             ),
             SizedBox(height: h*0.01),

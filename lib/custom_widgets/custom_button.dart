@@ -11,11 +11,14 @@ class CustomButton extends StatelessWidget {
     return GestureDetector(
       onTap: onPressed,
       child: Container(
-        height: ws.height * 0.065, // 👈 responsive height
+        height: ws.height * 0.06, // 👈 responsive height
         width: double.infinity,
         decoration: BoxDecoration(
-          color: Color(0xFF46151A),
-          border: Border.all(color: Color(0xFF46151A61).withOpacity(0.38)),
+          image: const DecorationImage(
+            image: AssetImage('assets/images/buttonBG.png'),
+            fit: BoxFit.contain,
+          ),
+
           borderRadius: BorderRadius.circular(ws.width * 0.08), // 👈 responsive radius
         ),
         child: Center(

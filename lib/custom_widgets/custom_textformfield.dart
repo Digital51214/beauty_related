@@ -1,10 +1,9 @@
 import 'package:flutter/material.dart';
 
-class CustomTextformfield extends StatelessWidget {
+class CustomTextformfield extends StatefulWidget {
   final String title;
   final TextEditingController controller;
   final bool obscureText;
-  final Widget? suffixIcon;
   final TextInputType KeyBoardType;
 
   const CustomTextformfield({
@@ -12,32 +11,66 @@ class CustomTextformfield extends StatelessWidget {
     required this.title,
     required this.controller,
     this.obscureText = false,
-    this.suffixIcon,
     required this.KeyBoardType,
   });
 
   @override
+  State<CustomTextformfield> createState() => _CustomTextformfieldState();
+}
+
+class _CustomTextformfieldState extends State<CustomTextformfield> {
+  late bool _isObscure;
+
+  @override
+  void initState() {
+    super.initState();
+    _isObscure = widget.obscureText;
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return Center( // 👈 Centered on screen
+    final width = MediaQuery.of(context).size.width;
+
+    return Center(
       child: SizedBox(
-        width: 350, // 👈 desired width
+        height: 55,
+        width: width * 0.9,
         child: TextFormField(
-          keyboardType: KeyBoardType,
-          obscureText: obscureText,
-          controller: controller,
+          keyboardType: widget.KeyBoardType,
+          obscureText: _isObscure,
+          controller: widget.controller,
+          style: const TextStyle(
+            color: Colors.white,
+
+          ),
           decoration: InputDecoration(
-            hintText: title,
-            hintStyle: TextStyle(
-              color: Colors.white
+            hintText: widget.title,
+            hintStyle: const TextStyle(
+              color: Colors.white70,
+
             ),
-            suffixIcon: suffixIcon,
+            suffixIcon: widget.obscureText
+                ? IconButton(
+              icon: Icon(
+                _isObscure
+                    ? Icons.visibility_off
+                    : Icons.visibility,
+                color: Colors.white,
+              ),
+              onPressed: () {
+                setState(() {
+                  _isObscure = !_isObscure;
+                });
+              },
+            )
+                : null,
             enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(30),
-              borderSide: BorderSide(color: Colors.white),
+              borderSide: const BorderSide(color: Colors.white),
             ),
             focusedBorder: OutlineInputBorder(
-              borderSide: BorderSide(color: Colors.white),
               borderRadius: BorderRadius.circular(30),
+              borderSide: const BorderSide(color: Colors.white),
             ),
           ),
         ),
