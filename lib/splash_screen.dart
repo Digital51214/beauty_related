@@ -1,8 +1,7 @@
 import 'dart:async';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'app_routes.dart';
-import 'package:beauty_related/onboarding_screen.dart';
-import 'package:flutter/material.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -12,26 +11,26 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
+
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
-    Timer(Duration(seconds: 5),(){
+
+    Future.delayed(const Duration(seconds: 2), () {
       Get.offNamed(AppRoutes.onboarding);
     });
   }
+
   @override
   Widget build(BuildContext context) {
-    final size = MediaQuery.of(context).size;
-    final h = size.height;
-    final w = size.width;
-    return Scaffold(
+    return const Scaffold(
       backgroundColor: Color(0xFF46151A),
       body: Center(
         child: Image(
           image: AssetImage('assets/images/splash.png'),
-          height: h * 0.45,
-          width: w * 0.75,
+          width: 300,
+          height: 600,// fixed size = no layout shift
+          filterQuality: FilterQuality.none, // no smooth animation feel
         ),
       ),
     );

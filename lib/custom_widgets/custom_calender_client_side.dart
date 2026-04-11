@@ -126,9 +126,8 @@ class _CustomCalendarClientPickerState
               child: Container(
                 width: double.infinity,
                 decoration: BoxDecoration(
-                  image: DecorationImage(
-                    image: const AssetImage('assets/images/calenderBG.png'),
-                    fit: BoxFit.cover,),
+
+                  color: Colors.white70.withOpacity(0.1),
                   border: Border.all(
                     color: Colors.white.withOpacity(0.6),
                     width: 1,
@@ -167,7 +166,7 @@ class _CustomCalendarClientPickerState
                                   Text(
                                     _monthNames[_focusedMonth.month - 1],
                                     style: TextStyle(
-                                      color: Colors.white.withOpacity(0.75),
+                                      color: Colors.white.withOpacity(0.6),
                                       fontSize: baseSize * 0.038,
                                       fontFamily: 'A',
                                     ),
@@ -200,7 +199,7 @@ class _CustomCalendarClientPickerState
                                       color: Colors.white.withOpacity(0.15),
                                       image: const DecorationImage(
                                         image: AssetImage(
-                                            'assets/images/calenderButtons.png'),
+                                            'assets/images/homeicon.png'),
                                         fit: BoxFit.contain,
                                       ),
                                     ),
@@ -345,7 +344,7 @@ class _CustomCalendarClientPickerState
                                 decoration: BoxDecoration(
                                   color: isSlotSelected
                                       ? const Color(0xFF46151A)
-                                      : Colors.white.withOpacity(0.1),
+                                      : Colors.black.withOpacity(0.05),
                                   borderRadius: BorderRadius.circular(20),
                                   border: Border.all(
                                     color: isSlotSelected
@@ -449,7 +448,7 @@ class _CustomCalendarClientPickerState
           shape: BoxShape.circle,
           color: Colors.white.withOpacity(0.15),
           image: const DecorationImage(
-            image: AssetImage('assets/images/calenderButtons.png'),
+            image: AssetImage('assets/images/homeicon.png'),
             fit: BoxFit.contain,
           ),
         ),

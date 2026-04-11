@@ -1,129 +1,41 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
-import 'package:get/get_core/src/get_main.dart';
-import 'package:get/get_navigation/src/extension_navigation.dart';
+import 'package:get/get.dart';
+
+import '../custom_widgets/glass_effect.dart';
 
 class ClientNotificationScreen extends StatefulWidget {
   const ClientNotificationScreen({super.key});
-
   @override
-  State<ClientNotificationScreen> createState() => _ClientNotificationScreenState();
+  State<ClientNotificationScreen> createState() =>
+      _ClientNotificationScreenState();
 }
 
-class _ClientNotificationScreenState extends State<ClientNotificationScreen> {
-
-  // ─── Notification Data ───
+class _ClientNotificationScreenState
+    extends State<ClientNotificationScreen> {
   final List<Map<String, dynamic>> _notifications = [
     {
       'title': 'Special Offer',
-      'message': 'Someone just shared their experience at\nSarah\'s Glow Studio',
+      'message':
+      'Someone just shared their experience at\nSarah\'s Glow Studio',
       'time': '2 h Ago',
       'image': 'assets/images/review2.png',
     },
     {
       'title': 'Appointment confirmed',
-      'message': 'Someone just shared their experience at\nSarah\'s Glow Studio',
+      'message':
+      'Someone just shared their experience at\nSarah\'s Glow Studio',
       'time': '2 h Ago',
       'image': 'assets/images/home2.jpg',
     },
     {
       'title': 'Discover',
-      'message': 'Someone just shared their experience at\nSarah\'s Glow Studio',
+      'message':
+      'Someone just shared their experience at\nSarah\'s Glow Studio',
       'time': '2 h Ago',
       'image': 'assets/images/review2.png',
     },
   ];
-
-  // ─── Notification Card ───
-  Widget _notificationCard(
-      double h,
-      double w,
-      double baseSize,
-      String image,
-      String title,
-      String message,
-      String time,
-      ) {
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(20),
-      child: BackdropFilter(
-        filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10), // ✅ blur
-        child: Container(
-          width: double.infinity,
-          padding: EdgeInsets.symmetric(
-            horizontal: w * 0.04,
-            vertical: h * 0.015,
-          ),
-          decoration: BoxDecoration(
-            color: Colors.white.withOpacity(0.12), // ✅ glassmorphism
-            borderRadius: BorderRadius.circular(20),
-            border: Border.all(
-              color: Colors.white.withOpacity(0.25),
-              width: 0.8,
-            ),
-          ),
-          child: Row(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-
-              // ─── Avatar ───
-              CircleAvatar(
-                radius: baseSize * 0.065,
-                backgroundImage: AssetImage(image),
-              ),
-
-              SizedBox(width: w * 0.03),
-
-              // ─── Content ───
-              Expanded(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          title,
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.w600,
-                            fontSize: baseSize * 0.045,
-                            fontFamily: 'A',
-                          ),
-                        ),
-                        Text(
-                          time,
-                          style: TextStyle(
-                            color: Colors.white.withOpacity(0.7),
-                            fontWeight: FontWeight.w500,
-                            fontSize: baseSize * 0.03,
-                            fontFamily: 'A',
-                          ),
-                        ),
-                      ],
-                    ),
-
-                    SizedBox(height: h * 0.006),
-
-                    Text(
-                      message,
-                      style: TextStyle(
-                        color: Colors.white.withOpacity(0.75),
-                        fontWeight: FontWeight.w300,
-                        fontSize: baseSize * 0.033,
-                        fontFamily: 'A',
-                        height: 1.4,
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -134,7 +46,6 @@ class _ClientNotificationScreenState extends State<ClientNotificationScreen> {
 
     return Scaffold(
       backgroundColor: Colors.transparent,
-      resizeToAvoidBottomInset: false,
       body: Container(
         width: double.infinity,
         height: double.infinity,
@@ -146,82 +57,95 @@ class _ClientNotificationScreenState extends State<ClientNotificationScreen> {
         ),
         child: SafeArea(
           child: Padding(
-            padding: EdgeInsets.only(
-              left: w * 0.04,
-              right: w * 0.04,
-              top: h * 0.015,
-            ),
+            padding: EdgeInsets.symmetric(
+                horizontal: w * 0.04, vertical: h * 0.015),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-
-                // ─── Top Bar ───
                 Row(
                   children: [
                     GestureDetector(
                       onTap: () => Get.back(),
-                      child: Container(
-                        height: baseSize * 0.13,
-                        width: baseSize * 0.13,
-                        decoration: BoxDecoration(
-                          image: DecorationImage(image: AssetImage("assets/images/homeicon.png",
-                          ),fit: BoxFit.contain,),
-                          shape: BoxShape.circle,
-
-                          border: Border.all(
-                            color: Colors.white.withOpacity(0.5),
-                            width: 1,
-                          ),
-                        ),
-                        child: Icon(
-                          Icons.arrow_back_ios_new,
-                          color: Colors.white,
-                          size: baseSize * 0.06,
+                      child: GlassCard(
+                        borderRadius: 50,
+                        child: SizedBox(
+                          height: baseSize * 0.13,
+                          width: baseSize * 0.13,
+                          child: Icon(Icons.arrow_back_ios_new,
+                              color: Colors.white,
+                              size: baseSize * 0.055),
                         ),
                       ),
                     ),
                     const Spacer(),
-                    Text(
-                      'Notifications',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontWeight: FontWeight.w600,
-                        fontSize: baseSize * 0.055,
-                        fontFamily: 'A',
-                      ),
-                    ),
+                    Text('Notifications',
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.w600,
+                            fontSize: baseSize * 0.052,
+                            fontFamily: 'A')),
                     const Spacer(),
                     CircleAvatar(
-                      radius: baseSize * 0.06,
+                      radius: baseSize * 0.055,
                       backgroundColor: Colors.transparent,
                       backgroundImage:
                       const AssetImage('assets/images/liked1.png'),
                     ),
                   ],
                 ),
-
-                SizedBox(height: h * 0.03),
-
-                // ─── Notification Cards ───
+                SizedBox(height: h * 0.025),
                 Expanded(
-                  child: SingleChildScrollView(
+                  child: ListView.separated(
                     physics: const BouncingScrollPhysics(),
-                    child: Column(
-                      children: _notifications.map((notif) {
-                        return Padding(
-                          padding: EdgeInsets.only(bottom: h * 0.015),
-                          child: _notificationCard(
-                            h,
-                            w,
-                            baseSize,
-                            notif['image'],
-                            notif['title'],
-                            notif['message'],
-                            notif['time'],
-                          ),
-                        );
-                      }).toList(),
-                    ),
+                    itemCount: _notifications.length,
+                    separatorBuilder: (_, __) => SizedBox(height: h * 0.015),
+                    itemBuilder: (context, index) {
+                      final n = _notifications[index];
+                      return GlassCard(
+                        borderRadius: 22,
+                        blurSigma: 15,
+                        padding: EdgeInsets.symmetric(
+                            horizontal: w * 0.04, vertical: h * 0.016),
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            CircleAvatar(
+                              radius: baseSize * 0.065,
+                              backgroundImage: AssetImage(n['image']),
+                            ),
+                            SizedBox(width: w * 0.03),
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Row(
+                                    children: [
+                                      Text(n['title'],
+                                          style: TextStyle(
+                                              color: Colors.white,
+                                              fontWeight: FontWeight.w600,
+                                              fontSize: baseSize * 0.042,
+                                              fontFamily: 'A')),
+                                      const Spacer(),
+                                      Text(n['time'],
+                                          style: TextStyle(
+                                              color: Colors.white70,
+                                              fontSize: baseSize * 0.03)),
+                                    ],
+                                  ),
+                                  SizedBox(height: h * 0.005),
+                                  Text(n['message'],
+                                      style: TextStyle(
+                                          color: Colors.white.withOpacity(0.7),
+                                          fontSize: baseSize * 0.031,
+                                          height: 1.4)),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      );
+                    },
                   ),
                 ),
               ],

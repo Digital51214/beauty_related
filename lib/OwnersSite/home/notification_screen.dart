@@ -140,7 +140,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
         height: double.infinity,
         decoration: const BoxDecoration(
           image: DecorationImage(
-            image: AssetImage('assets/images/helper1.png'),
+            image: AssetImage('assets/images/bg3.png'),
             fit: BoxFit.cover,
           ),
         ),
@@ -166,7 +166,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                         decoration: const BoxDecoration(
                           shape: BoxShape.circle,
                           image: DecorationImage(
-                            image: AssetImage('assets/images/helper2.png'),
+                            image: AssetImage('assets/images/homeicon.png'),
                             fit: BoxFit.cover,
                           ),
                         ),

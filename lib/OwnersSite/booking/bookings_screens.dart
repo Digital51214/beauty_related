@@ -1,3 +1,4 @@
+import 'dart:ui';
 import 'package:flutter/material.dart';
 
 class BookingsScreens extends StatefulWidget {
@@ -8,11 +9,8 @@ class BookingsScreens extends StatefulWidget {
 }
 
 class _BookingsScreensState extends State<BookingsScreens> {
+  String _selectedTab = 'Upcoming';
 
-  // ─── Selected Tab ───
-  String _selectedTab = 'Upcoming'; // 👈 default selected
-
-  // ─── Tab Button ───
   Widget _tabButton(String title, double h, double w, double baseSize) {
     final bool isSelected = _selectedTab == title;
     return GestureDetector(
@@ -22,12 +20,10 @@ class _BookingsScreensState extends State<BookingsScreens> {
         height: h * 0.05,
         width: w * 0.26,
         decoration: BoxDecoration(
-          color: isSelected
-              ? Colors.transparent                    // ✅ selected = transparent
-              : Colors.white.withOpacity(0.2),        // ✅ unselected = white 0.2
+          color: isSelected ? Colors.transparent : Colors.white.withOpacity(0.2),
           borderRadius: BorderRadius.circular(40),
           border: isSelected
-              ? Border.all(color: Colors.white, width: 1.5) // ✅ selected border
+              ? Border.all(color: Colors.white, width: 1.5)
               : Border.all(color: Colors.transparent, width: 1.5),
         ),
         child: Center(
@@ -49,15 +45,9 @@ class _BookingsScreensState extends State<BookingsScreens> {
   Widget _upcomingContent(double h, double w, double baseSize) {
     return AspectRatio(
       aspectRatio: 17 / 7.1,
-      child: Container(
-        width: double.infinity,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(30),
-          image: const DecorationImage(
-            image: AssetImage('assets/images/booking1.png'),
-            fit: BoxFit.cover,
-          ),
-        ),
+      child: _glassBox(
+        borderRadius: BorderRadius.circular(50),
+        blur: 15,
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Row(
@@ -85,10 +75,7 @@ class _BookingsScreensState extends State<BookingsScreens> {
                         width: w * 0.25,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(30),
-                          image: const DecorationImage(
-                            image: AssetImage('assets/images/booking2.png'),
-                            fit: BoxFit.cover,
-                          ),
+                          color: Colors.white.withOpacity(0.3),
                         ),
                         child: Center(
                           child: Text(
@@ -108,7 +95,6 @@ class _BookingsScreensState extends State<BookingsScreens> {
                         style: TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.w600,
-
                           fontSize: baseSize * 0.038,
                         ),
                       ),
@@ -139,7 +125,6 @@ class _BookingsScreensState extends State<BookingsScreens> {
                           fontSize: baseSize * 0.03,
                           color: Colors.white,
                           fontWeight: FontWeight.w300,
-
                         ),
                       ),
                       SizedBox(width: w * 0.05),
@@ -155,7 +140,6 @@ class _BookingsScreensState extends State<BookingsScreens> {
                           fontSize: baseSize * 0.03,
                           color: Colors.white,
                           fontWeight: FontWeight.w300,
-
                         ),
                       ),
                     ],
@@ -221,14 +205,10 @@ class _BookingsScreensState extends State<BookingsScreens> {
 
   // ─── Completed Content ───
   Widget _completedContent(double h, double w, double baseSize) {
-    return Container(
-      width: double.infinity,
-      padding: EdgeInsets.all(w * 0.05),
-      decoration: BoxDecoration(
-        color: Colors.white.withOpacity(0.1),
-        borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: Colors.white.withOpacity(0.2), width: 0.5),
-      ),
+    return _glassBox(
+      borderRadius: BorderRadius.circular(20),
+      blur: 15,
+      padding: EdgeInsets.all(h * 0.025),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -258,14 +238,10 @@ class _BookingsScreensState extends State<BookingsScreens> {
 
   // ─── Cancelled Content ───
   Widget _cancelledContent(double h, double w, double baseSize) {
-    return Container(
-      width: double.infinity,
-      padding: EdgeInsets.all(w * 0.05),
-      decoration: BoxDecoration(
-        color: Colors.white.withOpacity(0.1),
-        borderRadius: BorderRadius.circular(20),
-        border: Border.all(color: Colors.white.withOpacity(0.2), width: 0.5),
-      ),
+    return _glassBox(
+      borderRadius: BorderRadius.circular(20),
+      blur: 15,
+      padding: EdgeInsets.all(h * 0.025),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -306,7 +282,7 @@ class _BookingsScreensState extends State<BookingsScreens> {
         width: double.infinity,
         decoration: const BoxDecoration(
           image: DecorationImage(
-            image: AssetImage('assets/images/home1.png'),
+            image: AssetImage('assets/images/bg3.png'),
             fit: BoxFit.cover,
           ),
         ),
@@ -320,7 +296,6 @@ class _BookingsScreensState extends State<BookingsScreens> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-
                 // ─── Top Bar ───
                 Row(
                   children: [
@@ -336,7 +311,6 @@ class _BookingsScreensState extends State<BookingsScreens> {
                     ),
                   ],
                 ),
-
                 SizedBox(height: h * 0.015),
 
                 // ─── Heading ───
@@ -358,7 +332,6 @@ class _BookingsScreensState extends State<BookingsScreens> {
                     fontFamily: 'A',
                   ),
                 ),
-
                 SizedBox(height: h * 0.02),
 
                 // ─── Tab Buttons ───
@@ -371,7 +344,6 @@ class _BookingsScreensState extends State<BookingsScreens> {
                     _tabButton('Cancelled', h, w, baseSize),
                   ],
                 ),
-
                 SizedBox(height: h * 0.04),
 
                 // ─── Tab Content ───
@@ -390,4 +362,36 @@ class _BookingsScreensState extends State<BookingsScreens> {
       ),
     );
   }
+}
+
+// ─── Glass Box Helper — Onboarding Style ───
+Widget _glassBox({
+  required Widget child,
+  required BorderRadius borderRadius,
+  EdgeInsetsGeometry? padding,
+  double? height,
+  double? width,
+  double blur = 15,
+  double opacity = 0.1,
+}) {
+  return ClipRRect(
+    borderRadius: borderRadius,
+    child: BackdropFilter(
+      filter: ImageFilter.blur(sigmaX: 15, sigmaY: 15),
+      child: Container(
+        height: height,
+        width: width,
+        padding: padding,
+        decoration: BoxDecoration(
+          borderRadius: borderRadius,
+          color: Colors.white.withOpacity(0.1),
+          border: Border.all(
+            color: Colors.white.withOpacity(0.3),
+            width: 1.2,
+          ),
+        ),
+        child: child,
+      ),
+    ),
+  );
 }

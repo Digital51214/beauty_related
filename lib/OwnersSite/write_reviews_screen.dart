@@ -1,5 +1,9 @@
+import 'package:beauty_related/custom_widgets/blackish_glass_effect.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
+
+import '../custom_widgets/glass_effect.dart';
 
 class WriteReviewScreen extends StatefulWidget {
   const WriteReviewScreen({super.key});
@@ -26,7 +30,6 @@ class _WriteReviewScreenState extends State<WriteReviewScreen> {
     final baseSize = size.shortestSide;
 
     return Scaffold(
-      /// ✅ KEY FIX 1: yeh true hona chahiye — keyboard aane par screen upar shift ho
       resizeToAvoidBottomInset: true,
       backgroundColor: Colors.transparent,
       body: Container(
@@ -41,7 +44,7 @@ class _WriteReviewScreenState extends State<WriteReviewScreen> {
         child: SafeArea(
           child: Column(
             children: [
-              /// ---- Top Bar ---- (yeh fixed rahega upar)
+              // ── Top Bar ──
               Padding(
                 padding: EdgeInsets.symmetric(
                   horizontal: w * 0.045,
@@ -51,21 +54,19 @@ class _WriteReviewScreenState extends State<WriteReviewScreen> {
                   children: [
                     GestureDetector(
                       onTap: () => Get.back(),
-                      child: Container(
-                        height: baseSize * 0.13,
-                        width: baseSize * 0.13,
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: Colors.white.withOpacity(0.3),
-                          border: Border.all(
-                            color: Colors.white.withOpacity(0.5),
-                            width: 1,
+                      child: GlassCard(
+                        borderRadius: 100,
+                        tintOpacity: 0.15,
+                        child: SizedBox(
+                          height: baseSize * 0.13,
+                          width: baseSize * 0.13,
+                          child: Center(
+                            child: Icon(
+                              Icons.arrow_back_ios_new,
+                              color: Colors.white,
+                              size: baseSize * 0.06,
+                            ),
                           ),
-                        ),
-                        child: Icon(
-                          Icons.arrow_back_ios_new,
-                          color: Colors.white,
-                          size: baseSize * 0.06,
                         ),
                       ),
                     ),
@@ -89,36 +90,28 @@ class _WriteReviewScreenState extends State<WriteReviewScreen> {
                 ),
               ),
 
-              /// ✅ KEY FIX 2: Expanded + SingleChildScrollView
-              /// Keyboard aane par yeh area scroll ho jayega, overflow nahi aayega
+              // ── Scrollable Body ──
               Expanded(
                 child: SingleChildScrollView(
-                  /// ✅ KEY FIX 3: keyboard dismiss — bahar tap karo to keyboard band
-                  keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
+                  keyboardDismissBehavior:
+                  ScrollViewKeyboardDismissBehavior.onDrag,
                   padding: EdgeInsets.only(
                     left: w * 0.045,
                     right: w * 0.045,
-                    /// ✅ KEY FIX 4: keyboard ki height jitna neeche se padding
-                    bottom: MediaQuery.of(context).viewInsets.bottom + h * 0.02,
+                    bottom:
+                    MediaQuery.of(context).viewInsets.bottom + h * 0.02,
                   ),
                   child: Column(
                     children: [
                       SizedBox(height: h * 0.01),
 
-                      /// ---- Helper Info Card ----
-                      Container(
-                        width: double.infinity,
+                      // ── Helper Info Card ──
+                      GlassCard(
+                        borderRadius: 50,
+                        tintOpacity: 0.18,
                         padding: EdgeInsets.symmetric(
                           horizontal: w * 0.02,
                           vertical: h * 0.005,
-                        ),
-                        decoration: BoxDecoration(
-                          color: Colors.white.withOpacity(0.22),
-                          borderRadius: BorderRadius.circular(50),
-                          border: Border.all(
-                            color: Colors.white.withOpacity(0.35),
-                            width: 1,
-                          ),
                         ),
                         child: Row(
                           children: [
@@ -129,7 +122,8 @@ class _WriteReviewScreenState extends State<WriteReviewScreen> {
                                 borderRadius: BorderRadius.circular(50),
                                 color: Colors.white.withOpacity(0.3),
                                 image: const DecorationImage(
-                                  image: AssetImage('assets/images/homeicon3.png'),
+                                  image: AssetImage(
+                                      'assets/images/homeicon3.png'),
                                   fit: BoxFit.cover,
                                 ),
                               ),
@@ -172,20 +166,13 @@ class _WriteReviewScreenState extends State<WriteReviewScreen> {
 
                       SizedBox(height: h * 0.025),
 
-                      /// ---- Review Input Card ----
-                      Container(
-                        width: double.infinity,
+                      // ── Review Input Card ──
+                      GlassCard1(
+                        borderRadius: 30,
+                        tintOpacity: 0.12,
                         padding: EdgeInsets.symmetric(
                           horizontal: w * 0.05,
                           vertical: h * 0.025,
-                        ),
-                        decoration: BoxDecoration(
-                          color: Colors.black.withOpacity(0.18),
-                          borderRadius: BorderRadius.circular(30),
-                          border: Border.all(
-                            color: Colors.white.withOpacity(0.3),
-                            width: 1,
-                          ),
                         ),
                         child: Column(
                           children: [
@@ -201,7 +188,7 @@ class _WriteReviewScreenState extends State<WriteReviewScreen> {
 
                             SizedBox(height: h * 0.022),
 
-                            /// ---- Clickable Stars ----
+                            // ── Stars ──
                             Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: List.generate(5, (index) {
@@ -228,16 +215,10 @@ class _WriteReviewScreenState extends State<WriteReviewScreen> {
 
                             SizedBox(height: h * 0.025),
 
-                            /// ---- Text Field ----
-                            Container(
-                              decoration: BoxDecoration(
-                                color: Colors.black.withOpacity(0.07),
-                                borderRadius: BorderRadius.circular(35),
-                                border: Border.all(
-                                  color: Colors.white.withOpacity(0.3),
-                                  width: 1,
-                                ),
-                              ),
+                            // ── Text Field ──
+                            GlassCard1(
+                              borderRadius: 35,
+                              tintOpacity: 0.07,
                               child: TextField(
                                 controller: _reviewController,
                                 maxLines: 5,
@@ -262,14 +243,14 @@ class _WriteReviewScreenState extends State<WriteReviewScreen> {
 
                             SizedBox(height: h * 0.03),
 
-                            /// ---- Submit Button ----
+                            // ── Submit Button ──
                             GestureDetector(
                               onTap: () {
                                 if (selectedStars == 0) {
                                   ScaffoldMessenger.of(context).showSnackBar(
                                     const SnackBar(
-                                      content:
-                                      Text('Please select a star rating'),
+                                      content: Text(
+                                          'Please select a star rating'),
                                       backgroundColor: Color(0xFF46151A),
                                     ),
                                   );

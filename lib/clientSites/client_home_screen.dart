@@ -1,8 +1,9 @@
 import 'dart:ui';
-
+import 'package:beauty_related/custom_widgets/blackish_glass_effect.dart';
 import 'package:flutter/material.dart';
-
+import '../custom_widgets/glass_effect.dart';
 import 'notifications_screen.dart' show ClientNotificationScreen;
+
 
 class ClientHomescreen extends StatefulWidget {
   const ClientHomescreen({super.key});
@@ -64,7 +65,6 @@ class _ClientHomescreenState extends State<ClientHomescreen> {
     final double nameFont = size.width * 0.05;
     final double gridGap = size.width * 0.035;
     final double cardRadius = size.width * 0.07;
-    final double statCardHeight = size.height * 0.15;
     final double actionCardHeight = size.height * 0.098;
     final double sectionTitleFont = size.width * 0.036;
 
@@ -73,7 +73,7 @@ class _ClientHomescreenState extends State<ClientHomescreen> {
         children: [
           const Screensbackground(),
           SafeArea(
-            child: SingleChildScrollView(
+            child: Padding(
               padding: EdgeInsets.symmetric(horizontal: horizontalPad),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -94,41 +94,36 @@ class _ClientHomescreenState extends State<ClientHomescreen> {
                             width: size.width * 0.004,
                           ),
                         ),
-                        child: CircleAvatar(
-                          backgroundImage: const AssetImage(
-                            "assets/images/home2.jpg",
-                          ),
+                        child: const CircleAvatar(
+                          backgroundImage: AssetImage("assets/images/home2.jpg"),
                         ),
-                        ),
+                      ),
                       const Spacer(),
-                      GestureDetector(
-                        onTap: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => ClientNotificationScreen(),
-                            ),
-                          );
-                        },
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(size.width * 0.08),
-                          child: BackdropFilter(
-                            filter: ImageFilter.blur(sigmaX: 12, sigmaY: 12),
-                            child: Container(
-                              width: bellSize,
-                              height: bellSize,
-                              decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                color: Colors.white.withOpacity(0.10),
-                                border: Border.all(
-                                  color: Colors.white.withOpacity(0.12),
-                                  width: size.width * 0.0025,
-                                ),
+
+                      RepaintBoundary(
+                        child: GestureDetector(
+                          onTap: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) =>
+                                const ClientNotificationScreen(),
                               ),
-                              child: Icon(
-                                Icons.notifications,
-                                color: Colors.white,
-                                size: size.width * 0.065,
+                            );
+                          },
+                          child: SizedBox(
+                            width: bellSize,
+                            height: bellSize,
+                            child: GlassCard(
+                              borderRadius: bellSize / 2,
+                              blurSigma: 2,
+                              tintOpacity: 0.05,
+                              child: Center(
+                                child: Icon(
+                                  Icons.notifications,
+                                  color: Colors.white,
+                                  size: size.width * 0.065,
+                                ),
                               ),
                             ),
                           ),
@@ -173,12 +168,14 @@ class _ClientHomescreenState extends State<ClientHomescreen> {
                     ),
                     itemBuilder: (context, index) {
                       final item = stats[index];
-                      return _GlassStatCard(
-                        icon: item["icon"],
-                        iconColor: item["iconColor"],
-                        title: item["title"],
-                        value: item["value"],
-                        radius: cardRadius,
+                      return RepaintBoundary(
+                        child: _GlassStatCard(
+                          icon: item["icon"],
+                          iconColor: item["iconColor"],
+                          title: item["title"],
+                          value: item["value"],
+                          radius: cardRadius,
+                        ),
                       );
                     },
                   ),
@@ -200,17 +197,19 @@ class _ClientHomescreenState extends State<ClientHomescreen> {
                     quickActions.length,
                         (index) => Padding(
                       padding: EdgeInsets.only(bottom: size.height * 0.01),
-                      child: _QuickActionCard(
-                        title: quickActions[index]["title"]!,
-                        subtitle: quickActions[index]["subtitle"]!,
-                        time: quickActions[index]["time"]!,
-                        height: actionCardHeight,
-                        radius: cardRadius * 0.75,
+                      child: RepaintBoundary(
+                        child: _QuickActionCard(
+                          title: quickActions[index]["title"]!,
+                          subtitle: quickActions[index]["subtitle"]!,
+                          time: quickActions[index]["time"]!,
+                          height: actionCardHeight,
+                          radius: cardRadius * 0.75,
+                        ),
                       ),
                     ),
                   ),
 
-                  SizedBox(height: size.height * 0.1),
+
                 ],
               ),
             ),
@@ -240,52 +239,37 @@ class _GlassStatCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
 
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(radius),
-      child: BackdropFilter(
-        filter: ImageFilter.blur(sigmaX: 18, sigmaY: 18),
-        child: Container(
-          padding: EdgeInsets.symmetric(
-            horizontal: size.width * 0.035,
-            vertical: size.height * 0.01,
-          ),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(radius),
-            color: Colors.white.withOpacity(0.12),
-            border: Border.all(
-              color: Colors.white.withOpacity(0.28),
-              width: size.width * 0.0025,
+    return GlassCard(
+      borderRadius: radius,
+      blurSigma: 7,
+      tintOpacity: 0.05,
+      padding: EdgeInsets.symmetric(
+        horizontal: size.width * 0.035,
+        vertical: size.height * 0.01,
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Icon(icon, color: iconColor, size: size.width * 0.075),
+          SizedBox(height: size.height * 0.01),
+          Text(
+            title,
+            style: TextStyle(
+              color: Colors.white.withOpacity(0.92),
+              fontSize: size.width * 0.026,
+              fontWeight: FontWeight.w500,
             ),
           ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Icon(
-                icon,
-                color: iconColor,
-                size: size.width * 0.075,
-              ),
-              SizedBox(height: size.height * 0.01),
-              Text(
-                title,
-                style: TextStyle(
-                  color: Colors.white.withOpacity(0.92),
-                  fontSize: size.width * 0.026,
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
-              SizedBox(height: size.height * 0.01),
-              Text(
-                value,
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: size.width * 0.068,
-                  fontWeight: FontWeight.w800,
-                ),
-              ),
-            ],
+          SizedBox(height: size.height * 0.01),
+          Text(
+            value,
+            style: TextStyle(
+              color: Colors.white,
+              fontSize: size.width * 0.068,
+              fontWeight: FontWeight.w800,
+            ),
           ),
-        ),
+        ],
       ),
     );
   }
@@ -310,89 +294,82 @@ class _QuickActionCard extends StatelessWidget {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
 
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(radius),
-      child: BackdropFilter(
-        filter: ImageFilter.blur(sigmaX: 18, sigmaY: 18),
-        child: Container(
-          height: height,
-          padding: EdgeInsets.symmetric(
-            horizontal: size.width * 0.04,
-            vertical: size.height * 0.014,
-          ),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(radius),
-            color: Colors.white.withOpacity(0.10),
-            border: Border.all(
-              color: Colors.white.withOpacity(0.22),
-              width: size.width * 0.0025,
+    return SizedBox(
+      height: height,
+      child: GlassCard(
+        borderRadius: radius,
+        blurSigma: 7,
+        tintOpacity: 0.05,
+        padding: EdgeInsets.symmetric(
+          horizontal: size.width * 0.04,
+          vertical: size.height * 0.014,
+        ),
+        child: Row(
+          children: [
+            Container(
+              width: size.width * 0.13,
+              alignment: Alignment.center,
+              child: Icon(
+                Icons.star,
+                color: const Color(0xFFFFB545),
+                size: size.width * 0.075,
+              ),
             ),
-          ),
-          child: Row(
-            children: [
-              Container(
-                width: size.width * 0.13,
-                alignment: Alignment.center,
-                child: Icon(
-                  Icons.star,
-                  color: const Color(0xFFFFB545),
-                  size: size.width * 0.075,
-                ),
-              ),
-              SizedBox(width: size.width * 0.02),
-              Expanded(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      title,
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: size.width * 0.03,
-                        fontWeight: FontWeight.w500,
-                        fontFamily: 'Serif',
-                      ),
+            SizedBox(width: size.width * 0.02),
+            Expanded(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    title,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: size.width * 0.03,
+                      fontWeight: FontWeight.w500,
+                      fontFamily: 'Serif',
                     ),
-                    SizedBox(height: size.height * 0.004),
-                    Text(
-                      subtitle,
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: TextStyle(
-                        color: Colors.white.withOpacity(0.92),
-                        fontSize: size.width * 0.025,
-                        fontWeight: FontWeight.w300,
-                      ),
+                  ),
+                  SizedBox(height: size.height * 0.004),
+                  Text(
+                    subtitle,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyle(
+                      color: Colors.white.withOpacity(0.92),
+                      fontSize: size.width * 0.025,
+                      fontWeight: FontWeight.w300,
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
-              SizedBox(width: size.width * 0.02),
-              Text(
-                time,
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: size.width * 0.032,
-                  fontWeight: FontWeight.w400,
-                ),
+            ),
+            SizedBox(width: size.width * 0.02),
+            Text(
+              time,
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: size.width * 0.032,
+                fontWeight: FontWeight.w400,
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );
   }
-}class Screensbackground extends StatelessWidget {
+}
+
+class Screensbackground extends StatelessWidget {
   const Screensbackground({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Positioned.fill(
       child: Image.asset(
-        "assets/images/backgroundimage.png",
+        "assets/images/bg3.png",
         fit: BoxFit.cover,
       ),
     );

@@ -1,10 +1,10 @@
+import 'dart:ui';
+
 import 'package:beauty_related/custom_widgets/customcontainer.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get_core/src/get_main.dart';
-import 'package:get/get_navigation/src/extension_navigation.dart';
+import 'package:get/get.dart';
 
 import '../../app_routes.dart';
-import 'details_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -14,16 +14,16 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-
   final List<Map<String, dynamic>> _categories = [
-    {'title': 'Make Up',   'width': 0.25},
-    {'title': 'Wig',       'width': 0.17},
-    {'title': 'Nails',     'width': 0.20},
-    {'title': 'Hairs',     'width': 0.20},
+    {'title': 'Make Up', 'width': 0.25},
+    {'title': 'Wig', 'width': 0.17},
+    {'title': 'Nails', 'width': 0.20},
+    {'title': 'Hairs', 'width': 0.20},
     {'title': 'Face Wash', 'width': 0.23},
     {'title': 'Skin Care', 'width': 0.25},
   ];
 
+  List<bool> isLiked = [false, false, false, false];
   final Set<String> _selectedCategories = {};
 
   void _toggleCategory(String title) {
@@ -37,183 +37,178 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   Widget _promoCard(double h, double w, double baseSize, String imagePath) {
-    return SizedBox(
-      width: w * 0.85,
-      child: ClipRRect(
-        borderRadius: BorderRadius.circular(35),
-        child: Stack(
-          children: [
-            Container(
-              height: h * 0.2,
-              width: double.infinity,
-              padding: EdgeInsets.only(
-                left: w * 0.06,
-                right: w * 0.06,
-                top: h * 0.027,
-                bottom: h * 0.03,
-              ),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(45),
-                gradient: LinearGradient(
-                  begin: Alignment.topLeft,
-                  end: Alignment.bottomRight,
-                  colors: [
-                    Color(0xFF5C4A4A).withOpacity(0.95),
-                    Color(0xFFB8B1A8).withOpacity(0.5),
+    return RepaintBoundary(
+      child: SizedBox(
+        width: w * 0.85,
+        child: _glassBox(
+          borderRadius: BorderRadius.circular(50),
+          blur: 15,
+          child: Stack(
+            children: [
+              Container(
+                height: h * 0.2,
+                width: double.infinity,
+                padding: EdgeInsets.only(
+                  left: w * 0.06,
+                  right: w * 0.06,
+                  top: h * 0.027,
+                  bottom: h * 0.03,
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      'Velvet Hair and\nBeauty Lounge',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: baseSize * 0.05,
+                        fontWeight: FontWeight.w600,
+                        fontFamily: 'A',
+                        height: 1,
+                      ),
+                    ),
+                    SizedBox(height: h * 0.008),
+                    Text(
+                      'Lock in Hydration all day with\nthese light weight moisturisers',
+                      style: TextStyle(
+                        color: Colors.white.withOpacity(0.9),
+                        fontSize: baseSize * 0.03,
+                        fontFamily: 'A',
+                        height: 1,
+                      ),
+                    ),
+                    SizedBox(height: h * 0.01),
+                    GestureDetector(
+                      onTap: () {
+                        Get.toNamed(AppRoutes.helperDetail);
+                      },
+                      child: Container(
+                        padding: EdgeInsets.symmetric(
+                          horizontal: w * 0.03,
+                          vertical: h * 0.011,
+                        ),
+                        decoration: BoxDecoration(
+                          image: const DecorationImage(
+                            image: AssetImage('assets/images/seeDetailsBG.png'),
+                            fit: BoxFit.contain,
+                          ),
+                          borderRadius: BorderRadius.circular(30),
+                        ),
+                        child: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            Text(
+                              'See Details',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.w600,
+                                fontFamily: 'A',
+                                fontSize: baseSize * 0.035,
+                              ),
+                            ),
+                            SizedBox(width: w * 0.02),
+                            Icon(
+                              Icons.arrow_forward_rounded,
+                              color: Colors.white,
+                              size: baseSize * 0.055,
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
                   ],
                 ),
               ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    'Velvet Hair and\nBeauty Lounge',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: baseSize * 0.05,
-                      fontWeight: FontWeight.w600,
-                      fontFamily: 'A',
-                      height: 1,
+              Positioned(
+                top: -h * 0.03,
+                right: -w * 0.03,
+                child: Container(
+                  height: h * 0.16,
+                  width: h * 0.16,
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    border: Border.all(
+                      color: Colors.white.withOpacity(0.2),
+                      width: 2,
                     ),
                   ),
-                  SizedBox(height: h * 0.008),
-                  Text(
-                    'Lock in Hydration all day with\nthese light weight moisturisers',
-                    style: TextStyle(
-                      color: Colors.white.withOpacity(0.9),
-                      fontSize: baseSize * 0.03,
-                      fontFamily: 'A',
-                      height: 1,
-                    ),
-                  ),
-                  SizedBox(height: h * 0.01),
-                  GestureDetector(
-                    onTap: () {
-                      Get.toNamed(AppRoutes.helperDetail);
-                    },
-                    child: Container(
-                      padding: EdgeInsets.symmetric(
-                        horizontal: w * 0.03,
-                        vertical: h * 0.011,
-                      ),
-                      decoration: BoxDecoration(
-                        image: DecorationImage(
-                          image: AssetImage('assets/images/seeDetailsBG.png'),
-                          fit: BoxFit.contain,
-                        ),
-                        borderRadius: BorderRadius.circular(30),
-                      ),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Text(
-                            'See Details',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.w600,
-                              fontFamily: 'A',
-                              fontSize: baseSize * 0.035,
-                            ),
-                          ),
-                          SizedBox(width: w * 0.02),
-                          Icon(
-                            Icons.arrow_forward_rounded,
-                            color: Colors.white,
-                            size: baseSize * 0.055,
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            Positioned(
-              top: -h * 0.03,
-              right: -w * 0.03,
-              child: Container(
-                height: h * 0.16,
-                width: h * 0.16,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  border: Border.all(
-                    color: Colors.white.withOpacity(0.2),
-                    width: 2,
+                  child: ClipOval(
+                    child: Image.asset(imagePath, fit: BoxFit.cover),
                   ),
                 ),
-                child: ClipOval(
-                  child: Image.asset(imagePath, fit: BoxFit.cover),
-                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
   }
 
-  Widget _productCard(double h, double w, double baseSize, String imagePath) {
-    return Container(
-      width: w * 0.45,
-      padding: EdgeInsets.all(w * 0.03),
-      decoration: BoxDecoration(
+  Widget _productCard(
+      double h,
+      double w,
+      double baseSize,
+      String imagePath,
+      int index,
+      ) {
+    return RepaintBoundary(
+      child: _glassBox(
         borderRadius: BorderRadius.circular(25),
-        gradient: LinearGradient(
-          colors: [
-            Color(0xFF5C4A4A).withOpacity(0.7),
-            Color(0xFFB8B1A8).withOpacity(0.7),
+        blur: 15,
+        width: w * 0.45,
+        padding: EdgeInsets.all(w * 0.03),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            ClipRRect(
+              borderRadius: BorderRadius.circular(18),
+              child: Image.asset(
+                imagePath,
+                height: h * 0.1,
+                width: double.infinity,
+                fit: BoxFit.cover,
+              ),
+            ),
+            ListTile(
+              contentPadding: EdgeInsets.zero,
+              title: Text(
+                'Axis Y',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: w * 0.04,
+                  fontWeight: FontWeight.w600,
+                  fontFamily: 'A',
+                ),
+              ),
+              subtitle: Text(
+                'The Mini Glow Set',
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: TextStyle(
+                  color: Colors.white.withOpacity(0.8),
+                  fontSize: w * 0.028,
+                  fontFamily: 'A',
+                ),
+              ),
+              trailing: GestureDetector(
+                onTap: () => setState(() => isLiked[index] = !isLiked[index]),
+                child: Container(
+                  padding: const EdgeInsets.all(8),
+                  decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: const Color(0xFF46151A).withOpacity(0.3),
+                  ),
+                  child: Icon(
+                    isLiked[index] ? Icons.favorite : Icons.favorite_border,
+                    color: Colors.white,
+                    size: baseSize * 0.045,
+                  ),
+                ),
+              ),
+            ),
           ],
         ),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          ClipRRect(
-            borderRadius: BorderRadius.circular(18),
-            child: Image.asset(
-              imagePath,
-              height: h * 0.1,
-              width: double.infinity,
-              fit: BoxFit.cover,
-            ),
-          ),
-          SizedBox(height: h * 0.005),
-          ListTile(
-            contentPadding: EdgeInsets.zero,
-            title: Text(
-              'Axis Y',
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: baseSize * 0.04,
-                fontWeight: FontWeight.w600,
-                fontFamily: 'A',
-              ),
-            ),
-            subtitle: Text(
-              'The Mini Glow Set',
-              maxLines: 1,
-              overflow: TextOverflow.ellipsis,
-              style: TextStyle(
-                color: Colors.white.withOpacity(0.8),
-                fontSize: baseSize * 0.028,
-                fontFamily: 'A',
-              ),
-            ),
-            trailing: Container(
-              padding: EdgeInsets.all(baseSize * 0.02),
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: const Color(0xFF46151A).withOpacity(0.3),
-              ),
-              child: Icon(
-                Icons.favorite_border,
-                color: Colors.white,
-                size: baseSize * 0.045,
-              ),
-            ),
-          ),
-        ],
       ),
     );
   }
@@ -231,7 +226,7 @@ class _HomeScreenState extends State<HomeScreen> {
         width: double.infinity,
         decoration: const BoxDecoration(
           image: DecorationImage(
-            image: AssetImage('assets/images/home1.png'),
+            image: AssetImage('assets/images/bg3.png'),
             fit: BoxFit.cover,
           ),
         ),
@@ -239,10 +234,12 @@ class _HomeScreenState extends State<HomeScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-
-              // ─── Top Bar ───
               Padding(
-                padding: EdgeInsets.only(left: w * 0.03, top: h * 0.015,right: w*0.03),
+                padding: EdgeInsets.only(
+                  left: w * 0.03,
+                  top: h * 0.015,
+                  right: w * 0.03,
+                ),
                 child: Row(
                   children: [
                     CircleAvatar(
@@ -292,38 +289,42 @@ class _HomeScreenState extends State<HomeScreen> {
                   ],
                 ),
               ),
-
               SizedBox(height: h * 0.008),
-
-              // ─── Greeting ───
-              Padding(
-                padding: EdgeInsets.only(left: w * 0.03),
-                child: Text(
-                  'Good Morning!',
-                  style: TextStyle(
-                    fontWeight: FontWeight.w300,
-                    fontFamily: 'A',
-                    color: const Color(0xFFB6B6B6),
-                    fontSize: baseSize * 0.035,
+              Row(
+                children: [
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.only(left: w * 0.03),
+                        child: Text(
+                          'Good Morning!',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.w300,
+                            fontFamily: 'A',
+                            fontSize: baseSize * 0.035,
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.only(left: w * 0.03),
+                        child: Text(
+                          'Scarlet Jhonson',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontFamily: 'A',
+                            fontWeight: FontWeight.w500,
+                            fontSize: baseSize * 0.045,
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
-                ),
+                ],
               ),
-              Padding(
-                padding: EdgeInsets.only(left: w * 0.03),
-                child: Text(
-                  'Scarlet Jhonson',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontFamily: 'A',
-                    fontWeight: FontWeight.w500,
-                    fontSize: baseSize * 0.045,
-                  ),
-                ),
-              ),
-
               SizedBox(height: h * 0.02),
-
-              // ─── Category Chips ───
               Padding(
                 padding: EdgeInsets.only(left: w * 0.03),
                 child: SingleChildScrollView(
@@ -344,41 +345,67 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ),
               ),
-
               SizedBox(height: h * 0.03),
-
-              // ─── Scrollable Content (Promo + Products) ───
               Expanded(
                 child: SingleChildScrollView(
                   physics: const BouncingScrollPhysics(),
-                  padding: EdgeInsets.only(
-                    left: w * 0.03,
-                    bottom: h * 0.12,
-
-                  ),
+                  padding: EdgeInsets.only(left: w * 0.03, bottom: h * 0.12),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-
-                      // ─── Promo Cards ───
-                      SingleChildScrollView(
-                        scrollDirection: Axis.horizontal,
-                        child: Row(
-                          children: [
-                            _promoCard(h, w, baseSize, 'assets/images/homeicon3.png'),
-                            SizedBox(width: w * 0.03),
-                            _promoCard(h, w, baseSize, 'assets/images/homeicon2.jpg'),
-                            SizedBox(width: w * 0.03),
-                            _promoCard(h, w, baseSize, 'assets/images/homeicon3.png'),
-                          ],
+                      RepaintBoundary(
+                        child: SingleChildScrollView(
+                          scrollDirection: Axis.horizontal,
+                          physics: const BouncingScrollPhysics(),
+                          child: Row(
+                            children: [
+                              _promoCard(
+                                h,
+                                w,
+                                baseSize,
+                                'assets/images/homeicon3.png',
+                              ),
+                              SizedBox(width: w * 0.03),
+                              RepaintBoundary(
+                                child: SizedBox(
+                                  width: w * 0.85,
+                                  child: _glassBox(
+                                    borderRadius: BorderRadius.circular(50),
+                                    child: SizedBox(
+                                      height: h * 0.2,
+                                      width: double.infinity,
+                                      child: ClipRRect(
+                                        borderRadius: BorderRadius.circular(40),
+                                        child: Image.asset(
+                                          "assets/images/maps.PNG",
+                                          fit: BoxFit.cover,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              SizedBox(width: w * 0.03),
+                              _promoCard(
+                                h,
+                                w,
+                                baseSize,
+                                'assets/images/homeicon2.jpg',
+                              ),
+                              SizedBox(width: w * 0.03),
+                              _promoCard(
+                                h,
+                                w,
+                                baseSize,
+                                'assets/images/homeicon3.png',
+                              ),
+                            ],
+                          ),
                         ),
                       ),
-
                       SizedBox(height: h * 0.015),
-
-                      // ─── Featured Experts Header ───
                       Padding(
-                        padding:  EdgeInsets.only(right: w * 0.03),
+                        padding: EdgeInsets.only(right: w * 0.03),
                         child: Row(
                           children: [
                             Text(
@@ -392,7 +419,8 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                             const Spacer(),
                             GestureDetector(
-                              onTap: () => Get.toNamed(AppRoutes.featureExperts),
+                              onTap: () =>
+                                  Get.toNamed(AppRoutes.featureExperts),
                               child: Text(
                                 'View All',
                                 style: TextStyle(
@@ -406,30 +434,50 @@ class _HomeScreenState extends State<HomeScreen> {
                           ],
                         ),
                       ),
-
                       SizedBox(height: h * 0.015),
-
-                      // ─── Product Cards ───
                       Padding(
-                        padding:  EdgeInsets.only(right: w * 0.03),
+                        padding: EdgeInsets.only(right: w * 0.03),
                         child: Column(
                           children: [
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
                               children: [
-                                _productCard(h, w, baseSize, 'assets/images/homeicon4.jpg'),
-                                _productCard(h, w, baseSize, 'assets/images/homeicon5.jpg'),
+                                _productCard(
+                                  h,
+                                  w,
+                                  baseSize,
+                                  'assets/images/homeicon4.jpg',
+                                  0,
+                                ),
+                                _productCard(
+                                  h,
+                                  w,
+                                  baseSize,
+                                  'assets/images/homeicon5.jpg',
+                                  1,
+                                ),
                               ],
                             ),
-
-                        SizedBox(height: h * 0.017),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            _productCard(h, w, baseSize, 'assets/images/home6.jpg'),
-                            _productCard(h, w, baseSize, 'assets/images/homeicon6.jpg'),
-                          ],
-                        ),
+                            SizedBox(height: h * 0.017),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                _productCard(
+                                  h,
+                                  w,
+                                  baseSize,
+                                  'assets/images/home6.jpg',
+                                  2,
+                                ),
+                                _productCard(
+                                  h,
+                                  w,
+                                  baseSize,
+                                  'assets/images/homeicon6.jpg',
+                                  3,
+                                ),
+                              ],
+                            ),
                           ],
                         ),
                       ),
@@ -437,11 +485,43 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ),
               ),
-
             ],
           ),
         ),
       ),
     );
   }
+}
+
+Widget _glassBox({
+  required Widget child,
+  required BorderRadius borderRadius,
+  EdgeInsetsGeometry? padding,
+  double? height,
+  double? width,
+  double blur = 15,
+  double opacity = 0.1,
+}) {
+  return RepaintBoundary(
+    child: ClipRRect(
+      borderRadius: borderRadius,
+      child: BackdropFilter(
+        filter: ImageFilter.blur(sigmaX: blur, sigmaY: blur),
+        child: Container(
+          height: height,
+          width: width,
+          padding: padding,
+          decoration: BoxDecoration(
+            borderRadius: borderRadius,
+            color: Colors.white.withOpacity(opacity),
+            border: Border.all(
+              color: Colors.white.withOpacity(0.3),
+              width: 1.2,
+            ),
+          ),
+          child: child,
+        ),
+      ),
+    ),
+  );
 }

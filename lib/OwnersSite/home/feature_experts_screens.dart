@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/src/extension_navigation.dart';
@@ -10,20 +12,48 @@ class FeatureExpertsScreens extends StatefulWidget {
 }
 
 class _FeatureExpertsScreensState extends State<FeatureExpertsScreens> {
-  List<bool> isLiked = [false, false, false, false];
-  Widget _productCard(double h, double w, String imagePath, int index) {
-    return Container(
-      width: w * 0.45,
-      padding: EdgeInsets.all(w * 0.03),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(25),
-        gradient: LinearGradient(
-          colors: [
-            Color(0xFF5C4A4A).withOpacity(0.7),
-            Color(0xFFB8B1A8).withOpacity(0.7),
-          ],
+  List<bool> isLiked = [false, false, false, false,false, false, false, false];
+
+  // ─── Glass Helper — Onboarding Style ───
+  Widget _glassBox({
+    required Widget child,
+    required BorderRadius borderRadius,
+    EdgeInsetsGeometry? padding,
+    double? height,
+    double? width,
+    double blur = 15,
+    double opacity = 0.1,
+  }) {
+    return ClipRRect(
+      borderRadius: borderRadius,
+      child: BackdropFilter(
+        filter: ImageFilter.blur(sigmaX: 15, sigmaY: 15),
+        child: Container(
+          height: height,
+          width: width,
+          padding: padding,
+          decoration: BoxDecoration(
+            borderRadius: borderRadius,
+            color: Colors.white.withOpacity(0.1),
+            border: Border.all(
+              color: Colors.white.withOpacity(0.3),
+              width: 1.2,
+            ),
+          ),
+          child: child,
         ),
       ),
+    );
+  }
+
+  // ─── Product Card ───
+  Widget _productCard(double h, double w, String imagePath, int index) {
+    final baseSize = MediaQuery.of(context).size.shortestSide;
+    return _glassBox(
+      borderRadius: BorderRadius.circular(25),
+      blur: 15,
+      width: w * 0.45,
+      padding: EdgeInsets.all(w * 0.03),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -36,8 +66,6 @@ class _FeatureExpertsScreensState extends State<FeatureExpertsScreens> {
               fit: BoxFit.cover,
             ),
           ),
-
-          SizedBox(height: h * 0.0),
           ListTile(
             contentPadding: EdgeInsets.zero,
             title: Text(
@@ -46,6 +74,7 @@ class _FeatureExpertsScreensState extends State<FeatureExpertsScreens> {
                 color: Colors.white,
                 fontSize: w * 0.04,
                 fontWeight: FontWeight.w600,
+                fontFamily: 'A',
               ),
             ),
             subtitle: Text(
@@ -55,26 +84,21 @@ class _FeatureExpertsScreensState extends State<FeatureExpertsScreens> {
               style: TextStyle(
                 color: Colors.white.withOpacity(0.8),
                 fontSize: w * 0.028,
+                fontFamily: 'A',
               ),
             ),
-            trailing: GestureDetector( // ✅ added
-              onTap: () {
-                setState(() {
-                  isLiked[index] = !isLiked[index];
-                });
-              },
+            trailing: GestureDetector(
+              onTap: () => setState(() => isLiked[index] = !isLiked[index]),
               child: Container(
-                padding: EdgeInsets.all(8),
+                padding: const EdgeInsets.all(8),
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   color: const Color(0xFF46151A).withOpacity(0.3),
                 ),
                 child: Icon(
-                  isLiked[index]
-                      ? Icons.favorite
-                      : Icons.favorite_border,
-                  color: isLiked[index] ? Colors.white : Colors.white,
-                  size: 18,
+                  isLiked[index] ? Icons.favorite : Icons.favorite_border,
+                  color: Colors.white,
+                  size: baseSize * 0.045,
                 ),
               ),
             ),
@@ -83,6 +107,7 @@ class _FeatureExpertsScreensState extends State<FeatureExpertsScreens> {
       ),
     );
   }
+
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
@@ -95,9 +120,9 @@ class _FeatureExpertsScreensState extends State<FeatureExpertsScreens> {
       resizeToAvoidBottomInset: false,
       body: Container(
         width: double.infinity,
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           image: DecorationImage(
-            image: AssetImage('assets/images/home1.png'),
+            image: AssetImage('assets/images/bg3.png'),
             fit: BoxFit.cover,
           ),
         ),
@@ -109,17 +134,14 @@ class _FeatureExpertsScreensState extends State<FeatureExpertsScreens> {
           ),
           child: Column(
             children: [
-              // Top Row: Back button & Avatar
               Row(
                 children: [
                   GestureDetector(
-                    onTap: () {
-                      Get.back();
-                    },
+                    onTap: () => Get.back(),
                     child: Container(
                       height: baseSize * 0.14,
                       width: baseSize * 0.14,
-                      decoration: BoxDecoration(
+                      decoration: const BoxDecoration(
                         shape: BoxShape.circle,
                         image: DecorationImage(
                           image: AssetImage('assets/images/homeicon.png'),
@@ -135,8 +157,8 @@ class _FeatureExpertsScreensState extends State<FeatureExpertsScreens> {
                       ),
                     ),
                   ),
-                  Spacer(),
-                  CircleAvatar(
+                  const Spacer(),
+                  const CircleAvatar(
                     radius: 25,
                     backgroundColor: Colors.transparent,
                     backgroundImage: AssetImage('assets/images/liked1.png'),
@@ -144,62 +166,54 @@ class _FeatureExpertsScreensState extends State<FeatureExpertsScreens> {
                 ],
               ),
               SizedBox(height: h * 0.02),
-              Align(alignment: Alignment.centerLeft,
+              Align(
+                alignment: Alignment.centerLeft,
                 child: Text(
-                    "Featured Experts",
-                style: TextStyle(
-                  color: Colors.white,
-                  fontFamily: 'A',
-                  fontWeight: FontWeight.w500,
-                  fontSize: baseSize * 0.065
-                ),),
+                  "Featured Experts",
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontFamily: 'A',
+                    fontWeight: FontWeight.w500,
+                    fontSize: baseSize * 0.065,
+                  ),
+                ),
               ),
               SizedBox(height: h * 0.02),
               Expanded(
                 child: SingleChildScrollView(
-                  physics: BouncingScrollPhysics(),
+                  physics: const BouncingScrollPhysics(),
                   padding: EdgeInsets.only(bottom: h * 0.12),
                   child: Column(
                     children: [
                       Row(
-                        mainAxisAlignment:
-                        MainAxisAlignment.spaceBetween,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          _productCard(h, w,
-                              'assets/images/homeicon4.jpg', 0),
-                          _productCard(h, w,
-                              'assets/images/homeicon5.jpg', 1),
+                          _productCard(h, w, 'assets/images/homeicon4.jpg', 0),
+                          _productCard(h, w, 'assets/images/homeicon5.jpg', 1),
                         ],
                       ),
                       SizedBox(height: h * 0.017),
                       Row(
-                        mainAxisAlignment:
-                        MainAxisAlignment.spaceBetween,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          _productCard(
-                              h, w, 'assets/images/home6.jpg', 2),
-                          _productCard(h, w,
-                              'assets/images/homeicon6.jpg', 3),
+                          _productCard(h, w, 'assets/images/home6.jpg', 2),
+                          _productCard(h, w, 'assets/images/homeicon6.jpg', 3),
                         ],
-                      ), SizedBox(height: h * 0.017),
+                      ),
+                      SizedBox(height: h * 0.017),
                       Row(
-                        mainAxisAlignment:
-                        MainAxisAlignment.spaceBetween,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          _productCard(
-                              h, w, 'assets/images/home6.jpg', 2),
-                          _productCard(h, w,
-                              'assets/images/homeicon6.jpg', 3),
+                          _productCard(h, w, 'assets/images/home6.jpg', 6),
+                          _productCard(h, w, 'assets/images/homeicon6.jpg', 7),
                         ],
-                      ), SizedBox(height: h * 0.017),
+                      ),
+                      SizedBox(height: h * 0.017),
                       Row(
-                        mainAxisAlignment:
-                        MainAxisAlignment.spaceBetween,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          _productCard(
-                              h, w, 'assets/images/home6.jpg', 2),
-                          _productCard(h, w,
-                              'assets/images/homeicon6.jpg', 3),
+                          _productCard(h, w, 'assets/images/home6.jpg', 2),
+                          _productCard(h, w, 'assets/images/homeicon6.jpg', 3),
                         ],
                       ),
                     ],

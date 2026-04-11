@@ -1,8 +1,11 @@
+import 'package:beauty_related/custom_widgets/blackish_glass_effect.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../app_routes.dart';
 import '../../custom_widgets/custom_calender_picker.dart';
+
+import '../../custom_widgets/glass_effect.dart';
 import 'booking_details_review_screen.dart';
 
 class BookAppointmentScreen extends StatefulWidget {
@@ -60,21 +63,9 @@ class _BookAppointmentScreenState extends State<BookAppointmentScreen> {
     final w = size.width;
     final baseSize = size.shortestSide;
 
-    // ✅ FIX: Side padding kam ki — w * 0.035 (pehle w * 0.05 tha)
-    // ✅ FIX: Vertical padding ek jaisa — h * 0.016 sab fields mein
-    final BoxDecoration fieldDecoration = BoxDecoration(
-      color: Colors.white.withOpacity(0.1),
-      borderRadius: BorderRadius.circular(50),
-      border: Border.all(
-        color: Colors.white.withOpacity(0.2),
-        width: 1.2,
-      ),
-    );
-
-    // ✅ FIX: Field ka vertical padding fixed — uniform size ke liye
     final EdgeInsets fieldPadding = EdgeInsets.symmetric(
-      horizontal: w * 0.035,  // pehle 0.05 tha, ab 0.035
-      vertical: h * 0.016,    // sab fields mein same
+      horizontal: w * 0.035,
+      vertical: h * 0.016,
     );
 
     final TextStyle labelStyle = TextStyle(
@@ -88,14 +79,11 @@ class _BookAppointmentScreenState extends State<BookAppointmentScreen> {
       fontSize: baseSize * 0.038,
     );
 
-    // ✅ FIX: Uniform icon size sab fields mein
     final double fieldIconSize = baseSize * 0.055;
 
-    // ✅ FIX: Uniform text style for selected values
     final TextStyle fieldValueStyle = TextStyle(
       color: Colors.white,
       fontSize: baseSize * 0.04,
-
     );
 
     return Scaffold(
@@ -124,22 +112,29 @@ class _BookAppointmentScreenState extends State<BookAppointmentScreen> {
                   children: [
                     GestureDetector(
                       onTap: () => Get.back(),
-                      child: Container(
-                        height: baseSize * 0.13,
-                        width: baseSize * 0.13,
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          image: const DecorationImage(
-                            image: AssetImage('assets/images/homeicon.png'),fit: BoxFit.contain,),
-                          border: Border.all(
-                            color: Colors.white.withOpacity(0.5),
-                            width: 1,
+                      child: GlassCard(
+                        borderRadius: 100,
+                        tintOpacity: 0.15,
+                        child: SizedBox(
+                          height: baseSize * 0.13,
+                          width: baseSize * 0.13,
+                          child: Stack(
+                            alignment: Alignment.center,
+                            children: [
+                              ClipRRect(
+                                borderRadius: BorderRadius.circular(100),
+                                child: Image.asset(
+                                  'assets/images/homeicon.png',
+                                  fit: BoxFit.contain,
+                                ),
+                              ),
+                              Icon(
+                                Icons.arrow_back_ios_new,
+                                color: Colors.white,
+                                size: baseSize * 0.06,
+                              ),
+                            ],
                           ),
-                        ),
-                        child: Icon(
-                          Icons.arrow_back_ios_new,
-                          color: Colors.white,
-                          size: baseSize * 0.06,
                         ),
                       ),
                     ),
@@ -180,117 +175,102 @@ class _BookAppointmentScreenState extends State<BookAppointmentScreen> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       // ── Info Card ──
-                      Container(
-                        width: double.infinity,
-                        decoration: BoxDecoration(
-                          color: Colors.white.withOpacity(0.1),
-                          borderRadius: BorderRadius.circular(50),
-                          border: Border.all(
-                            color: Colors.white.withOpacity(0.15),
-                            width: 1.5,
-                          ),
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.all(12),
-                          child: Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Container(
-                                height: baseSize * 0.26,
-                                width: baseSize * 0.22,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(35),
-                                  color: Colors.black.withOpacity(0.3),
-                                  border: Border.all(
-                                    color: Colors.black.withOpacity(0.15),
-                                    width: 1.5,
-                                  ),
-                                  image: const DecorationImage(
-                                    image: AssetImage(
-                                        'assets/images/homeicon3.png'),
-                                    fit: BoxFit.cover,
-                                  ),
+                      GlassCard(
+                        borderRadius: 50,
+                        tintOpacity: 0.10,
+                        padding: const EdgeInsets.all(12),
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Container(
+                              height: baseSize * 0.26,
+                              width: baseSize * 0.22,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(35),
+                                color: Colors.black.withOpacity(0.3),
+                                border: Border.all(
+                                  color: Colors.black.withOpacity(0.15),
+                                  width: 1.5,
+                                ),
+                                image: const DecorationImage(
+                                  image: AssetImage(
+                                      'assets/images/homeicon3.png'),
+                                  fit: BoxFit.cover,
                                 ),
                               ),
-                              SizedBox(width: w * 0.04),
-                              Flexible(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      'Helper on Studio',
-                                      style: TextStyle(
-                                        fontFamily: 'A',
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.w700,
-                                        fontSize: baseSize * 0.045,
+                            ),
+                            SizedBox(width: w * 0.04),
+                            Flexible(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    'Helper on Studio',
+                                    style: TextStyle(
+                                      fontFamily: 'A',
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.w700,
+                                      fontSize: baseSize * 0.045,
+                                    ),
+                                  ),
+                                  SizedBox(height: h * 0.005),
+                                  Text(
+                                    'Nails full beauty',
+                                    style: TextStyle(
+                                      color: Colors.white.withOpacity(0.75),
+                                      fontSize: baseSize * 0.032,
+                                    ),
+                                  ),
+                                  SizedBox(height: h * 0.005),
+                                  Row(
+                                    children: [
+                                      CircleAvatar(
+                                        radius: baseSize * 0.036,
+                                        backgroundImage: const AssetImage(
+                                            'assets/images/home2.jpg'),
                                       ),
-                                    ),
-                                    SizedBox(height: h * 0.005),
-                                    Text(
-                                      'Nails full beauty',
-                                      style: TextStyle(
-                                        color: Colors.white.withOpacity(0.75),
-                                        fontSize: baseSize * 0.032,
+                                      SizedBox(width: w * 0.02),
+                                      Padding(
+                                        padding: EdgeInsets.symmetric(
+                                            vertical: baseSize * 0.009),
+                                        child: Column(
+                                          children: [
+                                            Text(
+                                              'Nina',
+                                              style: TextStyle(
+                                                color: Colors.white,
+                                                fontSize: baseSize * 0.035,
+                                                fontFamily: 'A',
+                                              ),
+                                            ),
+                                            Text(
+                                              'Owner',
+                                              style: TextStyle(
+                                                color: Colors.white,
+                                                fontSize: baseSize * 0.025,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
                                       ),
-                                    ),
-                                    SizedBox(height: h * 0.005),
-                                    Row(
-                                      children: [
-                                        CircleAvatar(
-                                          radius: baseSize * 0.036,
-                                          backgroundImage: const AssetImage(
-                                              'assets/images/home2.jpg'),
-                                        ),
-                                        SizedBox(width: w * 0.02),
-                                        Padding(
-                                          padding: EdgeInsets.symmetric(
-                                              vertical: baseSize * 0.009),
-                                          child: Column(
-                                            children: [
-                                              Text(
-                                                'Nina',
-                                                style: TextStyle(
-                                                  color: Colors.white,
-                                                  fontSize: baseSize * 0.035,
-                                                  fontFamily: 'A',
-                                                ),
-                                              ),
-                                              Text(
-                                                'Owner',
-                                                style: TextStyle(
-                                                  color: Colors.white,
-                                                  fontSize: baseSize * 0.025,
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ],
-                                ),
+                                    ],
+                                  ),
+                                ],
                               ),
-                            ],
-                          ),
+                            ),
+                          ],
                         ),
                       ),
 
                       SizedBox(height: h * 0.02),
 
                       // ── Form Card ──
-                      Container(
-                        width: double.infinity,
+                      GlassCard1(
+                        borderRadius: 35,
+                        tintOpacity: 0.07,
                         padding: EdgeInsets.symmetric(
                           horizontal: w * 0.03,
                           vertical: h * 0.025,
-                        ),
-                        decoration: BoxDecoration(
-                          color: Colors.black.withOpacity(0.1),
-                          borderRadius: BorderRadius.circular(35),
-                          border: Border.all(
-                            color: Colors.white.withOpacity(0.15),
-                          ),
                         ),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -329,31 +309,37 @@ class _BookAppointmentScreenState extends State<BookAppointmentScreen> {
                                   ),
                                 );
                               },
-                              child: Container(
-                                height: 55,
-                                padding:EdgeInsets.only(left: w * 0.035, right: w * 0.035),
-                                decoration: fieldDecoration,
-                                child: Row(
-                                  children: [
-                                    Expanded(
-                                      child: Column(
-                                        crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                        mainAxisAlignment: MainAxisAlignment.center,
-                                        children: [
-                                          Text(
-                                            selectedService ?? 'Signature Haircut',
-                                            style: fieldValueStyle,
-                                          ),
-                                          Text('60 min . \$45.00',
-                                              style: hintStyle),
-                                        ],
+                              child: GlassCard(
+                                borderRadius: 50,
+                                tintOpacity: 0.10,
+                                padding: EdgeInsets.only(
+                                    left: w * 0.035, right: w * 0.035),
+                                child: SizedBox(
+                                  height: 55,
+                                  child: Row(
+                                    children: [
+                                      Expanded(
+                                        child: Column(
+                                          crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                          mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                          children: [
+                                            Text(
+                                              selectedService ??
+                                                  'Signature Haircut',
+                                              style: fieldValueStyle,
+                                            ),
+                                            Text('60 min . \$45.00',
+                                                style: hintStyle),
+                                          ],
+                                        ),
                                       ),
-                                    ),
-                                    Icon(Icons.keyboard_arrow_down,
-                                        color: Colors.white,
-                                        size: fieldIconSize),
-                                  ],
+                                      Icon(Icons.keyboard_arrow_down,
+                                          color: Colors.white,
+                                          size: fieldIconSize),
+                                    ],
+                                  ),
                                 ),
                               ),
                             ),
@@ -365,9 +351,10 @@ class _BookAppointmentScreenState extends State<BookAppointmentScreen> {
                             SizedBox(height: h * 0.012),
                             GestureDetector(
                               onTap: () => _pickDate(context),
-                              child: Container(
-                                padding: fieldPadding, // ✅ uniform padding
-                                decoration: fieldDecoration,
+                              child: GlassCard(
+                                borderRadius: 50,
+                                tintOpacity: 0.10,
+                                padding: fieldPadding,
                                 child: Row(
                                   children: [
                                     Expanded(
@@ -408,8 +395,7 @@ class _BookAppointmentScreenState extends State<BookAppointmentScreen> {
                                     itemBuilder: (_, i) => ListTile(
                                       title: Text(timeSlots[i],
                                           style: const TextStyle(
-                                              color: Colors.white,
-                                             )),
+                                              color: Colors.white)),
                                       onTap: () {
                                         setState(
                                                 () => selectedTime = timeSlots[i]);
@@ -419,9 +405,10 @@ class _BookAppointmentScreenState extends State<BookAppointmentScreen> {
                                   ),
                                 );
                               },
-                              child: Container(
-                                padding: fieldPadding, // ✅ uniform padding
-                                decoration: fieldDecoration,
+                              child: GlassCard(
+                                borderRadius: 50,
+                                tintOpacity: 0.10,
+                                padding: fieldPadding,
                                 child: Row(
                                   children: [
                                     Expanded(
@@ -445,31 +432,27 @@ class _BookAppointmentScreenState extends State<BookAppointmentScreen> {
                             // ── Notes ──
                             Text('Notes', style: labelStyle),
                             SizedBox(height: h * 0.012),
-                            Container(
-                              height: baseSize*0.2,
-                              decoration: BoxDecoration(
-                                color: Colors.white.withOpacity(0.08),
-                                borderRadius: BorderRadius.circular(30),
-                                border: Border.all(
-                                  color: Colors.white.withOpacity(0.2),
-                                  width: 1.2,
-                                ),
-                              ),
-                              child: TextField(
-                                controller: _notesController,
-                                maxLines: 4,
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: baseSize * 0.038,
-                                ),
-                                decoration: InputDecoration(
-                                  hintText: 'Write Notes.....',
-                                  hintStyle: hintStyle,
-                                  contentPadding: EdgeInsets.symmetric(
-                                    horizontal: w * 0.035, // ✅ side padding kam
-                                    vertical: h * 0.015,
+                            GlassCard(
+                              borderRadius: 30,
+                              tintOpacity: 0.07,
+                              child: SizedBox(
+                                height: baseSize * 0.2,
+                                child: TextField(
+                                  controller: _notesController,
+                                  maxLines: 4,
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: baseSize * 0.038,
                                   ),
-                                  border: InputBorder.none,
+                                  decoration: InputDecoration(
+                                    hintText: 'Write Notes.....',
+                                    hintStyle: hintStyle,
+                                    contentPadding: EdgeInsets.symmetric(
+                                      horizontal: w * 0.035,
+                                      vertical: h * 0.015,
+                                    ),
+                                    border: InputBorder.none,
+                                  ),
                                 ),
                               ),
                             ),
@@ -478,10 +461,8 @@ class _BookAppointmentScreenState extends State<BookAppointmentScreen> {
 
                             // ── Next Button ──
                             GestureDetector(
-
                               onTap: () {
-                               Get.toNamed(AppRoutes.bookingDetailsReview);
-
+                                Get.toNamed(AppRoutes.bookingDetailsReview);
                               },
                               child: Container(
                                 width: double.infinity,

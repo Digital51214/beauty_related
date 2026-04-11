@@ -1,7 +1,7 @@
-import 'package:beauty_related/custom_widgets/custom_button.dart';
-import 'package:beauty_related/custom_widgets/custom_textformfield.dart';
 import 'package:flutter/material.dart';
 import 'dart:ui';
+import '../custom_widgets/custom_button.dart';
+import '../custom_widgets/custom_textformfield.dart';
 import 'otp_verification.dart';
 
 class ForgetPassword extends StatefulWidget {
@@ -29,11 +29,9 @@ class _ForgetPasswordState extends State<ForgetPassword> {
 
     return Scaffold(
       backgroundColor: const Color(0xFF46151A),
-      // ✅ keyboard open hone par resize hogi
       resizeToAvoidBottomInset: true,
       body: SafeArea(
         child: SingleChildScrollView(
-          // ✅ scroll enable — overflow fix
           physics: const BouncingScrollPhysics(),
           child: Padding(
             padding: EdgeInsets.only(
@@ -44,13 +42,11 @@ class _ForgetPasswordState extends State<ForgetPassword> {
             ),
             child: Column(
               children: [
-                // ─── Top Bar ───
+                // ─── Top Bar (original same) ───
                 Row(
                   children: [
                     GestureDetector(
-                      onTap: () {
-                        Navigator.pop(context);
-                      },
+                      onTap: () => Navigator.pop(context),
                       child: Container(
                         height: baseSize * 0.14,
                         width: baseSize * 0.14,
@@ -62,103 +58,64 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                         ),
                         child: Padding(
                           padding: EdgeInsets.only(left: w * 0.02),
-                          child: Icon(
-                            Icons.arrow_back_ios,
-                            color: Colors.white,
-                            size: baseSize * 0.055,
-                          ),
+                          child: Icon(Icons.arrow_back_ios,
+                              color: Colors.white, size: baseSize * 0.055),
                         ),
                       ),
                     ),
                     SizedBox(width: w * 0.07),
-                    const Text(
-                      'Forget Password',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 18,
-                        fontWeight: FontWeight.w700,
-                      ),
-                    ),
+                    const Text('Forget Password',
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 18,
+                            fontWeight: FontWeight.w700)),
                     const Spacer(),
-                    Image.asset(
-                      "assets/images/MainLogo.png",
-                      height: baseSize * 0.15,
-                      width: baseSize * 0.15,
-                    ),
+                    Image.asset('assets/images/MainLogo.png',
+                        height: baseSize * 0.15, width: baseSize * 0.15),
                   ],
                 ),
-
                 SizedBox(height: h * 0.01),
 
-                // ─── Center Image ───
-                Image.asset(
-                  "assets/images/ForgetPassword.png",
-                  height: baseSize * 0.6, // ✅ thoda chota kiya space bachane
-                  width: baseSize * 0.6,
-                ),
+                // ─── Center Image (original same) ───
+                Image.asset('assets/images/ForgetPassword.png',
+                    height: baseSize * 0.6, width: baseSize * 0.6),
 
                 SizedBox(height: h * 0.02),
 
-                // ─── Container with blur background image ───
+                // ─── Glass container (original structure + glass effect) ───
                 Container(
-                  width: baseSize * 0.95,
-                  // ✅ fixed height nahi — content ke mutabiq khud resize ho
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(30),
-                    border: Border.all(
-                      color: Colors.white.withOpacity(0.2),
-                      width: 1,
-                    ),
+                    image: DecorationImage(image: AssetImage('assets/images/MainLogo.png'), fit: BoxFit.contain)
                   ),
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(30),
-                    child: Stack(
-                      children: [
-                        // Background image with blur
-                        Positioned.fill(
-                          child: ImageFiltered(
-                            imageFilter:
-                            ImageFilter.blur(sigmaX: 3, sigmaY: 3),
-                            child: Image.asset(
-                              'assets/images/MainLogo.png',
-                              fit: BoxFit.contain,
-                            ),
-                          ),
+                    child: BackdropFilter(
+                      filter: ImageFilter.blur(sigmaX: 7, sigmaY: 7),
+                      child: Container(
+                        width: baseSize * 0.95,
+                        decoration: BoxDecoration(
+                          color: Colors.black.withOpacity(0.10),
+                          borderRadius: BorderRadius.circular(30),
+                          border: Border.all(
+                              color: Colors.white.withOpacity(0.25), width: 1),
                         ),
-
-                        // Dark overlay
-                        Positioned.fill(
-                          child: Container(
-                            color: Colors.black.withOpacity(0.35),
-                          ),
-                        ),
-
-                        // ─── Content ───
-                        Padding(
+                        child: Padding(
                           padding: EdgeInsets.symmetric(
-                            horizontal: w * 0.04,
-                            vertical: h * 0.025,
-                          ),
+                              horizontal: w * 0.04, vertical: h * 0.025),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              const Text(
-                                "Enter Email",
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 25,
-                                  fontWeight: FontWeight.w700,
-                                  fontFamily: 'A',
-                                ),
-                              ),
-                              const Text(
-                                "Enter Mail To Verify Your Identity",
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 15,
-                                  fontWeight: FontWeight.w400,
-                                ),
-                              ),
+                              const Text("Enter Email",
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 25,
+                                      fontWeight: FontWeight.w700,
+                                      fontFamily: 'A')),
+                              const Text("Enter Mail To Verify Your Identity",
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.w400)),
                               SizedBox(height: h * 0.02),
                               CustomTextformfield(
                                 title: 'Email Address...',
@@ -168,25 +125,19 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                               SizedBox(height: h * 0.02),
                               CustomButton(
                                 title: 'Send Code',
-                                onPressed: () {
-                                  Navigator.push(
+                                onPressed: () => Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                      builder: (context) =>
-                                      const OTPVerification(),
-                                    ),
-                                  );
-                                },
+                                        builder: (_) => const OTPVerification())),
                               ),
                               SizedBox(height: h * 0.01),
                             ],
                           ),
                         ),
-                      ],
+                      ),
                     ),
                   ),
                 ),
-
                 SizedBox(height: h * 0.02),
               ],
             ),

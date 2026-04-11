@@ -88,7 +88,7 @@ class _PortfolioScreenState extends State<PortfolioScreen> {
         height: double.infinity,
         decoration: const BoxDecoration(
           image: DecorationImage(
-            image: AssetImage('assets/images/helper1.png'),
+            image: AssetImage('assets/images/bg3.png'),
             fit: BoxFit.cover,
           ),
         ),

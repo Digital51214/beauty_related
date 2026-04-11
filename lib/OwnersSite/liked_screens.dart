@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 
 class LikedScreens extends StatefulWidget {
@@ -9,22 +11,48 @@ class LikedScreens extends StatefulWidget {
 
 class _LikedScreensState extends State<LikedScreens> {
 
-  // ✅ Sab pehle se selected (true)
   List<bool> isLiked = [true, true, true, true];
 
-  Widget _productCard(double h, double w, double baseSize, String imagePath, int index) {
-    return Container(
-      width: w * 0.45,
-      padding: EdgeInsets.all(w * 0.03),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(25),
-        gradient: LinearGradient(
-          colors: [
-            Color(0xFF5C4A4A).withOpacity(0.7),
-            Color(0xFFB8B1A8).withOpacity(0.7),
-          ],
+  // ─── Glass Helper ───
+  Widget _glassBox({
+    required Widget child,
+    required BorderRadius borderRadius,
+    EdgeInsetsGeometry? padding,
+    double? height,
+    double? width,
+    double blur = 15,
+    double opacity = 0.18,
+  }) {
+    return ClipRRect(
+      borderRadius: borderRadius,
+      child: BackdropFilter(
+        filter: ImageFilter.blur(sigmaX: 7, sigmaY: 7),
+        child: Container(
+          height: height,
+          width: width,
+          padding: padding,
+          decoration: BoxDecoration(
+            borderRadius: borderRadius,
+            color: Colors.white.withOpacity(0.1),
+            border: Border.all(
+              color: Colors.white.withOpacity(0.3),
+              width: 1.2,
+            ),
+          ),
+          child: child,
         ),
       ),
+    );
+  }
+
+  // ─── Product Card ───
+  Widget _productCard(double h, double w, String imagePath, int index) {
+    final baseSize = MediaQuery.of(context).size.shortestSide;
+    return _glassBox(
+      borderRadius: BorderRadius.circular(25),
+      blur: 15,
+      width: w * 0.45,
+      padding: EdgeInsets.all(w * 0.03),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -45,7 +73,7 @@ class _LikedScreensState extends State<LikedScreens> {
                 color: Colors.white,
                 fontSize: w * 0.04,
                 fontWeight: FontWeight.w600,
-                fontFamily: 'A', // ✅
+                fontFamily: 'A',
               ),
             ),
             subtitle: Text(
@@ -55,25 +83,19 @@ class _LikedScreensState extends State<LikedScreens> {
               style: TextStyle(
                 color: Colors.white.withOpacity(0.8),
                 fontSize: w * 0.028,
-                fontFamily: 'A', // ✅
+                fontFamily: 'A',
               ),
             ),
             trailing: GestureDetector(
-              onTap: () {
-                setState(() {
-                  isLiked[index] = !isLiked[index];
-                });
-              },
+              onTap: () => setState(() => isLiked[index] = !isLiked[index]),
               child: Container(
-                padding: EdgeInsets.all(8),
+                padding: const EdgeInsets.all(8),
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   color: const Color(0xFF46151A).withOpacity(0.3),
                 ),
                 child: Icon(
-                  isLiked[index]
-                      ? Icons.favorite       // ✅ filled — selected
-                      : Icons.favorite_border,
+                  isLiked[index] ? Icons.favorite : Icons.favorite_border,
                   color: Colors.white,
                   size: baseSize * 0.045,
                 ),
@@ -98,7 +120,7 @@ class _LikedScreensState extends State<LikedScreens> {
         width: double.infinity,
         decoration: const BoxDecoration(
           image: DecorationImage(
-            image: AssetImage('assets/images/home1.png'),
+            image: AssetImage('assets/images/bg3.png'),
             fit: BoxFit.cover,
           ),
         ),
@@ -139,7 +161,7 @@ class _LikedScreensState extends State<LikedScreens> {
                       color: Colors.white,
                       fontWeight: FontWeight.w500,
                       fontSize: baseSize * 0.055,
-                      fontFamily: 'A', // ✅
+                      fontFamily: 'A',
                     ),
                   ),
                 ),
@@ -151,7 +173,7 @@ class _LikedScreensState extends State<LikedScreens> {
                       color: Colors.white,
                       fontWeight: FontWeight.w300,
                       fontSize: baseSize * 0.04,
-                      fontFamily: 'A', // ✅
+                      fontFamily: 'A',
                     ),
                   ),
                 ),
@@ -168,16 +190,16 @@ class _LikedScreensState extends State<LikedScreens> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            _productCard(h, w, baseSize, 'assets/images/homeicon4.jpg', 0),
-                            _productCard(h, w, baseSize, 'assets/images/homeicon5.jpg', 1),
+                            _productCard(h, w, 'assets/images/homeicon4.jpg', 0),
+                            _productCard(h, w, 'assets/images/homeicon5.jpg', 1),
                           ],
                         ),
                         SizedBox(height: h * 0.017),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            _productCard(h, w, baseSize, 'assets/images/home6.jpg', 2),
-                            _productCard(h, w, baseSize, 'assets/images/homeicon6.jpg', 3),
+                            _productCard(h, w, 'assets/images/home6.jpg', 2),
+                            _productCard(h, w, 'assets/images/homeicon6.jpg', 3),
                           ],
                         ),
                       ],

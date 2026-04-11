@@ -1,7 +1,9 @@
+import 'package:beauty_related/custom_widgets/blackish_glass_effect.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../app_routes.dart';
+
 
 class BookingConfirmScreen extends StatelessWidget {
   const BookingConfirmScreen({super.key});
@@ -37,22 +39,29 @@ class BookingConfirmScreen extends StatelessWidget {
                   children: [
                     GestureDetector(
                       onTap: () => Get.back(),
-                      child: Container(
-                        height: baseSize * 0.13,
-                        width: baseSize * 0.13,
-                        decoration: BoxDecoration(
-                          shape: BoxShape.circle,
-                          image: const DecorationImage(
-                            image: AssetImage('assets/images/homeicon.png'),fit: BoxFit.contain,),
-                          border: Border.all(
-                            color: Colors.white.withOpacity(0.5),
-                            width: 1,
+                      child: GlassCard1(
+                        borderRadius: 100,
+                        tintOpacity: 0.15,
+                        child: SizedBox(
+                          height: baseSize * 0.13,
+                          width: baseSize * 0.13,
+                          child: Stack(
+                            alignment: Alignment.center,
+                            children: [
+                              ClipRRect(
+                                borderRadius: BorderRadius.circular(100),
+                                child: Image.asset(
+                                  'assets/images/homeicon.png',
+                                  fit: BoxFit.contain,
+                                ),
+                              ),
+                              Icon(
+                                Icons.arrow_back_ios_new,
+                                color: Colors.white,
+                                size: baseSize * 0.06,
+                              ),
+                            ],
                           ),
-                        ),
-                        child: Icon(
-                          Icons.arrow_back_ios_new,
-                          color: Colors.white,
-                          size: baseSize * 0.06,
                         ),
                       ),
                     ),
@@ -105,186 +114,190 @@ class BookingConfirmScreen extends StatelessWidget {
                       SizedBox(height: h * 0.03),
 
                       // ── Info Card ──
-                      Container(
-                        width: double.infinity,
-                        decoration: BoxDecoration(
-                          color: Colors.black.withOpacity(0.2),
-                          borderRadius: BorderRadius.circular(32),
-                          border: Border.all(
-                            color: Colors.white.withOpacity(0.2),
-                            width: 1,
-                          ),
-                        ),
-                        child: Padding(
-                          padding: EdgeInsets.all(w * 0.035),
-                          child: Column(
-                            children: [
-                              // Studio Row
-                              Row(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  Container(
-                                    height: baseSize * 0.28,
-                                    width: baseSize * 0.22,
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(30),
-                                      color: Colors.black.withOpacity(0.3),
-                                      border: Border.all(
-                                        color: Colors.black.withOpacity(0.15),
-                                        width: 1.5,
-                                      ),
-                                      image: const DecorationImage(
-                                        image: AssetImage('assets/images/homeicon3.png'),
-                                        fit: BoxFit.cover,
-                                      ),
+                      GlassCard1(
+                        borderRadius: 32,
+                        tintOpacity: 0.15,
+                        padding: EdgeInsets.all(w * 0.035),
+                        child: Column(
+                          children: [
+                            // Studio Row
+                            Row(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Container(
+                                  height: baseSize * 0.28,
+                                  width: baseSize * 0.22,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(30),
+                                    color: Colors.black.withOpacity(0.3),
+                                    border: Border.all(
+                                      color: Colors.black.withOpacity(0.15),
+                                      width: 1.5,
+                                    ),
+                                    image: const DecorationImage(
+                                      image: AssetImage(
+                                          'assets/images/homeicon3.png'),
+                                      fit: BoxFit.cover,
                                     ),
                                   ),
-                                  SizedBox(width: w * 0.04),
-                                  Flexible(
-                                    child: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          'Helper on Studio',
-                                          style: TextStyle(
-                                            fontFamily: 'A',
-                                            color: Colors.white,
-                                            fontWeight: FontWeight.w700,
-                                            fontSize: baseSize * 0.048,
-                                          ),
-                                        ),
-                                        SizedBox(height: h * 0.003),
-                                        Text(
-                                          'Nails full beauty',
-                                          style: TextStyle(
-                                            color: Colors.white.withOpacity(0.7),
-                                            fontSize: baseSize * 0.032,
-                                          ),
-                                        ),
-                                        SizedBox(height: h * 0.008),
-                                        Row(
-                                          children: [
-                                            CircleAvatar(
-                                              radius: baseSize * 0.036,
-                                              backgroundImage: const AssetImage('assets/images/home2.jpg'),
-                                            ),
-                                            SizedBox(width: w * 0.02),
-                                            Column(
-                                              crossAxisAlignment: CrossAxisAlignment.start,
-                                              children: [
-                                                Text(
-                                                  'Nina',
-                                                  style: TextStyle(
-                                                    color: Colors.white,
-                                                    fontSize: baseSize * 0.035,
-                                                    fontFamily: 'A',
-                                                    fontWeight: FontWeight.w600,
-                                                  ),
-                                                ),
-                                                Text(
-                                                  'Owner',
-                                                  style: TextStyle(
-                                                    color: Colors.white.withOpacity(0.6),
-                                                    fontSize: baseSize * 0.025,
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                          ],
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ],
-                              ),
-
-                              // Divider
-                              Padding(
-                                padding: EdgeInsets.symmetric(vertical: h * 0.015),
-                                child: Divider(
-                                  color: Colors.white.withOpacity(0.25),
-                                  thickness: 1,
                                 ),
-                              ),
-
-                              // Service & Date Row
-                              Row(
-                                children: [
-                                  // Service
-                                  Expanded(
-                                    child: Row(
-                                      crossAxisAlignment: CrossAxisAlignment.center,
-                                      children: [
-                                        Icon(
-                                          Icons.content_cut_rounded,
-                                          color: Colors.white.withOpacity(0.85),
-                                          size: baseSize * 0.055,
+                                SizedBox(width: w * 0.04),
+                                Flexible(
+                                  child: Column(
+                                    crossAxisAlignment:
+                                    CrossAxisAlignment.start,
+                                    children: [
+                                      Text(
+                                        'Helper on Studio',
+                                        style: TextStyle(
+                                          fontFamily: 'A',
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.w700,
+                                          fontSize: baseSize * 0.048,
                                         ),
-                                        SizedBox(width: w * 0.025),
-                                        Column(
-                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                          children: [
-                                            Text(
-                                              'Service',
-                                              style: TextStyle(
-                                                color: Colors.white.withOpacity(0.6),
-                                                fontSize: baseSize * 0.028,
-                                              ),
-                                            ),
-                                            Text(
-                                              'Signature Haircut',
-                                              style: TextStyle(
-                                                color: Colors.white,
-                                                fontSize: baseSize * 0.034,
-                                                fontWeight: FontWeight.w600,
-                                              ),
-                                            ),
-                                          ],
+                                      ),
+                                      SizedBox(height: h * 0.003),
+                                      Text(
+                                        'Nails full beauty',
+                                        style: TextStyle(
+                                          color:
+                                          Colors.white.withOpacity(0.7),
+                                          fontSize: baseSize * 0.032,
                                         ),
-                                      ],
-                                    ),
+                                      ),
+                                      SizedBox(height: h * 0.008),
+                                      Row(
+                                        children: [
+                                          CircleAvatar(
+                                            radius: baseSize * 0.036,
+                                            backgroundImage: const AssetImage(
+                                                'assets/images/home2.jpg'),
+                                          ),
+                                          SizedBox(width: w * 0.02),
+                                          Column(
+                                            crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                'Nina',
+                                                style: TextStyle(
+                                                  color: Colors.white,
+                                                  fontSize: baseSize * 0.035,
+                                                  fontFamily: 'A',
+                                                  fontWeight: FontWeight.w600,
+                                                ),
+                                              ),
+                                              Text(
+                                                'Owner',
+                                                style: TextStyle(
+                                                  color: Colors.white
+                                                      .withOpacity(0.6),
+                                                  fontSize: baseSize * 0.025,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ],
+                                      ),
+                                    ],
                                   ),
+                                ),
+                              ],
+                            ),
 
-                                  SizedBox(width: baseSize * 0.1),
-
-                                  // Date
-                                  Expanded(
-                                    child: Row(
-                                      crossAxisAlignment: CrossAxisAlignment.center,
-                                      children: [
-                                        Icon(
-                                          Icons.access_time_filled,
-                                          color: Colors.white.withOpacity(0.85),
-                                          size: baseSize * 0.055,
-                                        ),
-                                        SizedBox(width: w * 0.025),
-                                        Column(
-                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                          children: [
-                                            Text(
-                                              'Date',
-                                              style: TextStyle(
-                                                color: Colors.white.withOpacity(0.6),
-                                                fontSize: baseSize * 0.028,
-                                              ),
-                                            ),
-                                            Text(
-                                              '6 Feb, 2026',
-                                              style: TextStyle(
-                                                color: Colors.white,
-                                                fontSize: baseSize * 0.036,
-                                                fontWeight: FontWeight.w600,
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                ],
+                            // Divider
+                            Padding(
+                              padding:
+                              EdgeInsets.symmetric(vertical: h * 0.015),
+                              child: Divider(
+                                color: Colors.white.withOpacity(0.25),
+                                thickness: 1,
                               ),
-                            ],
-                          ),
+                            ),
+
+                            // Service & Date Row
+                            Row(
+                              children: [
+                                Expanded(
+                                  child: Row(
+                                    crossAxisAlignment:
+                                    CrossAxisAlignment.center,
+                                    children: [
+                                      Icon(
+                                        Icons.content_cut_rounded,
+                                        color:
+                                        Colors.white.withOpacity(0.85),
+                                        size: baseSize * 0.055,
+                                      ),
+                                      SizedBox(width: w * 0.025),
+                                      Column(
+                                        crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            'Service',
+                                            style: TextStyle(
+                                              color: Colors.white
+                                                  .withOpacity(0.6),
+                                              fontSize: baseSize * 0.028,
+                                            ),
+                                          ),
+                                          Text(
+                                            'Signature Haircut',
+                                            style: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: baseSize * 0.034,
+                                              fontWeight: FontWeight.w600,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                ),
+
+                                SizedBox(width: baseSize * 0.1),
+
+                                Expanded(
+                                  child: Row(
+                                    crossAxisAlignment:
+                                    CrossAxisAlignment.center,
+                                    children: [
+                                      Icon(
+                                        Icons.access_time_filled,
+                                        color:
+                                        Colors.white.withOpacity(0.85),
+                                        size: baseSize * 0.055,
+                                      ),
+                                      SizedBox(width: w * 0.025),
+                                      Column(
+                                        crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            'Date',
+                                            style: TextStyle(
+                                              color: Colors.white
+                                                  .withOpacity(0.6),
+                                              fontSize: baseSize * 0.028,
+                                            ),
+                                          ),
+                                          Text(
+                                            '6 Feb, 2026',
+                                            style: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: baseSize * 0.036,
+                                              fontWeight: FontWeight.w600,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
                         ),
                       ),
 
@@ -299,12 +312,9 @@ class BookingConfirmScreen extends StatelessWidget {
                 padding: EdgeInsets.only(
                   left: w * 0.045,
                   right: w * 0.045,
-
-
                 ),
                 child: GestureDetector(
                   onTap: () {
-                    // TODO: navigate to bookings list
                     Get.toNamed(AppRoutes.writeReview);
                   },
                   child: Container(
@@ -312,7 +322,8 @@ class BookingConfirmScreen extends StatelessWidget {
                     height: h * 0.065,
                     decoration: BoxDecoration(
                       image: const DecorationImage(
-                        image: AssetImage('assets/images/buttonBG2.png'),
+                        image:
+                        AssetImage('assets/images/buttonBG2.png'),
                         fit: BoxFit.cover,
                       ),
                       borderRadius: BorderRadius.circular(30),
@@ -331,8 +342,7 @@ class BookingConfirmScreen extends StatelessWidget {
                   ),
                 ),
               ),
-              SizedBox(height: baseSize*0.25,),
-
+              SizedBox(height: baseSize * 0.25),
             ],
           ),
         ),
