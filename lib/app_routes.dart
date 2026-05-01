@@ -8,6 +8,11 @@ abstract class AppRoutes {
   static const terms = '/terms';
   static const privacy = '/privacy';
   static const forgetPassword = '/forget-password';
+  static const setupYourBusiness = '/setupYourBusiness';
+  static const addServicesScreen = '/addServicesScreen';
+  static const yourServicesScreen = '/yourServicesScreen';
+  static const addPortfolioScreen = '/addPortfolioScreen';
+  static const authPortfolioScreen = '/authPortfolioScreen';
   static const otpVerification = '/otp-verification';
   static const updatePassword = '/update-password';
 

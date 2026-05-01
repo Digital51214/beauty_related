@@ -99,14 +99,14 @@ class _OTPVerificationState extends State<OTPVerification> {
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(30),
                     child: BackdropFilter(
-                      filter: ImageFilter.blur(sigmaX: 7, sigmaY: 7),
+                      filter: ImageFilter.blur(sigmaX: 15, sigmaY: 15),
                       child: Container(
                         width: baseSize * 0.95,
                         decoration: BoxDecoration(
-                          color: Colors.black.withOpacity(0.10),
+                          color: Colors.black.withOpacity(0.1),
                           borderRadius: BorderRadius.circular(30),
                           border: Border.all(
-                              color: Colors.white.withOpacity(0.25), width: 1),
+                              color: Colors.white.withOpacity(0.3), width: 1),
                         ),
                         child: Padding(
                           padding: EdgeInsets.symmetric(

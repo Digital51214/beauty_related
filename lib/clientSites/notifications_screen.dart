@@ -51,14 +51,16 @@ class _ClientNotificationScreenState
         height: double.infinity,
         decoration: const BoxDecoration(
           image: DecorationImage(
-            image: AssetImage('assets/images/helper1.png'),
+            image: AssetImage('assets/images/bg3.png'),
             fit: BoxFit.cover,
           ),
         ),
         child: SafeArea(
           child: Padding(
             padding: EdgeInsets.symmetric(
-                horizontal: w * 0.04, vertical: h * 0.015),
+              horizontal: w * 0.04,
+              vertical: h * 0.015,
+            ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -68,22 +70,28 @@ class _ClientNotificationScreenState
                       onTap: () => Get.back(),
                       child: GlassCard(
                         borderRadius: 50,
+                        blurSigma: 15,
                         child: SizedBox(
                           height: baseSize * 0.13,
                           width: baseSize * 0.13,
-                          child: Icon(Icons.arrow_back_ios_new,
-                              color: Colors.white,
-                              size: baseSize * 0.055),
+                          child: Icon(
+                            Icons.arrow_back_ios_new,
+                            color: Colors.white,
+                            size: baseSize * 0.055,
+                          ),
                         ),
                       ),
                     ),
                     const Spacer(),
-                    Text('Notifications',
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.w600,
-                            fontSize: baseSize * 0.052,
-                            fontFamily: 'A')),
+                    Text(
+                      'Notifications',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.w600,
+                        fontSize: baseSize * 0.052,
+                        fontFamily: 'A',
+                      ),
+                    ),
                     const Spacer(),
                     CircleAvatar(
                       radius: baseSize * 0.055,
@@ -105,7 +113,9 @@ class _ClientNotificationScreenState
                         borderRadius: 22,
                         blurSigma: 15,
                         padding: EdgeInsets.symmetric(
-                            horizontal: w * 0.04, vertical: h * 0.016),
+                          horizontal: w * 0.04,
+                          vertical: h * 0.016,
+                        ),
                         child: Row(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -120,25 +130,34 @@ class _ClientNotificationScreenState
                                 children: [
                                   Row(
                                     children: [
-                                      Text(n['title'],
-                                          style: TextStyle(
-                                              color: Colors.white,
-                                              fontWeight: FontWeight.w600,
-                                              fontSize: baseSize * 0.042,
-                                              fontFamily: 'A')),
+                                      Text(
+                                        n['title'],
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.w600,
+                                          fontSize: baseSize * 0.042,
+                                          fontFamily: 'A',
+                                        ),
+                                      ),
                                       const Spacer(),
-                                      Text(n['time'],
-                                          style: TextStyle(
-                                              color: Colors.white70,
-                                              fontSize: baseSize * 0.03)),
+                                      Text(
+                                        n['time'],
+                                        style: TextStyle(
+                                          color: Colors.white70,
+                                          fontSize: baseSize * 0.03,
+                                        ),
+                                      ),
                                     ],
                                   ),
                                   SizedBox(height: h * 0.005),
-                                  Text(n['message'],
-                                      style: TextStyle(
-                                          color: Colors.white.withOpacity(0.7),
-                                          fontSize: baseSize * 0.031,
-                                          height: 1.4)),
+                                  Text(
+                                    n['message'],
+                                    style: TextStyle(
+                                      color: Colors.white.withOpacity(0.7),
+                                      fontSize: baseSize * 0.031,
+                                      height: 1.4,
+                                    ),
+                                  ),
                                 ],
                               ),
                             ),

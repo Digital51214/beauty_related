@@ -39,6 +39,11 @@ import 'OwnersSite/profile/change_password_screen.dart';
 import 'OwnersSite/profile/edit_profile.dart';
 import 'OwnersSite/profile/reviews_screen.dart';
 import 'OwnersSite/write_reviews_screen.dart';
+import 'auth_screens/add_portfolio_screen.dart';
+import 'auth_screens/add_services_screen.dart';
+import 'auth_screens/auth_portfolio_screen.dart';
+import 'auth_screens/setup_your_business.dart';
+import 'auth_screens/your_services_screen.dart';
 import 'clientSites/account_settings_client.dart';
 import 'clientSites/change_passsword_client.dart';
 import 'clientSites/client_bookings.dart';
@@ -73,12 +78,28 @@ class AppPages {
       page: () => const SignupClient(),
     ),
     GetPage(
+      name: AppRoutes.authPortfolioScreen,
+      page: () => const AuthPortfolioScreen(),
+    ),
+    GetPage(
+      name: AppRoutes.addPortfolioScreen,
+      page: () => const AddPortfolioScreen(),
+    ),
+    GetPage(
       name: AppRoutes.signupOwner,
       page: () => const SignupOwner(),
     ),
     GetPage(
+      name: AppRoutes.yourServicesScreen,
+      page: () => const YourServicesScreen(),
+    ),
+    GetPage(
       name: AppRoutes.terms,
       page: () => const TermsAndConditionsScreen(),
+    ),
+    GetPage(
+      name: AppRoutes.addServicesScreen,
+      page: () => const AddServicesScreen(),
     ),
     GetPage(
       name: AppRoutes.privacy,
@@ -87,6 +108,10 @@ class AppPages {
     GetPage(
       name: AppRoutes.forgetPassword,
       page: () => const ForgetPassword(),
+    ),
+    GetPage(
+      name: AppRoutes.setupYourBusiness,
+      page: () => const SetupYourBusinessScreen(),
     ),
     GetPage(
       name: AppRoutes.otpVerification,

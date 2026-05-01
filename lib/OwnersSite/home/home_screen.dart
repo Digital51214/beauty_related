@@ -36,14 +36,21 @@ class _HomeScreenState extends State<HomeScreen> {
     });
   }
 
-  Widget _promoCard(double h, double w, double baseSize, String imagePath) {
+  Widget _promoCard(
+      double h,
+      double w,
+      double baseSize,
+      String imagePath,
+      ) {
     return RepaintBoundary(
       child: SizedBox(
         width: w * 0.85,
         child: _glassBox(
           borderRadius: BorderRadius.circular(50),
           blur: 15,
+          opacity: 0.1,
           child: Stack(
+            clipBehavior: Clip.none,
             children: [
               Container(
                 height: h * 0.2,
@@ -51,12 +58,12 @@ class _HomeScreenState extends State<HomeScreen> {
                 padding: EdgeInsets.only(
                   left: w * 0.06,
                   right: w * 0.06,
-                  top: h * 0.027,
-                  bottom: h * 0.03,
+                  top: h * 0.024,
+                  bottom: h * 0.022,
                 ),
                 child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
                       'Velvet Hair and\nBeauty Lounge',
@@ -68,7 +75,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         height: 1,
                       ),
                     ),
-                    SizedBox(height: h * 0.008),
+                    SizedBox(height: h * 0.006),
                     Text(
                       'Lock in Hydration all day with\nthese light weight moisturisers',
                       style: TextStyle(
@@ -78,7 +85,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         height: 1,
                       ),
                     ),
-                    SizedBox(height: h * 0.01),
+                    SizedBox(height: h * 0.008),
                     GestureDetector(
                       onTap: () {
                         Get.toNamed(AppRoutes.helperDetail);
@@ -156,6 +163,7 @@ class _HomeScreenState extends State<HomeScreen> {
       child: _glassBox(
         borderRadius: BorderRadius.circular(25),
         blur: 15,
+        opacity: 0.1,
         width: w * 0.45,
         padding: EdgeInsets.all(w * 0.03),
         child: Column(
@@ -248,49 +256,59 @@ class _HomeScreenState extends State<HomeScreen> {
                       const AssetImage('assets/images/home2.jpg'),
                     ),
                     const Spacer(),
-                    GestureDetector(
-                      onTap: () => Get.toNamed(AppRoutes.search),
-                      child: Container(
-                        height: baseSize * 0.13,
-                        width: baseSize * 0.13,
-                        decoration: const BoxDecoration(
-                          shape: BoxShape.circle,
-                          image: DecorationImage(
-                            image: AssetImage('assets/images/homeicon.png'),
-                            fit: BoxFit.cover,
+                    Column(
+                      children: [
+                        GestureDetector(
+                          onTap: () => Get.toNamed(AppRoutes.search),
+                          child: Container(
+                            height: baseSize * 0.13,
+                            width: baseSize * 0.13,
+                            decoration: const BoxDecoration(
+                              shape: BoxShape.circle,
+                              image: DecorationImage(
+                                image: AssetImage('assets/images/homeicon.png'),
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                            child: Padding(
+                              padding: EdgeInsets.all(baseSize * 0.03),
+                              child: Image.asset('assets/images/homeicon1.png'),
+                            ),
                           ),
                         ),
-                        child: Padding(
-                          padding: EdgeInsets.all(baseSize * 0.03),
-                          child: Image.asset('assets/images/homeicon1.png'),
-                        ),
-                      ),
+                      ],
                     ),
                     SizedBox(width: w * 0.015),
-                    GestureDetector(
-                      onTap: () => Get.toNamed(AppRoutes.notification),
-                      child: Container(
-                        height: baseSize * 0.13,
-                        width: baseSize * 0.13,
-                        decoration: const BoxDecoration(
-                          shape: BoxShape.circle,
-                          image: DecorationImage(
-                            image: AssetImage('assets/images/homeicon.png'),
-                            fit: BoxFit.cover,
+                    Column(
+                      children: [
+                        GestureDetector(
+                          onTap: () => Get.toNamed(AppRoutes.notification),
+                          child: Container(
+                            height: baseSize * 0.13,
+                            width: baseSize * 0.13,
+                            decoration: const BoxDecoration(
+                              shape: BoxShape.circle,
+                              image: DecorationImage(
+                                image: AssetImage('assets/images/homeicon.png'),
+                                fit: BoxFit.cover,
+                              ),
+                            ),
+                            child: Icon(
+                              Icons.notifications,
+                              color: Colors.white,
+                              size: baseSize * 0.065,
+                            ),
                           ),
                         ),
-                        child: Icon(
-                          Icons.notifications,
-                          color: Colors.white,
-                          size: baseSize * 0.065,
-                        ),
-                      ),
+                        SizedBox(height: h * 0.008),
+                      ],
                     ),
                   ],
                 ),
               ),
               SizedBox(height: h * 0.008),
               Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Column(
                     mainAxisAlignment: MainAxisAlignment.start,
@@ -322,6 +340,10 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     ],
                   ),
+                  Padding(
+                    padding: const EdgeInsets.only(right: 12),
+                    child: Image.asset("assets/images/marker.png"),
+                  )
                 ],
               ),
               SizedBox(height: h * 0.02),
@@ -366,31 +388,11 @@ class _HomeScreenState extends State<HomeScreen> {
                                 'assets/images/homeicon3.png',
                               ),
                               SizedBox(width: w * 0.03),
-                              RepaintBoundary(
-                                child: SizedBox(
-                                  width: w * 0.85,
-                                  child: _glassBox(
-                                    borderRadius: BorderRadius.circular(50),
-                                    child: SizedBox(
-                                      height: h * 0.2,
-                                      width: double.infinity,
-                                      child: ClipRRect(
-                                        borderRadius: BorderRadius.circular(40),
-                                        child: Image.asset(
-                                          "assets/images/maps.PNG",
-                                          fit: BoxFit.cover,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                              SizedBox(width: w * 0.03),
                               _promoCard(
                                 h,
                                 w,
                                 baseSize,
-                                'assets/images/homeicon2.jpg',
+                                'assets/images/homeIcon2.jpg',
                               ),
                               SizedBox(width: w * 0.03),
                               _promoCard(

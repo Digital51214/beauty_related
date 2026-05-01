@@ -58,7 +58,7 @@ class _BookingsScreensState extends State<BookingsScreens> {
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(40),
                   image: const DecorationImage(
-                    image: AssetImage('assets/images/homeicon2.jpg'),
+                    image: AssetImage('assets/images/homeIcon2.jpg'),
                     fit: BoxFit.cover,
                   ),
                 ),

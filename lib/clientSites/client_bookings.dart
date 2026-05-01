@@ -100,7 +100,7 @@ class _ClientBookingsScreensState extends State<ClientBookingsScreens> {
             children: [
               ClipRRect(
                 borderRadius: BorderRadius.circular(16),
-                child: Image.asset('assets/images/homeicon2.jpg',
+                child: Image.asset('assets/images/homeIcon2.jpg',
                     height: h * 0.085, width: w * 0.18, fit: BoxFit.cover),
               ),
               SizedBox(width: w * 0.025),

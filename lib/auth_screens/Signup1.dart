@@ -52,169 +52,171 @@ class _SignupClientState extends State<SignupClient> {
     return Scaffold(
       backgroundColor: const Color(0xFF46151A),
       resizeToAvoidBottomInset: true,
-      body: Container(
-        width: double.infinity,
-        height: double.infinity,
-        decoration: const BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage('assets/images/logoForSignIn.png'),
-            fit: BoxFit.cover,
+      body: SafeArea(
+        child: Container(
+          width: double.infinity,
+          height: double.infinity,
+          decoration: const BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage('assets/images/logoForSignIn.png'),
+              fit: BoxFit.cover,
+            ),
           ),
-        ),
-        child: SafeArea(
-          child: SingleChildScrollView(
-            physics: const BouncingScrollPhysics(),
-            padding: EdgeInsets.symmetric(
-                horizontal: w * 0.035, vertical: h * 0.03),
-            child: ConstrainedBox(
-              constraints: BoxConstraints(minHeight: h * 0.9),
-              child: Center(
-                child: ClipRRect(
-                  borderRadius: BorderRadius.circular(28),
-                  child: BackdropFilter(
-                    filter: ImageFilter.blur(sigmaX: 7, sigmaY: 7),
-                    child: Container(
-                      width: double.infinity,
-                      padding: EdgeInsets.symmetric(
-                          horizontal: w * 0.035, vertical: h * 0.025),
-                      decoration: BoxDecoration(
-                        color: Colors.black.withOpacity(0.10),
-                        borderRadius: BorderRadius.circular(28),
-                        border: Border.all(
-                            color: Colors.white.withOpacity(0.25), width: 1),
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text('Sign Up',
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontFamily: 'A',
-                                  fontSize: getResponsiveFont(w, 31),
-                                  fontWeight: FontWeight.w700)),
-                          SizedBox(height: h * 0.005),
-                          Text('Enter Your Account Details',
-                              style: TextStyle(
-                                  color: Colors.white.withOpacity(0.95),
-                                  fontFamily: 'A',
-                                  fontSize: getResponsiveFont(w, 15),
-                                  fontWeight: FontWeight.w400)),
-                          SizedBox(height: h * 0.04),
-                          CustomTextformfield(
-                              title: 'Username....',
-                              controller: _userNameController,
-                              KeyBoardType: TextInputType.name),
-                          SizedBox(height: h * 0.01),
-                          CustomTextformfield(
-                              title: 'Email Address...',
-                              controller: _emailController,
-                              KeyBoardType: TextInputType.emailAddress),
-                          SizedBox(height: h * 0.01),
-                          CustomTextformfield(
-                              title: 'Password...',
-                              controller: _passwordController,
-                              obscureText: true,
-                              KeyBoardType: TextInputType.visiblePassword),
-                          SizedBox(height: h * 0.01),
-                          CustomTextformfield(
-                              title: 'Confirm Password....',
-                              controller: _confirmPasswordController,
-                              obscureText: true,
-                              KeyBoardType: TextInputType.visiblePassword),
-                          SizedBox(height: h * 0.01),
-                          Row(
-                            crossAxisAlignment: CrossAxisAlignment.center,
-                            children: [
-                              Transform.scale(
-                                scale: 0.95,
-                                child: Checkbox(
-                                  value: checked,
-                                  onChanged: (v) =>
-                                      setState(() => checked = v ?? false),
-                                  shape: const CircleBorder(),
-                                  side: MaterialStateBorderSide.resolveWith(
-                                          (_) => const BorderSide(
-                                          color: Colors.white, width: 1)),
-                                  visualDensity: VisualDensity.compact,
-                                  materialTapTargetSize:
-                                  MaterialTapTargetSize.shrinkWrap,
-                                  fillColor: MaterialStateProperty.resolveWith(
-                                          (states) =>
-                                      states.contains(
-                                          MaterialState.selected)
-                                          ? const Color(0xFF46151A)
-                                          : Colors.transparent),
-                                  checkColor: Colors.white,
-                                ),
-                              ),
-                              Expanded(
-                                child: RichText(
-                                  text: TextSpan(
-                                    style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: getResponsiveFont(w, 12),
-                                        fontWeight: FontWeight.w400),
-                                    children: [
-                                      const TextSpan(text: 'I agree with all '),
-                                      TextSpan(
-                                        text: 'Terms & Conditions',
-                                        style: const TextStyle(
-                                            fontWeight: FontWeight.w700,
-                                            decoration:
-                                            TextDecoration.underline,
-                                            decorationColor: Colors.white),
-                                        recognizer: _termsTapRecognizer,
-                                      ),
-                                      const TextSpan(text: ' and '),
-                                      TextSpan(
-                                        text: 'Privacy Policy',
-                                        style: const TextStyle(
-                                            fontWeight: FontWeight.w700,
-                                            decoration:
-                                            TextDecoration.underline,
-                                            decorationColor: Colors.white),
-                                        recognizer: _privacyTapRecognizer,
-                                      ),
-                                    ],
+          child: SafeArea(
+            child: SingleChildScrollView(
+              physics: const BouncingScrollPhysics(),
+              padding: EdgeInsets.symmetric(
+                  horizontal: w * 0.035, vertical: h * 0.06),
+              child: ConstrainedBox(
+                constraints: BoxConstraints(minHeight: h * 0.9),
+                child: Center(
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(28),
+                    child: BackdropFilter(
+                      filter: ImageFilter.blur(sigmaX: 15, sigmaY: 15),
+                      child: Container(
+                        width: double.infinity,
+                        padding: EdgeInsets.symmetric(
+                            horizontal: w * 0.035, vertical: h * 0.025),
+                        decoration: BoxDecoration(
+                          color: Colors.black.withOpacity(0.1),
+                          borderRadius: BorderRadius.circular(28),
+                          border: Border.all(
+                              color: Colors.white.withOpacity(0.3), width: 1),
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text('Sign Up',
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontFamily: 'A',
+                                    fontSize: getResponsiveFont(w, 31),
+                                    fontWeight: FontWeight.w700)),
+                            SizedBox(height: h * 0.005),
+                            Text('Enter Your Account Details',
+                                style: TextStyle(
+                                    color: Colors.white.withOpacity(0.95),
+                                    fontFamily: 'A',
+                                    fontSize: getResponsiveFont(w, 15),
+                                    fontWeight: FontWeight.w400)),
+                            SizedBox(height: h * 0.04),
+                            CustomTextformfield(
+                                title: 'Username....',
+                                controller: _userNameController,
+                                KeyBoardType: TextInputType.name),
+                            SizedBox(height: h * 0.01),
+                            CustomTextformfield(
+                                title: 'Email Address...',
+                                controller: _emailController,
+                                KeyBoardType: TextInputType.emailAddress),
+                            SizedBox(height: h * 0.01),
+                            CustomTextformfield(
+                                title: 'Password...',
+                                controller: _passwordController,
+                                obscureText: true,
+                                KeyBoardType: TextInputType.visiblePassword),
+                            SizedBox(height: h * 0.01),
+                            CustomTextformfield(
+                                title: 'Confirm Password....',
+                                controller: _confirmPasswordController,
+                                obscureText: true,
+                                KeyBoardType: TextInputType.visiblePassword),
+                            SizedBox(height: h * 0.02),
+                            Row(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Transform.scale(
+                                  scale: 0.95,
+                                  child: Checkbox(
+                                    value: checked,
+                                    onChanged: (v) =>
+                                        setState(() => checked = v ?? false),
+                                    shape: const CircleBorder(),
+                                    side: MaterialStateBorderSide.resolveWith(
+                                            (_) => const BorderSide(
+                                            color: Colors.white, width: 1)),
+                                    visualDensity: VisualDensity.compact,
+                                    materialTapTargetSize:
+                                    MaterialTapTargetSize.shrinkWrap,
+                                    fillColor: MaterialStateProperty.resolveWith(
+                                            (states) =>
+                                        states.contains(
+                                            MaterialState.selected)
+                                            ? const Color(0xFFFFFFFF)
+                                            : Colors.transparent),
+                                    checkColor: Color(0xFF46151A),
                                   ),
                                 ),
-                              ),
-                            ],
-                          ),
-                          SizedBox(height: h * 0.04),
-                          SizedBox(
-                            width: double.infinity,
-                            child: CustomButton(
-                              title: 'Sign Up',
-                              onPressed: () =>
-                                  Get.offAllNamed(AppRoutes.clientBottomNav),
+                                Expanded(
+                                  child: RichText(
+                                    text: TextSpan(
+                                      style: TextStyle(
+                                          color: Colors.white,
+                                          fontSize: getResponsiveFont(w, 12),
+                                          fontWeight: FontWeight.w400),
+                                      children: [
+                                        const TextSpan(text: 'I agree with all '),
+                                        TextSpan(
+                                          text: 'Terms & Conditions',
+                                          style: const TextStyle(
+                                              fontWeight: FontWeight.w700,
+                                              decoration:
+                                              TextDecoration.underline,
+                                              decorationColor: Colors.white),
+                                          recognizer: _termsTapRecognizer,
+                                        ),
+                                        const TextSpan(text: ' and '),
+                                        TextSpan(
+                                          text: 'Privacy Policy',
+                                          style: const TextStyle(
+                                              fontWeight: FontWeight.w700,
+                                              decoration:
+                                              TextDecoration.underline,
+                                              decorationColor: Colors.white),
+                                          recognizer: _privacyTapRecognizer,
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                ),
+                              ],
                             ),
-                          ),
-                          SizedBox(height: h * 0.08),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Text("Already have an account. ",
-                                  style: TextStyle(
-                                      color: Colors.white,
-                                      fontFamily: 'A',
-                                      fontSize: getResponsiveFont(w, 14),
-                                      fontWeight: FontWeight.w400)),
-                              GestureDetector(
-                                onTap: () => Get.offNamed(AppRoutes.login),
-                                child: Text('Sign In',
+                            SizedBox(height: h * 0.02),
+                            SizedBox(
+                              width: double.infinity,
+                              child: CustomButton(
+                                title: 'Sign Up',
+                                onPressed: () =>
+                                    Get.offAllNamed(AppRoutes.bottomNav),
+                              ),
+                            ),
+                            SizedBox(height: h * 0.04),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text("Already have an account. ",
                                     style: TextStyle(
                                         color: Colors.white,
                                         fontFamily: 'A',
                                         fontSize: getResponsiveFont(w, 14),
-                                        fontWeight: FontWeight.w700,
-                                        decoration: TextDecoration.underline,
-                                        decorationColor: Colors.white)),
-                              ),
-                            ],
-                          ),
-                          SizedBox(height: h * 0.04),
-                        ],
+                                        fontWeight: FontWeight.w400)),
+                                GestureDetector(
+                                  onTap: () => Get.offNamed(AppRoutes.login),
+                                  child: Text('Sign In',
+                                      style: TextStyle(
+                                          color: Colors.white,
+                                          fontFamily: 'A',
+                                          fontSize: getResponsiveFont(w, 14),
+                                          fontWeight: FontWeight.w700,
+                                          decoration: TextDecoration.underline,
+                                          decorationColor: Colors.white)),
+                                ),
+                              ],
+                            ),
+                            SizedBox(height: h * 0.02),
+                          ],
+                        ),
                       ),
                     ),
                   ),

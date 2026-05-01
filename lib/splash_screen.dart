@@ -1,4 +1,3 @@
-import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'app_routes.dart';
@@ -11,7 +10,6 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-
   @override
   void initState() {
     super.initState();
@@ -28,9 +26,8 @@ class _SplashScreenState extends State<SplashScreen> {
       body: Center(
         child: Image(
           image: AssetImage('assets/images/splash.png'),
-          width: 300,
-          height: 600,// fixed size = no layout shift
-          filterQuality: FilterQuality.none, // no smooth animation feel
+          width: 260,
+          fit: BoxFit.contain,
         ),
       ),
     );

@@ -25,7 +25,7 @@ class _ClientAccountSettingState extends State<ClientAccountSetting> {
         height: double.infinity,
         decoration: const BoxDecoration(
           image: DecorationImage(
-            image: AssetImage('assets/images/helper1.png'),
+            image: AssetImage('assets/images/Image_bg.png'),
             fit: BoxFit.cover,
           ),
         ),
@@ -69,6 +69,12 @@ class _ClientAccountSettingState extends State<ClientAccountSetting> {
                 _buildNavTile(label: 'Edit Profile', h: h, w: w, baseSize: baseSize,
                     onTap: () => Get.toNamed(AppRoutes.clientEditProfile)),
                 SizedBox(height: h * 0.018),
+                _buildNavTile(label: 'My Services', h: h, w: w, baseSize: baseSize,
+                    onTap: () => Get.toNamed(AppRoutes.clientEditProfile)),
+                SizedBox(height: h * 0.018),
+                _buildNavTile(label: 'My Portfolio', h: h, w: w, baseSize: baseSize,
+                    onTap: () => Get.toNamed(AppRoutes.clientEditProfile)),
+                SizedBox(height: h * 0.018),
                 _buildNavTile(label: 'Change Password', h: h, w: w, baseSize: baseSize,
                     onTap: () => Get.toNamed(AppRoutes.clientChangePassword)),
                 SizedBox(height: h * 0.018),
@@ -78,23 +84,32 @@ class _ClientAccountSettingState extends State<ClientAccountSetting> {
 
                 // Logout button
                 GestureDetector(
-                  onTap: () => _showLogoutDialog(context),
+                  onTap: () {
+                    _showLogoutDialog(context);
+                  },
                   child: GlassCard(
                     borderRadius: 30,
                     child: SizedBox(
-                      height: h * 0.062,
+                      height: h * 0.058,
                       width: double.infinity,
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Icon(Icons.logout_rounded,
-                              color: Colors.white, size: baseSize * 0.05),
+                          Image(
+                            image:
+                            const AssetImage('assets/images/account2.png'),
+                            height: h * 0.03,
+                            color: Colors.white,
+                          ),
                           SizedBox(width: w * 0.02),
-                          Text('Logout',
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.w600,
-                                  fontSize: baseSize * 0.04)),
+                          Text(
+                            'Logout',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.w500,
+                              fontSize: baseSize * 0.04,
+                            ),
+                          ),
                         ],
                       ),
                     ),
@@ -180,7 +195,7 @@ class _ClientAccountSettingState extends State<ClientAccountSetting> {
                 ),
               ),
               SizedBox(height: h * 0.02),
-              Text('Logout',
+              Text('LogOut',
                   style: TextStyle(
                       fontFamily: 'A',
                       color: Colors.white,
@@ -227,13 +242,13 @@ class _ClientAccountSettingState extends State<ClientAccountSetting> {
                         height: h * 0.058,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(30),
-                          color: Colors.white,
+                          color: Color(0xFF46151A),
                         ),
                         child: Center(
                           child: Text('Yes, Logout',
                               style: TextStyle(
                                   fontFamily: 'A',
-                                  color: const Color(0xFF692226),
+                                  color: Colors.white,
                                   fontWeight: FontWeight.w700,
                                   fontSize: baseSize * 0.036)),
                         ),

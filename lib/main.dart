@@ -14,12 +14,12 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GetMaterialApp(
+
       defaultTransition: Transition.fade,
       transitionDuration: const Duration(milliseconds: 250),
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
       theme: ThemeData(
-
         scaffoldBackgroundColor: const Color(0xFF46151A),
         textSelectionTheme: const TextSelectionThemeData(
           cursorColor: Colors.white,

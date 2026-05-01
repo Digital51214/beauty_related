@@ -16,6 +16,7 @@ class _SearchScreenState extends State<SearchScreen> {
 
   double _distanceValue = 25;
   RangeValues _priceRange = const RangeValues(40, 200);
+  DateTime? _selectedDate;
 
   final List<String> _serviceTypes = [
     'Make Up',
@@ -38,6 +39,45 @@ class _SearchScreenState extends State<SearchScreen> {
     });
   }
 
+  Future<void> _pickFilterDate(
+      BuildContext context,
+      void Function(void Function()) setModalState,
+      ) async {
+    final picked = await showDatePicker(
+      context: context,
+      initialDate: _selectedDate ?? DateTime.now(),
+      firstDate: DateTime(2024),
+      lastDate: DateTime(2100),
+      builder: (context, child) {
+        return Theme(
+          data: Theme.of(context).copyWith(
+            colorScheme: const ColorScheme.dark(
+              primary: Color(0xFF5B0F1B),
+              onPrimary: Colors.white,
+              surface: Color(0xFF5C5151),
+              onSurface: Colors.white,
+            ),
+            dialogBackgroundColor: const Color(0xFF5C5151),
+          ),
+          child: child!,
+        );
+      },
+    );
+
+    if (picked != null) {
+      setModalState(() => _selectedDate = picked);
+      setState(() => _selectedDate = picked);
+    }
+  }
+
+  String _formatDate(DateTime date) {
+    const months = [
+      'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+      'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
+    ];
+    return '${date.day} ${months[date.month - 1]} ${date.year}';
+  }
+
   void _showFilterSheet(BuildContext context) {
     final size = MediaQuery.of(context).size;
     final h = size.height;
@@ -57,14 +97,14 @@ class _SearchScreenState extends State<SearchScreen> {
                 top: Radius.circular(30),
               ),
               child: BackdropFilter(
-                filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
+                filter: ImageFilter.blur(sigmaX: 15, sigmaY: 15),
                 child: Container(
                   padding: EdgeInsets.symmetric(
                     horizontal: w * 0.05,
                     vertical: h * 0.025,
                   ),
                   decoration: BoxDecoration(
-                    color: Colors.white.withOpacity(0.1),
+                    color: Colors.white.withOpacity(0.10),
                     borderRadius: const BorderRadius.vertical(
                       top: Radius.circular(30),
                     ),
@@ -73,271 +113,365 @@ class _SearchScreenState extends State<SearchScreen> {
                       width: 1.2,
                     ),
                   ),
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      Container(
-                        width: w * 0.1,
-                        height: 4,
-                        margin: EdgeInsets.only(bottom: h * 0.02),
-                        decoration: BoxDecoration(
-                          color: Colors.white.withOpacity(0.3),
-                          borderRadius: BorderRadius.circular(2),
-                        ),
-                      ),
-
-                      Row(
-                        children: [
-                          GestureDetector(
-                            onTap: () => Get.back(),
-                            child: const Icon(
-                              Icons.close,
-                              color: Colors.white,
-                              size: 22,
-                            ),
-                          ),
-                          const Spacer(),
-                          Text(
-                            'Filter Results',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: baseSize * 0.05,
-                              fontWeight: FontWeight.w600,
-                              fontFamily: 'A',
-                            ),
-                          ),
-                          const Spacer(),
-                          const SizedBox(width: 22),
-                        ],
-                      ),
-
-                      SizedBox(height: h * 0.025),
-
-                      Container(
-                        padding: EdgeInsets.symmetric(
-                          horizontal: w * 0.04,
-                          vertical: h * 0.018,
-                        ),
-                        decoration: BoxDecoration(
-                          color: Colors.white.withOpacity(0.2),
-                          borderRadius: BorderRadius.circular(20),
-                          border: Border.all(
-                            color: Colors.white.withOpacity(0.15),
-                            width: 0.5,
+                  child: SingleChildScrollView(
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Container(
+                          width: w * 0.1,
+                          height: 4,
+                          margin: EdgeInsets.only(bottom: h * 0.02),
+                          decoration: BoxDecoration(
+                            color: Colors.white.withOpacity(0.75),
+                            borderRadius: BorderRadius.circular(2),
                           ),
                         ),
-                        child: Column(
+                        Row(
                           children: [
-                            Row(
-                              mainAxisAlignment:
-                              MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                  'Distance',
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: baseSize * 0.04,
-                                    fontWeight: FontWeight.w500,
-                                    fontFamily: 'A',
-                                  ),
-                                ),
-                                Text(
-                                  '${_distanceValue.toInt()} miles',
-                                  style: TextStyle(
-                                    color: const Color(0xFF46151A),
-                                    fontSize: baseSize * 0.040,
-                                    fontWeight: FontWeight.w700,
-                                  ),
-                                ),
-                              ],
-                            ),
-                            SliderTheme(
-                              data: SliderTheme.of(context).copyWith(
-                                activeTrackColor: const Color(0xFF46151A),
-                                inactiveTrackColor: Colors.white,
-                                thumbColor: const Color(0xFF46151A),
-                                overlayColor: const Color(
-                                  0xFF46151A,
-                                ).withOpacity(0.2),
-                                thumbShape:
-                                const RoundSliderThumbShape(
-                                  enabledThumbRadius: 10,
-                                ),
-                                trackHeight: 3,
-                              ),
-                              child: Slider(
-                                value: _distanceValue,
-                                min: 1,
-                                max: 100,
-                                onChanged: (val) {
-                                  setModalState(() => _distanceValue = val);
-                                  setState(() => _distanceValue = val);
-                                },
+                            GestureDetector(
+                              onTap: () => Get.back(),
+                              child: const Icon(
+                                Icons.close,
+                                color: Colors.white,
+                                size: 22,
                               ),
                             ),
-                          ],
-                        ),
-                      ),
-
-                      SizedBox(height: h * 0.015),
-
-                      Container(
-                        padding: EdgeInsets.symmetric(
-                          horizontal: w * 0.04,
-                          vertical: h * 0.018,
-                        ),
-                        decoration: BoxDecoration(
-                          color: Colors.white.withOpacity(0.3),
-                          borderRadius: BorderRadius.circular(20),
-                          border: Border.all(
-                            color: Colors.white.withOpacity(0.3),
-                            width: 0.8,
-                          ),
-                        ),
-                        child: Column(
-                          children: [
-                            Row(
-                              mainAxisAlignment:
-                              MainAxisAlignment.spaceBetween,
-                              children: [
-                                Text(
-                                  'Price Range',
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: baseSize * 0.04,
-                                    fontWeight: FontWeight.w500,
-                                    fontFamily: 'A',
-                                  ),
-                                ),
-                                Text(
-                                  '${_priceRange.start.toInt()}\$-${_priceRange.end.toInt()}\$',
-                                  style: TextStyle(
-                                    color: const Color(0xFF46151A),
-                                    fontSize: baseSize * 0.040,
-                                    fontWeight: FontWeight.w700,
-                                  ),
-                                ),
-                              ],
-                            ),
-                            SliderTheme(
-                              data: SliderTheme.of(context).copyWith(
-                                activeTrackColor: const Color(0xFF46151A),
-                                inactiveTrackColor: Colors.white,
-                                thumbColor: const Color(0xFF46151A),
-                                overlayColor: const Color(
-                                  0xFF46151A,
-                                ).withOpacity(0.2),
-                                thumbShape:
-                                const RoundSliderThumbShape(
-                                  enabledThumbRadius: 10,
-                                ),
-                                rangeThumbShape:
-                                const RoundRangeSliderThumbShape(
-                                  enabledThumbRadius: 10,
-                                ),
-                                trackHeight: 3,
-                              ),
-                              child: RangeSlider(
-                                values: _priceRange,
-                                min: 0,
-                                max: 500,
-                                onChanged: (val) {
-                                  setModalState(() => _priceRange = val);
-                                  setState(() => _priceRange = val);
-                                },
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-
-                      SizedBox(height: h * 0.015),
-
-                      Container(
-                        width: double.infinity,
-                        padding: EdgeInsets.symmetric(
-                          horizontal: w * 0.04,
-                          vertical: h * 0.018,
-                        ),
-                        decoration: BoxDecoration(
-                          color: Colors.white.withOpacity(0.3),
-                          borderRadius: BorderRadius.circular(20),
-                          border: Border.all(
-                            color: Colors.white.withOpacity(0.15),
-                            width: 0.5,
-                          ),
-                        ),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
+                            const Spacer(),
                             Text(
-                              'Service Type',
+                              'Filter Results',
                               style: TextStyle(
                                 color: Colors.white,
-                                fontSize: baseSize * 0.04,
-                                fontWeight: FontWeight.w500,
+                                fontSize: baseSize * 0.05,
+                                fontWeight: FontWeight.w600,
                                 fontFamily: 'A',
                               ),
                             ),
-                            SizedBox(height: h * 0.012),
-                            Wrap(
-                              spacing: w * 0.02,
-                              runSpacing: h * 0.01,
-                              children: _serviceTypes.map((service) {
-                                final selected =
-                                _selectedServices.contains(service);
-                                return GestureDetector(
-                                  onTap: () {
-                                    setModalState(() {
-                                      if (_selectedServices.contains(service)) {
-                                        _selectedServices.remove(service);
-                                      } else {
-                                        _selectedServices.add(service);
-                                      }
-                                    });
-                                    setState(() {});
-                                  },
-                                  child: AnimatedContainer(
-                                    duration: const Duration(
-                                      milliseconds: 200,
-                                    ),
-                                    padding: EdgeInsets.symmetric(
-                                      horizontal: w * 0.045,
-                                      vertical: h * 0.012,
-                                    ),
-                                    decoration: BoxDecoration(
-                                      borderRadius: BorderRadius.circular(30),
-                                      color:
-                                      selected
-                                          ? Colors.white.withOpacity(0.55)
-                                          : Colors.black.withOpacity(0.15),
-                                      border: Border.all(
-                                        color:
-                                        selected
-                                            ? Colors.white
-                                            : Colors.white.withOpacity(0.3),
-                                        width: 0.5,
-                                      ),
-                                    ),
-                                    child: Text(
-                                      service,
-                                      style: TextStyle(
-                                        color: Colors.white,
-                                        fontWeight: FontWeight.w600,
-                                        fontFamily: 'A',
-                                        fontSize: baseSize * 0.035,
-                                      ),
-                                    ),
-                                  ),
-                                );
-                              }).toList(),
-                            ),
+                            const Spacer(),
+                            const SizedBox(width: 22),
                           ],
                         ),
-                      ),
+                        SizedBox(height: h * 0.025),
 
-                      SizedBox(height: h * 0.03),
-                    ],
+                        Container(
+                          padding: EdgeInsets.symmetric(
+                            horizontal: w * 0.04,
+                            vertical: h * 0.018,
+                          ),
+                          decoration: BoxDecoration(
+                            color: const Color(0xFF6B6666).withOpacity(0.75),
+                            borderRadius: BorderRadius.circular(20),
+                            border: Border.all(
+                              color: Colors.white.withOpacity(0.18),
+                              width: 0.8,
+                            ),
+                          ),
+                          child: Column(
+                            children: [
+                              Row(
+                                mainAxisAlignment:
+                                MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    'Distance',
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: baseSize * 0.04,
+                                      fontWeight: FontWeight.w500,
+                                      fontFamily: 'A',
+                                    ),
+                                  ),
+                                  Text(
+                                    '${_distanceValue.toInt()} miles',
+                                    style: TextStyle(
+                                      color: const Color(0xFF5B0F1B),
+                                      fontSize: baseSize * 0.040,
+                                      fontWeight: FontWeight.w700,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              SliderTheme(
+                                data: SliderTheme.of(context).copyWith(
+                                  activeTrackColor: const Color(0xFF5B0F1B),
+                                  inactiveTrackColor:
+                                  Colors.white.withOpacity(0.85),
+                                  thumbColor: const Color(0xFF5B0F1B),
+                                  overlayColor: const Color(
+                                    0xFF5B0F1B,
+                                  ).withOpacity(0.2),
+                                  thumbShape:
+                                  const RoundSliderThumbShape(
+                                    enabledThumbRadius: 10,
+                                  ),
+                                  trackHeight: 5,
+                                ),
+                                child: Slider(
+                                  value: _distanceValue,
+                                  min: 1,
+                                  max: 100,
+                                  onChanged: (val) {
+                                    setModalState(() => _distanceValue = val);
+                                    setState(() => _distanceValue = val);
+                                  },
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+
+                        SizedBox(height: h * 0.015),
+
+                        Container(
+                          padding: EdgeInsets.symmetric(
+                            horizontal: w * 0.04,
+                            vertical: h * 0.018,
+                          ),
+                          decoration: BoxDecoration(
+                            color: const Color(0xFF6B6666).withOpacity(0.75),
+                            borderRadius: BorderRadius.circular(20),
+                            border: Border.all(
+                              color: Colors.white.withOpacity(0.18),
+                              width: 0.8,
+                            ),
+                          ),
+                          child: Column(
+                            children: [
+                              Row(
+                                mainAxisAlignment:
+                                MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    'Price Range',
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: baseSize * 0.04,
+                                      fontWeight: FontWeight.w500,
+                                      fontFamily: 'A',
+                                    ),
+                                  ),
+                                  Text(
+                                    '${_priceRange.start.toInt()}\$-${_priceRange.end.toInt()}\$',
+                                    style: TextStyle(
+                                      color: const Color(0xFF5B0F1B),
+                                      fontSize: baseSize * 0.040,
+                                      fontWeight: FontWeight.w700,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                              SliderTheme(
+                                data: SliderTheme.of(context).copyWith(
+                                  activeTrackColor: const Color(0xFF5B0F1B),
+                                  inactiveTrackColor:
+                                  Colors.white.withOpacity(0.85),
+                                  thumbColor: const Color(0xFF5B0F1B),
+                                  overlayColor: const Color(
+                                    0xFF5B0F1B,
+                                  ).withOpacity(0.2),
+                                  thumbShape:
+                                  const RoundSliderThumbShape(
+                                    enabledThumbRadius: 10,
+                                  ),
+                                  rangeThumbShape:
+                                  const RoundRangeSliderThumbShape(
+                                    enabledThumbRadius: 10,
+                                  ),
+                                  trackHeight: 5,
+                                ),
+                                child: RangeSlider(
+                                  values: _priceRange,
+                                  min: 0,
+                                  max: 500,
+                                  onChanged: (val) {
+                                    setModalState(() => _priceRange = val);
+                                    setState(() => _priceRange = val);
+                                  },
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+
+                        SizedBox(height: h * 0.015),
+
+                        Container(
+                          width: double.infinity,
+                          padding: EdgeInsets.symmetric(
+                            horizontal: w * 0.04,
+                            vertical: h * 0.018,
+                          ),
+                          decoration: BoxDecoration(
+                            color: const Color(0xFF6B6666).withOpacity(0.75),
+                            borderRadius: BorderRadius.circular(20),
+                            border: Border.all(
+                              color: Colors.white.withOpacity(0.18),
+                              width: 0.8,
+                            ),
+                          ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Service Type',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: baseSize * 0.04,
+                                  fontWeight: FontWeight.w500,
+                                  fontFamily: 'A',
+                                ),
+                              ),
+                              SizedBox(height: h * 0.012),
+                              Wrap(
+                                spacing: w * 0.02,
+                                runSpacing: h * 0.01,
+                                children: _serviceTypes.map((service) {
+                                  final selected =
+                                  _selectedServices.contains(service);
+                                  return GestureDetector(
+                                    onTap: () {
+                                      setModalState(() {
+                                        if (_selectedServices.contains(service)) {
+                                          _selectedServices.remove(service);
+                                        } else {
+                                          _selectedServices.add(service);
+                                        }
+                                      });
+                                      setState(() {});
+                                    },
+                                    child: AnimatedContainer(
+                                      duration: const Duration(
+                                        milliseconds: 200,
+                                      ),
+                                      padding: EdgeInsets.symmetric(
+                                        horizontal: w * 0.045,
+                                        vertical: h * 0.012,
+                                      ),
+                                      decoration: BoxDecoration(
+                                        borderRadius:
+                                        BorderRadius.circular(30),
+                                        color: selected
+                                            ? const Color(
+                                          0xFF5B0F1B,
+                                        ).withOpacity(0.95)
+                                            : const Color(
+                                          0xFF9A9393,
+                                        ).withOpacity(0.45),
+                                        border: Border.all(
+                                          color: selected
+                                              ? Colors.white.withOpacity(0.9)
+                                              : Colors.transparent,
+                                          width: 0.7,
+                                        ),
+                                      ),
+                                      child: Text(
+                                        service,
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.w600,
+                                          fontFamily: 'A',
+                                          fontSize: baseSize * 0.035,
+                                        ),
+                                      ),
+                                    ),
+                                  );
+                                }).toList(),
+                              ),
+                            ],
+                          ),
+                        ),
+
+                        SizedBox(height: h * 0.015),
+
+                        Container(
+                          width: double.infinity,
+                          padding: EdgeInsets.symmetric(
+                            horizontal: w * 0.04,
+                            vertical: h * 0.018,
+                          ),
+                          decoration: BoxDecoration(
+                            color: const Color(0xFF6B6666).withOpacity(0.75),
+                            borderRadius: BorderRadius.circular(20),
+                            border: Border.all(
+                              color: Colors.white.withOpacity(0.18),
+                              width: 0.8,
+                            ),
+                          ),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                'Date',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: baseSize * 0.04,
+                                  fontWeight: FontWeight.w500,
+                                  fontFamily: 'A',
+                                ),
+                              ),
+                              SizedBox(height: h * 0.012),
+                              GestureDetector(
+                                onTap: () =>
+                                    _pickFilterDate(context, setModalState),
+                                child: Container(
+                                  width: double.infinity,
+                                  padding: EdgeInsets.symmetric(
+                                    horizontal: w * 0.04,
+                                    vertical: h * 0.016,
+                                  ),
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(18),
+                                    color: const Color(0xFF9A9393)
+                                        .withOpacity(0.35),
+                                    border: Border.all(
+                                      color: Colors.white.withOpacity(0.18),
+                                      width: 0.8,
+                                    ),
+                                  ),
+                                  child: Row(
+                                    children: [
+                                      const Icon(
+                                        Icons.calendar_month_outlined,
+                                        color: Colors.white,
+                                      ),
+                                      SizedBox(width: w * 0.03),
+                                      Expanded(
+                                        child: Text(
+                                          _selectedDate == null
+                                              ? 'Select date'
+                                              : _formatDate(_selectedDate!),
+                                          style: TextStyle(
+                                            color: Colors.white,
+                                            fontSize: baseSize * 0.035,
+                                            fontFamily: 'A',
+                                            fontWeight: FontWeight.w500,
+                                          ),
+                                        ),
+                                      ),
+                                      if (_selectedDate != null)
+                                        GestureDetector(
+                                          onTap: () {
+                                            setModalState(
+                                                    () => _selectedDate = null);
+                                            setState(
+                                                    () => _selectedDate = null);
+                                          },
+                                          child: Icon(
+                                            Icons.close,
+                                            color: Colors.white.withOpacity(0.8),
+                                            size: baseSize * 0.045,
+                                          ),
+                                        ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+
+                        SizedBox(height: h * 0.03),
+                      ],
+                    ),
                   ),
                 ),
               ),
@@ -498,9 +632,7 @@ class _SearchScreenState extends State<SearchScreen> {
                   ),
                 ],
               ),
-
               SizedBox(height: h * 0.03),
-
               Row(
                 children: [
                   Expanded(
@@ -566,9 +698,7 @@ class _SearchScreenState extends State<SearchScreen> {
                   ),
                 ],
               ),
-
               SizedBox(height: h * 0.03),
-
               Expanded(
                 child: SingleChildScrollView(
                   physics: const BouncingScrollPhysics(),

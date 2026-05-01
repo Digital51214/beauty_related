@@ -5,8 +5,10 @@ import 'package:get/get.dart';
 import '../OwnersSite/image_picker_screen.dart';
 import '../custom_widgets/custom_button.dart';
 import '../custom_widgets/glass_effect.dart';
+
 class ClientEditProfile extends StatefulWidget {
   const ClientEditProfile({super.key});
+
   @override
   State<ClientEditProfile> createState() => _ClientEditProfileState();
 }
@@ -28,7 +30,7 @@ class _ClientEditProfileState extends State<ClientEditProfile> {
         height: double.infinity,
         decoration: const BoxDecoration(
           image: DecorationImage(
-            image: AssetImage('assets/images/helper1.png'),
+            image: AssetImage('assets/images/Image_bg.png'),
             fit: BoxFit.cover,
           ),
         ),
@@ -36,7 +38,9 @@ class _ClientEditProfileState extends State<ClientEditProfile> {
           child: SingleChildScrollView(
             physics: const BouncingScrollPhysics(),
             padding: EdgeInsets.symmetric(
-                horizontal: w * 0.035, vertical: h * 0.015),
+              horizontal: w * 0.035,
+              vertical: h * 0.015,
+            ),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -49,91 +53,138 @@ class _ClientEditProfileState extends State<ClientEditProfile> {
                         child: SizedBox(
                           height: baseSize * 0.13,
                           width: baseSize * 0.13,
-                          child: Icon(Icons.arrow_back_ios_new,
-                              color: Colors.white, size: baseSize * 0.055),
+                          child: Icon(
+                            Icons.arrow_back_ios_new,
+                            color: Colors.white,
+                            size: baseSize * 0.055,
+                          ),
                         ),
                       ),
                     ),
                     const Spacer(),
-                    Image.asset('assets/images/MainLogo.png',
-                        height: baseSize * 0.12, width: baseSize * 0.12),
+                    Image.asset(
+                      'assets/images/MainLogo.png',
+                      height: baseSize * 0.12,
+                      width: baseSize * 0.12,
+                    ),
                   ],
                 ),
                 SizedBox(height: h * 0.02),
-                Text('Edit Profile',
-                    style: TextStyle(
-                        fontFamily: 'A',
-                        color: Colors.white,
-                        fontWeight: FontWeight.w600,
-                        fontSize: baseSize * 0.062)),
+                Text(
+                  'Edit Profile',
+                  style: TextStyle(
+                    fontFamily: 'A',
+                    color: Colors.white,
+                    fontWeight: FontWeight.w600,
+                    fontSize: baseSize * 0.062,
+                  ),
+                ),
                 SizedBox(height: h * 0.02),
                 Center(
                   child: ImagePickerScreen(
-                      onPickImage: (img) => setState(() {})),
+                    onPickImage: (img) => setState(() {}),
+                  ),
                 ),
                 SizedBox(height: h * 0.025),
 
-                // Main card
                 Container(
-                  decoration: BoxDecoration(
-                      image: DecorationImage(image: AssetImage("assets/images/MainLogo.png"),
-                      fit: BoxFit.contain)
+                  decoration: const BoxDecoration(
+                    image: DecorationImage(
+                      image: AssetImage("assets/images/MainLogo.png"),
+                      fit: BoxFit.contain,
+                    ),
                   ),
-                  child: GlassCard1(
-                    borderRadius: 35,
-                    blurSigma: 5,
-                    padding: EdgeInsets.symmetric(
-                        horizontal: w * 0.06, vertical: h * 0.03),
-                    child: Column(
-                      children: [
-                        _buildField(hintText: 'Scarlet Jhonson',
-                            keyboardType: TextInputType.name,
-                            fieldHeight: fieldHeight,
-                            fieldFontSize: fieldFontSize, w: w),
-                        SizedBox(height: h * 0.015),
-                        _buildField(hintText: 'Scarletjhonson@gmail.com',
-                            keyboardType: TextInputType.emailAddress,
-                            fieldHeight: fieldHeight,
-                            fieldFontSize: fieldFontSize, w: w),
-                        SizedBox(height: h * 0.015),
-                        _buildField(hintText: '07093753487',
-                            keyboardType: TextInputType.phone,
-                            fieldHeight: fieldHeight,
-                            fieldFontSize: fieldFontSize, w: w),
-                        SizedBox(height: h * 0.015),
-                        _buildField(hintText: 'Makeup',
-                            keyboardType: TextInputType.text,
-                            fieldHeight: fieldHeight,
-                            fieldFontSize: fieldFontSize, w: w),
-                        SizedBox(height: h * 0.015),
-                        GlassCard(
-                          borderRadius: 20,
-                          tintOpacity: 0.10,
-                          child: SizedBox(
-                            width: double.infinity,
-                            height: h * 0.1,
-                            child: TextFormField(
-                              maxLines: 4,
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: fieldFontSize),
-                              decoration: InputDecoration(
-                                contentPadding: EdgeInsets.symmetric(
-                                    horizontal: w * 0.05,
-                                    vertical: h * 0.015),
-                                border: InputBorder.none,
-                                hintText: 'Description...',
-                                hintStyle: TextStyle(
-                                    color: Colors.white70,
-                                    fontSize: fieldFontSize),
-                              ),
-                              cursorColor: Colors.white,
-                            ),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(35),
+                    child: BackdropFilter(
+                      filter: ImageFilter.blur(sigmaX: 15, sigmaY: 15),
+                      child: Container(
+                        padding: EdgeInsets.symmetric(
+                          horizontal: w * 0.06,
+                          vertical: h * 0.03,
+                        ),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(35),
+                          color: Colors.black.withOpacity(0.1),
+                          border: Border.all(
+                            color: Colors.white.withOpacity(0.3),
+                            width: 1.2,
                           ),
                         ),
-                        SizedBox(height: h * 0.025),
-                        CustomButton(title: 'Update', onPressed: () {}),
-                      ],
+                        child: Column(
+                          children: [
+                            _buildField(
+                              hintText: 'Scarlet Jhonson',
+                              keyboardType: TextInputType.name,
+                              fieldHeight: fieldHeight,
+                              fieldFontSize: fieldFontSize,
+                              w: w,
+                            ),
+                            SizedBox(height: h * 0.015),
+                            _buildField(
+                              hintText: 'Scarletjhonson@gmail.com',
+                              keyboardType: TextInputType.emailAddress,
+                              fieldHeight: fieldHeight,
+                              fieldFontSize: fieldFontSize,
+                              w: w,
+                            ),
+                            SizedBox(height: h * 0.015),
+                            _buildField(
+                              hintText: '07093753487',
+                              keyboardType: TextInputType.phone,
+                              fieldHeight: fieldHeight,
+                              fieldFontSize: fieldFontSize,
+                              w: w,
+                            ),
+                            SizedBox(height: h * 0.015),
+                            _buildField(
+                              hintText: 'Makeup',
+                              keyboardType: TextInputType.text,
+                              fieldHeight: fieldHeight,
+                              fieldFontSize: fieldFontSize,
+                              w: w,
+                            ),
+                            SizedBox(height: h * 0.015),
+                            Container(
+                              width: double.infinity,
+                              height: h * 0.1,
+                              decoration: BoxDecoration(
+                                color: Colors.transparent,
+                                borderRadius: BorderRadius.circular(20),
+                                border: Border.all(
+                                  color: Colors.white.withOpacity(0.35),
+                                  width: 1,
+                                ),
+                              ),
+                              child: TextFormField(
+                                maxLines: 4,
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: fieldFontSize,
+                                ),
+                                decoration: InputDecoration(
+                                  contentPadding: EdgeInsets.symmetric(
+                                    horizontal: w * 0.05,
+                                    vertical: h * 0.015,
+                                  ),
+                                  border: InputBorder.none,
+                                  hintText: 'Description...',
+                                  hintStyle: TextStyle(
+                                    color: Colors.white70,
+                                    fontSize: fieldFontSize,
+                                  ),
+                                ),
+                                cursorColor: Colors.white,
+                              ),
+                            ),
+                            SizedBox(height: h * 0.025),
+                            CustomButton(
+                              title: 'Update',
+                              onPressed: () {},
+                            ),
+                          ],
+                        ),
+                      ),
                     ),
                   ),
                 ),
@@ -153,24 +204,35 @@ class _ClientEditProfileState extends State<ClientEditProfile> {
     required double fieldFontSize,
     required double w,
   }) {
-    return GlassCard(
-      borderRadius: 30,
-      tintOpacity: 0.10,
-      child: SizedBox(
-        height: fieldHeight,
-        child: TextFormField(
-          keyboardType: keyboardType,
-          style: TextStyle(color: Colors.white, fontSize: fieldFontSize),
-          decoration: InputDecoration(
-            contentPadding:
-            EdgeInsets.symmetric(horizontal: w * 0.05, vertical: 0),
-            border: InputBorder.none,
-            hintText: hintText,
-            hintStyle: TextStyle(
-                color: Colors.white70, fontSize: fieldFontSize),
-          ),
-          cursorColor: Colors.white,
+    return Container(
+      height: fieldHeight,
+      decoration: BoxDecoration(
+        color: Colors.transparent,
+        borderRadius: BorderRadius.circular(30),
+        border: Border.all(
+          color: Colors.white.withOpacity(0.35),
+          width: 1,
         ),
+      ),
+      child: TextFormField(
+        keyboardType: keyboardType,
+        style: TextStyle(
+          color: Colors.white,
+          fontSize: fieldFontSize,
+        ),
+        decoration: InputDecoration(
+          contentPadding: EdgeInsets.symmetric(
+            horizontal: w * 0.05,
+            vertical: 0,
+          ),
+          border: InputBorder.none,
+          hintText: hintText,
+          hintStyle: TextStyle(
+            color: Colors.white70,
+            fontSize: fieldFontSize,
+          ),
+        ),
+        cursorColor: Colors.white,
       ),
     );
   }

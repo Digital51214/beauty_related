@@ -47,8 +47,11 @@ class _AccountSettingState extends State<AccountSetting> {
                         child: SizedBox(
                           height: baseSize * 0.13,
                           width: baseSize * 0.13,
-                          child: Icon(Icons.arrow_back_ios_new,
-                              color: Colors.white, size: baseSize * 0.055),
+                          child: Icon(
+                            Icons.arrow_back_ios_new,
+                            color: Colors.white,
+                            size: baseSize * 0.055,
+                          ),
                         ),
                       ),
                     ),
@@ -61,9 +64,7 @@ class _AccountSettingState extends State<AccountSetting> {
                     ),
                   ],
                 ),
-
                 SizedBox(height: h * 0.02),
-
                 Text(
                   'Account Settings',
                   style: TextStyle(
@@ -73,9 +74,7 @@ class _AccountSettingState extends State<AccountSetting> {
                     fontSize: baseSize * 0.065,
                   ),
                 ),
-
                 SizedBox(height: h * 0.035),
-
                 _buildNavTile(
                   label: 'Edit Profile',
                   h: h,
@@ -85,9 +84,7 @@ class _AccountSettingState extends State<AccountSetting> {
                     Get.toNamed(AppRoutes.editProfile);
                   },
                 ),
-
                 SizedBox(height: h * 0.018),
-
                 _buildNavTile(
                   label: 'Change Password',
                   h: h,
@@ -97,9 +94,7 @@ class _AccountSettingState extends State<AccountSetting> {
                     Get.toNamed(AppRoutes.changePassword);
                   },
                 ),
-
                 SizedBox(height: h * 0.018),
-
                 _buildNavTile(
                   label: 'Delete Account',
                   h: h,
@@ -107,9 +102,7 @@ class _AccountSettingState extends State<AccountSetting> {
                   baseSize: baseSize,
                   onTap: () {},
                 ),
-
                 SizedBox(height: h * 0.03),
-
                 GestureDetector(
                   onTap: () {
                     _showLogoutDialog(context);
@@ -157,108 +150,58 @@ class _AccountSettingState extends State<AccountSetting> {
 
     showDialog(
       context: context,
-      barrierDismissible: true,
       barrierColor: Colors.black.withOpacity(0.55),
       builder: (_) => Dialog(
         backgroundColor: Colors.transparent,
         insetPadding: EdgeInsets.symmetric(horizontal: w * 0.08),
-        child: Container(
+        child: GlassCard(
+          borderRadius: 28,
+          blurSigma: 20,
           padding: EdgeInsets.symmetric(
-            horizontal: w * 0.06,
-            vertical: h * 0.035,
-          ),
-          decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(28),
-            gradient: const LinearGradient(
-              colors: [Color(0xFF7B2D35), Color(0xFF3D1318)],
-              begin: Alignment.topLeft,
-              end: Alignment.bottomRight,
-            ),
-            border: Border.all(
-              color: Colors.white.withOpacity(0.25),
-              width: 1.2,
-            ),
-            boxShadow: [
-              BoxShadow(
-                color: Colors.black.withOpacity(0.4),
-                blurRadius: 30,
-                spreadRadius: 2,
-              ),
-            ],
-          ),
+              horizontal: w * 0.06, vertical: h * 0.035),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              Container(
-                height: baseSize * 0.18,
-                width: baseSize * 0.18,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: Colors.white.withOpacity(0.12),
-                  border: Border.all(
-                    color: Colors.white.withOpacity(0.3),
-                    width: 1.2,
-                  ),
-                ),
-                child: Icon(
-                  Icons.logout_rounded,
-                  color: Colors.white,
-                  size: baseSize * 0.09,
+              GlassCard(
+                borderRadius: 50,
+                child: SizedBox(
+                  height: baseSize * 0.17,
+                  width: baseSize * 0.17,
+                  child: Icon(Icons.logout_rounded,
+                      color: Colors.white, size: baseSize * 0.085),
                 ),
               ),
-
-              SizedBox(height: h * 0.022),
-
-              Text(
-                'Logout',
-                style: TextStyle(
-                  fontFamily: 'A',
-                  color: Colors.white,
-                  fontWeight: FontWeight.w700,
-                  fontSize: baseSize * 0.058,
-                ),
-              ),
-
+              SizedBox(height: h * 0.02),
+              Text('LogOut',
+                  style: TextStyle(
+                      fontFamily: 'A',
+                      color: Colors.white,
+                      fontWeight: FontWeight.w700,
+                      fontSize: baseSize * 0.055)),
               SizedBox(height: h * 0.01),
-
-              Text(
-                'Are you sure you want to\nlogout from your account?',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  fontFamily: 'A',
-                  color: Colors.white.withOpacity(0.7),
-                  fontWeight: FontWeight.w300,
-                  fontSize: baseSize * 0.035,
-                  height: 1.5,
-                ),
-              ),
-
-              SizedBox(height: h * 0.032),
-
+              Text('Are you sure you want to\nlogout from your account?',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                      fontFamily: 'A',
+                      color: Colors.white70,
+                      fontSize: baseSize * 0.033,
+                      height: 1.5)),
+              SizedBox(height: h * 0.03),
               Row(
                 children: [
                   Expanded(
                     child: GestureDetector(
                       onTap: () => Get.back(),
-                      child: Container(
-                        height: h * 0.058,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(30),
-                          color: Colors.white.withOpacity(0.15),
-                          border: Border.all(
-                            color: Colors.white.withOpacity(0.4),
-                            width: 1.0,
-                          ),
-                        ),
-                        child: Center(
-                          child: Text(
-                            'Cancel',
-                            style: TextStyle(
-                              fontFamily: 'A',
-                              color: Colors.white,
-                              fontWeight: FontWeight.w500,
-                              fontSize: baseSize * 0.038,
-                            ),
+                      child: GlassCard(
+                        borderRadius: 30,
+                        child: SizedBox(
+                          height: h * 0.058,
+                          child: Center(
+                            child: Text('Cancel',
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontFamily: 'A',
+                                    fontSize: baseSize * 0.037)),
                           ),
                         ),
                       ),
@@ -269,96 +212,22 @@ class _AccountSettingState extends State<AccountSetting> {
                     child: GestureDetector(
                       onTap: () async {
                         Get.back();
-
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                            duration: const Duration(seconds: 2),
-                            backgroundColor: Colors.transparent,
-                            elevation: 0,
-                            behavior: SnackBarBehavior.floating,
-                            margin: EdgeInsets.symmetric(
-                              horizontal: w * 0.06,
-                              vertical: h * 0.04,
-                            ),
-                            content: Container(
-                              padding: EdgeInsets.symmetric(
-                                horizontal: w * 0.05,
-                                vertical: h * 0.018,
-                              ),
-                              decoration: BoxDecoration(
-                                gradient: const LinearGradient(
-                                  colors: [
-                                    Color(0xFF7B2D35),
-                                    Color(0xFF3D1318)
-                                  ],
-                                  begin: Alignment.topLeft,
-                                  end: Alignment.bottomRight,
-                                ),
-                                borderRadius: BorderRadius.circular(20),
-                                border: Border.all(
-                                  color: Colors.white.withOpacity(0.3),
-                                  width: 1.0,
-                                ),
-                                boxShadow: [
-                                  BoxShadow(
-                                    color: Colors.black.withOpacity(0.3),
-                                    blurRadius: 20,
-                                  ),
-                                ],
-                              ),
-                              child: Row(
-                                children: [
-                                  Container(
-                                    height: h * 0.045,
-                                    width: h * 0.045,
-                                    decoration: BoxDecoration(
-                                      shape: BoxShape.circle,
-                                      color: Colors.white.withOpacity(0.2),
-                                    ),
-                                    child: const Icon(
-                                      Icons.check_rounded,
-                                      color: Colors.white,
-                                      size: 20,
-                                    ),
-                                  ),
-                                  SizedBox(width: w * 0.03),
-                                  Text(
-                                    'You are logged out\nsuccessfully!',
-                                    style: TextStyle(
-                                      fontFamily: 'A',
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.w500,
-                                      fontSize: baseSize * 0.035,
-                                      height: 1.4,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        );
-
-                        await Future.delayed(const Duration(seconds: 2));
-                        if (context.mounted) {
-                          Get.offAllNamed(AppRoutes.login);
-                        }
+                        await Future.delayed(const Duration(seconds: 1));
+                        if (context.mounted) Get.offAllNamed(AppRoutes.login);
                       },
                       child: Container(
                         height: h * 0.058,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(30),
-                          color: Colors.white,
+                          color: Color(0xFF46151A),
                         ),
                         child: Center(
-                          child: Text(
-                            'Yes, Logout',
-                            style: TextStyle(
-                              fontFamily: 'A',
-                              color: const Color(0xFF692226),
-                              fontWeight: FontWeight.w700,
-                              fontSize: baseSize * 0.038,
-                            ),
-                          ),
+                          child: Text('Yes, Logout',
+                              style: TextStyle(
+                                  fontFamily: 'A',
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w700,
+                                  fontSize: baseSize * 0.036)),
                         ),
                       ),
                     ),

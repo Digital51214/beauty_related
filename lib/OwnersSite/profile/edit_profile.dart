@@ -1,3 +1,4 @@
+import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -81,9 +82,7 @@ class _EditProfileState extends State<EditProfile> {
                     ),
                   ],
                 ),
-
                 SizedBox(height: h * 0.02),
-
                 Text(
                   'Edit Profile',
                   style: TextStyle(
@@ -93,9 +92,7 @@ class _EditProfileState extends State<EditProfile> {
                     fontSize: baseSize * 0.062,
                   ),
                 ),
-
                 SizedBox(height: h * 0.02),
-
                 Center(
                   child: ImagePickerScreen(
                     onPickImage: (pickedImage) {
@@ -103,52 +100,61 @@ class _EditProfileState extends State<EditProfile> {
                     },
                   ),
                 ),
-
                 SizedBox(height: h * 0.025),
-
                 Container(
-                  decoration: BoxDecoration(
+                  decoration: const BoxDecoration(
                     image: DecorationImage(
                       image: AssetImage('assets/images/MainLogo.png'),
                       fit: BoxFit.contain,
                     ),
                   ),
-                  child: GlassCard1(
-                    borderRadius: 35,
-                    blurSigma: 5,
-                    padding: EdgeInsets.symmetric(
-                      horizontal: w * 0.06,
-                      vertical: h * 0.03,
-                    ),
-                    child: Column(
-                      children: [
-                        _buildField(
-                          controller: nameController,
-                          hintText: 'Scarlet Jhonson',
-                          keyboardType: TextInputType.name,
-                          fieldHeight: fieldHeight,
-                          fieldFontSize: fieldFontSize,
-                          w: w,
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(35),
+                    child: BackdropFilter(
+                      filter: ImageFilter.blur(sigmaX: 15, sigmaY: 15),
+                      child: Container(
+                        padding: EdgeInsets.symmetric(
+                          horizontal: w * 0.06,
+                          vertical: h * 0.03,
                         ),
-                        SizedBox(height: h * 0.015),
-                        _buildField(
-                          controller: emailController,
-                          hintText: 'Scarletjhonson@gmail.com',
-                          keyboardType: TextInputType.emailAddress,
-                          fieldHeight: fieldHeight,
-                          fieldFontSize: fieldFontSize,
-                          w: w,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(35),
+                          color: Colors.black.withOpacity(0.1),
+                          border: Border.all(
+                            color: Colors.white.withOpacity(0.3),
+                            width: 1.2,
+                          ),
                         ),
-                        SizedBox(height: h * 0.025),
-                        CustomButton(
-                          title: 'Update',
-                          onPressed: () {},
+                        child: Column(
+                          children: [
+                            _buildField(
+                              controller: nameController,
+                              hintText: 'Scarlet Jhonson',
+                              keyboardType: TextInputType.name,
+                              fieldHeight: fieldHeight,
+                              fieldFontSize: fieldFontSize,
+                              w: w,
+                            ),
+                            SizedBox(height: h * 0.015),
+                            _buildField(
+                              controller: emailController,
+                              hintText: 'Scarletjhonson@gmail.com',
+                              keyboardType: TextInputType.emailAddress,
+                              fieldHeight: fieldHeight,
+                              fieldFontSize: fieldFontSize,
+                              w: w,
+                            ),
+                            SizedBox(height: h * 0.025),
+                            CustomButton(
+                              title: 'Update',
+                              onPressed: () {},
+                            ),
+                          ],
                         ),
-                      ],
+                      ),
                     ),
                   ),
                 ),
-
                 SizedBox(height: h * 0.03),
               ],
             ),
@@ -166,32 +172,36 @@ class _EditProfileState extends State<EditProfile> {
     required double fieldFontSize,
     required double w,
   }) {
-    return GlassCard(
-      borderRadius: 30,
-      tintOpacity: 0.10,
-      child: SizedBox(
-        height: fieldHeight,
-        child: TextFormField(
-          controller: controller,
-          keyboardType: keyboardType,
-          style: TextStyle(
-            color: Colors.white,
+    return Container(
+      height: fieldHeight,
+      decoration: BoxDecoration(
+        color: Colors.transparent,
+        borderRadius: BorderRadius.circular(30),
+        border: Border.all(
+          color: Colors.white.withOpacity(0.35),
+          width: 1,
+        ),
+      ),
+      child: TextFormField(
+        controller: controller,
+        keyboardType: keyboardType,
+        style: TextStyle(
+          color: Colors.white,
+          fontSize: fieldFontSize,
+        ),
+        decoration: InputDecoration(
+          contentPadding: EdgeInsets.symmetric(
+            horizontal: w * 0.05,
+            vertical: 0,
+          ),
+          border: InputBorder.none,
+          hintText: hintText,
+          hintStyle: TextStyle(
+            color: Colors.white70,
             fontSize: fieldFontSize,
           ),
-          decoration: InputDecoration(
-            contentPadding: EdgeInsets.symmetric(
-              horizontal: w * 0.05,
-              vertical: 0,
-            ),
-            border: InputBorder.none,
-            hintText: hintText,
-            hintStyle: TextStyle(
-              color: Colors.white70,
-              fontSize: fieldFontSize,
-            ),
-          ),
-          cursorColor: Colors.white,
         ),
+        cursorColor: Colors.white,
       ),
     );
   }

@@ -21,9 +21,8 @@ class _HelperDetailScreenState extends State<HelperDetailScreen> {
     double borderRadius = 30,
     BorderRadius? customBorderRadius,
     EdgeInsetsGeometry? padding,
-    double blurSigma = 12,
-    Color? tintColor,
-    double tintOpacity = 0.08,
+    double blurSigma = 15,
+    double tintOpacity = 0.10,
   }) {
     final effectiveRadius =
         customBorderRadius ?? BorderRadius.circular(borderRadius);
@@ -32,15 +31,17 @@ class _HelperDetailScreenState extends State<HelperDetailScreen> {
       borderRadius: effectiveRadius,
       child: BackdropFilter(
         filter: ImageFilter.blur(sigmaX: blurSigma, sigmaY: blurSigma),
-        child: CustomPaint(
-          painter: _GlassPainter(
+        child: Container(
+          padding: padding,
+          decoration: BoxDecoration(
             borderRadius: effectiveRadius,
-            tintColor: tintColor,
-            tintOpacity: tintOpacity,
+            color: Colors.white.withOpacity(tintOpacity),
+            border: Border.all(
+              color: Colors.white.withOpacity(0.3),
+              width: 1.2,
+            ),
           ),
-          child: padding != null
-              ? Padding(padding: padding, child: child)
-              : child,
+          child: child,
         ),
       ),
     );
@@ -57,15 +58,14 @@ class _HelperDetailScreenState extends State<HelperDetailScreen> {
       extendBody: true,
       backgroundColor: Colors.black,
       body: Stack(
-        fit: StackFit.expand,
         children: [
-          // ─── Full Background Image ───
-          Image.asset(
-            'assets/images/background for details.png',
-            fit: BoxFit.cover,
+          Positioned.fill(
+            child: Image.asset(
+              'assets/images/background for details.png',
+              fit: BoxFit.cover,
+            ),
           ),
 
-          // ─── Dark gradient overlay ───
           Positioned.fill(
             child: Container(
               decoration: const BoxDecoration(
@@ -74,232 +74,204 @@ class _HelperDetailScreenState extends State<HelperDetailScreen> {
                   end: Alignment.bottomCenter,
                   colors: [
                     Colors.transparent,
-                    Color(0x47180606),
+                    Color(0x40180606),
                     Color(0xCC1C0909),
                   ],
-                  stops: [0.2, 0.38, 0.65],
+                  stops: [0.18, 0.38, 0.68],
                 ),
               ),
             ),
           ),
 
-          // ─── Bottom Sheet Content ───
-          Positioned(
-            top: h * 0.45,
-            left: 0,
-            right: 0,
-            bottom: 0,
-            child: _glassCard(
-              customBorderRadius: const BorderRadius.only(
-                topLeft: Radius.circular(40),
-                topRight: Radius.circular(40),
-                bottomLeft: Radius.zero,
-                bottomRight: Radius.zero,
-              ),
-              borderRadius: 40,
-              blurSigma: 5,
-              tintOpacity: 0.09,
-              padding: EdgeInsets.only(
-                left: w * 0.04,
-                right: w * 0.04,
-                top: w * 0.05,
-                bottom: h * 0.12, // bottom button ke liye space
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  // ─── Studio Info Row ───
-                  Container(
-                    width: double.infinity,
-                    padding: const EdgeInsets.all(12),
-                    decoration: BoxDecoration(
-                      color: Colors.white.withOpacity(0.08),
-                      borderRadius: BorderRadius.circular(50),
-                      border: Border.all(
-                        color: Colors.white.withOpacity(0.15),
-                        width: 1.5,
-                      ),
-                    ),
-                    child: Row(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        // ─── Thumbnail ───
-                        Container(
-                          height: baseSize * 0.28,
-                          width: baseSize * 0.22,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(35),
-                            border: Border.all(
-                              color: Colors.white.withOpacity(0.15),
-                              width: 1.5,
-                            ),
-                            image: const DecorationImage(
-                              image: AssetImage(
-                                'assets/images/homeicon3.png',
-                              ),
-                              fit: BoxFit.cover,
-                            ),
-                          ),
-                        ),
+          DraggableScrollableSheet(
+            initialChildSize: 0.49,
+            minChildSize: 0.49,
+            maxChildSize: 0.72,
+            builder: (context, scrollController) {
+              return _glassCard(
+                customBorderRadius: const BorderRadius.only(
+                  topLeft: Radius.circular(40),
+                  topRight: Radius.circular(40),
+                ),
+                blurSigma: 15,
+                tintOpacity: 0.10,
+                padding: EdgeInsets.only(
+                  left: w * 0.04,
+                  right: w * 0.04,
+                  top: h * 0.02,
+                  bottom: h * 0.12,
+                ),
+                child: SingleChildScrollView(
+                  controller: scrollController,
 
-                        SizedBox(width: w * 0.035),
-
-                        Expanded(
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                'Helper on Studio',
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: baseSize * 0.048,
-                                  fontWeight: FontWeight.w700,
-                                  fontFamily: 'A',
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      _glassCard(
+                        borderRadius: 35,
+                        blurSigma: 15,
+                        tintOpacity: 0.10,
+                        padding: const EdgeInsets.all(12),
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          children: [
+                            Container(
+                              height: baseSize * 0.28,
+                              width: baseSize * 0.22,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(28),
+                                border: Border.all(
+                                  color: Colors.white.withOpacity(0.3),
+                                  width: 1.2,
+                                ),
+                                image: const DecorationImage(
+                                  image: AssetImage('assets/images/homeIcon2.jpg'),
+                                  fit: BoxFit.cover,
                                 ),
                               ),
-                              SizedBox(height: h * 0.003),
-                              Text(
-                                'Nails full beauty',
-                                style: TextStyle(
-                                  color: Colors.white.withOpacity(0.55),
-                                  fontSize: baseSize * 0.028,
-                                  fontFamily: 'A',
-                                ),
-                              ),
-                              SizedBox(height: h * 0.012),
-
-                              Row(
-                                crossAxisAlignment: CrossAxisAlignment.center,
+                            ),
+                            SizedBox(width: w * 0.03),
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  CircleAvatar(
-                                    radius: baseSize * 0.036,
-                                    backgroundImage: const AssetImage(
-                                      'assets/images/home2.jpg',
+                                  Text(
+                                    'Helper on Studio',
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: baseSize * 0.048,
+                                      fontWeight: FontWeight.w700,
+                                      fontFamily: 'A',
                                     ),
                                   ),
-                                  SizedBox(width: w * 0.02),
-
-                                  Expanded(
-                                    child: Row(
-                                      mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                      children: [
-                                        Column(
-                                          crossAxisAlignment:
-                                          CrossAxisAlignment.start,
+                                  SizedBox(height: h * 0.003),
+                                  Text(
+                                    'Nails full beauty',
+                                    style: TextStyle(
+                                      color: Colors.white.withOpacity(0.7),
+                                      fontSize: baseSize * 0.029,
+                                      fontFamily: 'A',
+                                    ),
+                                  ),
+                                  SizedBox(height: h * 0.014),
+                                  Row(
+                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                    children: [
+                                      CircleAvatar(
+                                        radius: baseSize * 0.038,
+                                        backgroundImage: const AssetImage(
+                                          'assets/images/home2.jpg',
+                                        ),
+                                      ),
+                                      SizedBox(width: w * 0.02),
+                                      Expanded(
+                                        child: Row(
                                           children: [
-                                            Text(
-                                              'Nina',
-                                              style: TextStyle(
-                                                color: Colors.white,
-                                                fontSize: baseSize * 0.032,
-                                                fontWeight: FontWeight.w600,
-                                                fontFamily: 'A',
-                                              ),
+                                            Column(
+                                              crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                              children: [
+                                                Text(
+                                                  'Nina',
+                                                  style: TextStyle(
+                                                    color: Colors.white,
+                                                    fontSize: baseSize * 0.036,
+                                                    fontWeight: FontWeight.w600,
+                                                    fontFamily: 'A',
+                                                  ),
+                                                ),
+                                                Text(
+                                                  'Owner',
+                                                  style: TextStyle(
+                                                    color: Colors.white.withOpacity(0.6),
+                                                    fontSize: baseSize * 0.026,
+                                                    fontFamily: 'A',
+                                                  ),
+                                                ),
+                                              ],
                                             ),
-                                            Text(
-                                              'Owner',
-                                              style: TextStyle(
-                                                color: Colors.white
-                                                    .withOpacity(0.5),
-                                                fontSize: baseSize * 0.024,
-                                                fontFamily: 'A',
+                                            SizedBox(width: w * 0.03),
+                                            GestureDetector(
+                                              onTap: () {
+                                                Get.toNamed(AppRoutes.portfolio);
+                                              },
+                                              child: Container(
+                                                padding: EdgeInsets.symmetric(
+                                                  horizontal: w * 0.03,
+                                                  vertical: h * 0.009,
+                                                ),
+                                                decoration: BoxDecoration(
+                                                  borderRadius:
+                                                  BorderRadius.circular(22),
+                                                  color: const Color(0xFF46151A)
+                                                      .withOpacity(0.9),
+                                                  border: Border.all(
+                                                    color:
+                                                    Colors.white.withOpacity(0.25),
+                                                    width: 1,
+                                                  ),
+                                                ),
+                                                child: Row(
+                                                  mainAxisSize: MainAxisSize.min,
+                                                  children: [
+                                                    Text(
+                                                      'See Portfolio',
+                                                      style: TextStyle(
+                                                        fontFamily: 'A',
+                                                        color: Colors.white,
+                                                        fontSize: baseSize * 0.026,
+                                                        fontWeight: FontWeight.w500,
+                                                      ),
+                                                    ),
+                                                    SizedBox(width: w * 0.01),
+                                                    Icon(
+                                                      Icons.arrow_forward,
+                                                      color: Colors.white,
+                                                      size: baseSize * 0.03,
+                                                    ),
+                                                  ],
+                                                ),
                                               ),
                                             ),
                                           ],
                                         ),
-
-                                        GestureDetector(
-                                          onTap: () {
-                                            Get.toNamed(AppRoutes.portfolio);
-                                          },
-                                          child: Container(
-                                            padding: EdgeInsets.symmetric(
-                                              horizontal: w * 0.025,
-                                              vertical: h * 0.007,
-                                            ),
-                                            decoration: BoxDecoration(
-                                              borderRadius:
-                                              BorderRadius.circular(20),
-                                              image: const DecorationImage(
-                                                image: AssetImage(
-                                                  "assets/images/buttonBG2.png",
-                                                ),
-                                                fit: BoxFit.cover,
-                                              ),
-                                            ),
-                                            child: Row(
-                                              mainAxisSize: MainAxisSize.min,
-                                              children: [
-                                                Text(
-                                                  'See Portfolio',
-                                                  style: TextStyle(
-                                                    fontFamily: 'A',
-                                                    color: Colors.white,
-                                                    fontSize: baseSize * 0.026,
-                                                    fontWeight: FontWeight.w500,
-                                                  ),
-                                                ),
-                                                SizedBox(width: w * 0.01),
-                                                Icon(
-                                                  Icons.arrow_forward,
-                                                  color: Colors.white,
-                                                  size: baseSize * 0.028,
-                                                ),
-                                              ],
-                                            ),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
+                                      ),
+                                    ],
                                   ),
                                 ],
                               ),
-                            ],
-                          ),
+                            ),
+                          ],
                         ),
-                      ],
-                    ),
-                  ),
-
-                  SizedBox(height: h * 0.015),
-
-                  // ─── Description Title ───
-                  Text(
-                    'Description',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: baseSize * 0.048,
-                      fontWeight: FontWeight.w700,
-                      fontFamily: 'A',
-                    ),
-                  ),
-                  SizedBox(height: h * 0.008),
-
-                  // ─── Description Text ───
-                  Expanded(
-                    child: SingleChildScrollView(
-                      physics: const BouncingScrollPhysics(),
-                      child: Text(
-                        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent porttitor mi vel porta tempus. Donec ac nunc ut odio auctor vulputate. Fusce bibendum erat at lectus interdum, eget cursus tellus egestas. Ut varius nulla fringilla tincidunt rhoncus. Nullam nulla dolor, mollis sit amet nisi non, faucibus pellentesque urna. Aenean volutpat id nunc a mollis. Morbi tincidunt risus in nulla ornare sollicitudin. Donec quis posuere ante, quis rutrum sem. Duis suscipit lobortis ultrices. Maecenas pretium diam turpis. "
-                            "Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Proin rutrum quam mollis metus vestibulum, ut imperdiet dui imperdiet. Mauris laoreet enim lacus, vel viverra justo luctus sed.",
+                      ),
+                      SizedBox(height: h * 0.02),
+                      Text(
+                        'Description',
                         style: TextStyle(
-                          color: Colors.white.withOpacity(0.65),
-                          fontSize: baseSize * 0.030,
-                          height: 1.78,
+                          color: Colors.white,
+                          fontSize: baseSize * 0.048,
+                          fontWeight: FontWeight.w700,
                           fontFamily: 'A',
                         ),
-                        softWrap: true,
-                        overflow: TextOverflow.visible,
                       ),
-                    ),
+                      SizedBox(height: h * 0.01),
+                      Text(
+                        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent porttitor mi vel porta tempus. Donec ac nunc ut odio auctor vulputate. Fusce bibendum erat  at lectus interdum, eget cursus tellus egestas. Ut varius nulla fringilla tincidunt rhoncus. Nullam nulla dolor, mollis sit amet nisi non, faucibus pellentesque urna. Aenean volutpat id nunc a mollis. Morbi tincidunt risus in nulla ornare sollicitudin. Donec quis posuere ante, quis rutrum sem. Duis suscipit lobortis ultrices. Maecenas pretium diam turpis. "
+                            "Class aptent taciti sociosqu ad litora torquent per conubia nostra, per inceptos himenaeos. Proin rutrum quam mollis metus vestibulum, ut imperdiet dui imperdiet. Mauris laoreet enim lacus, vel viverra justo luctus sed.",
+                        style: TextStyle(
+                          color: Colors.white.withOpacity(0.75),
+                          fontSize: baseSize * 0.031,
+                          height: 1.7,
+                          fontFamily: 'A',
+                        ),
+                      ),
+                      SizedBox(height: h * 0.03),
+                    ],
                   ),
-                ],
-              ),
-            ),
+                ),
+              );
+            },
           ),
-
-          // ─── Top Buttons ───
           Positioned(
             top: 0,
             left: 0,
@@ -313,13 +285,12 @@ class _HelperDetailScreenState extends State<HelperDetailScreen> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    // ─── Back Button ───
                     GestureDetector(
                       onTap: () => Get.back(),
                       child: _glassCard(
                         borderRadius: baseSize * 0.065,
-                        blurSigma: 5,
-                        tintOpacity: 0.13,
+                        blurSigma: 15,
+                        tintOpacity: 0.10,
                         child: SizedBox(
                           height: baseSize * 0.13,
                           width: baseSize * 0.13,
@@ -331,8 +302,6 @@ class _HelperDetailScreenState extends State<HelperDetailScreen> {
                         ),
                       ),
                     ),
-
-                    // ─── Favorite Button ───
                     GestureDetector(
                       onTap: () {
                         setState(() {
@@ -341,8 +310,8 @@ class _HelperDetailScreenState extends State<HelperDetailScreen> {
                       },
                       child: _glassCard(
                         borderRadius: baseSize * 0.065,
-                        blurSigma: 12,
-                        tintOpacity: 0.13,
+                        blurSigma: 15,
+                        tintOpacity: 0.10,
                         child: SizedBox(
                           height: baseSize * 0.13,
                           width: baseSize * 0.13,
@@ -365,56 +334,42 @@ class _HelperDetailScreenState extends State<HelperDetailScreen> {
           ),
         ],
       ),
-
-      // ─── Proper Bottom Bar ───
       bottomNavigationBar: SafeArea(
-        child: Padding(
-          padding: EdgeInsets.only(
-            left: w * 0.0,
-            right: w * 0.0,
-            bottom: h * 0.0
+        top: false,
+        child: Container(
+          padding: EdgeInsets.fromLTRB(
+            w * 0.04,
+            h * 0.012,
+            w * 0.04,
+            h * 0.012,
           ),
-          child: ClipRRect(
-
-            child: BackdropFilter(
-              filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
-              child: Container(
-
-                padding: EdgeInsets.all(w * 0.015),
-                decoration: BoxDecoration(
-                  color: Colors.black.withOpacity(0.12),
-
-                  border: Border.all(
-                    color: Colors.white.withOpacity(0.08),
-                    width: 1,
-                  ),
+          decoration: BoxDecoration(
+            color: Colors.black.withOpacity(0.08),
+          ),
+          child: GestureDetector(
+            onTap: () {
+              Get.toNamed(AppRoutes.bookAppointment);
+            },
+            child: Container(
+              width: double.infinity,
+              height: h * 0.062,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(30),
+                color: const Color(0xFF46151A),
+                border: Border.all(
+                  color: Colors.white.withOpacity(0.15),
+                  width: 1,
                 ),
-                child: GestureDetector(
-                  onTap: () {
-                    Get.toNamed(AppRoutes.bookAppointment);
-                  },
-                  child: Container(
-                    width: double.infinity,
-                    height: h * 0.058,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(30),
-                      image: const DecorationImage(
-                        image: AssetImage('assets/images/buttonBG2.png'),
-                        fit: BoxFit.contain,
-                      ),
-                    ),
-                    child: Center(
-                      child: Text(
-                        'Book Now',
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: baseSize * 0.042,
-                          fontWeight: FontWeight.w600,
-                          fontFamily: 'A',
-                          letterSpacing: 0.5,
-                        ),
-                      ),
-                    ),
+              ),
+              child: Center(
+                child: Text(
+                  'Book Now',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: baseSize * 0.042,
+                    fontWeight: FontWeight.w600,
+                    fontFamily: 'A',
+                    letterSpacing: 0.5,
                   ),
                 ),
               ),
@@ -423,111 +378,5 @@ class _HelperDetailScreenState extends State<HelperDetailScreen> {
         ),
       ),
     );
-  }
-}
-
-// ─── GlassPainter — local to this file ───
-class _GlassPainter extends CustomPainter {
-  final BorderRadius borderRadius;
-  final Color? tintColor;
-  final double tintOpacity;
-
-  const _GlassPainter({
-    this.borderRadius = const BorderRadius.all(Radius.circular(30)),
-    this.tintColor,
-    this.tintOpacity = 0.08,
-  });
-
-  @override
-  void paint(Canvas canvas, Size size) {
-    final rect = Offset.zero & size;
-    final rrect = borderRadius.toRRect(rect);
-
-    // 1. Base tint
-    canvas.drawRRect(
-      rrect,
-      Paint()..color = (tintColor ?? Colors.white).withOpacity(tintOpacity),
-    );
-
-    // 2. Soft diagonal shine
-    canvas.drawRRect(
-      rrect,
-      Paint()
-        ..shader = LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          colors: [
-            Colors.white.withOpacity(0.22),
-            Colors.white.withOpacity(0.06),
-            Colors.transparent,
-          ],
-          stops: const [0.0, 0.35, 0.75],
-        ).createShader(rect),
-    );
-
-    // 3. Top highlight streak
-    final topStreak = RRect.fromRectAndCorners(
-      Rect.fromLTWH(size.width * 0.15, 0, size.width * 0.70, 1.2),
-      topLeft: borderRadius.topLeft,
-      topRight: borderRadius.topRight,
-      bottomLeft: Radius.zero,
-      bottomRight: Radius.zero,
-    );
-
-    canvas.drawRRect(
-      topStreak,
-      Paint()
-        ..shader = LinearGradient(
-          colors: [
-            Colors.transparent,
-            Colors.white.withOpacity(0.55),
-            Colors.transparent,
-          ],
-        ).createShader(Rect.fromLTWH(0, 0, size.width, 1.2)),
-    );
-
-    // 4. 4-side shimmer border
-    canvas.drawRRect(
-      rrect,
-      Paint()
-        ..shader = LinearGradient(
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
-          colors: [
-            Colors.white.withOpacity(0.55),
-            Colors.white.withOpacity(0.18),
-            Colors.white.withOpacity(0.08),
-            Colors.white.withOpacity(0.45),
-          ],
-          stops: const [0.0, 0.35, 0.65, 1.0],
-        ).createShader(rect)
-        ..style = PaintingStyle.stroke
-        ..strokeWidth = 1.1,
-    );
-
-    // 5. Inner glow border
-    final innerRect = Rect.fromLTWH(
-      1.2,
-      1.2,
-      size.width - 2.4,
-      size.height - 2.4,
-    );
-
-    final innerRRect = borderRadius.toRRect(innerRect);
-
-    canvas.drawRRect(
-      innerRRect,
-      Paint()
-        ..color = Colors.white.withOpacity(0.10)
-        ..style = PaintingStyle.stroke
-        ..strokeWidth = 0.5,
-    );
-  }
-
-  @override
-  bool shouldRepaint(covariant _GlassPainter old) {
-    return old.borderRadius != borderRadius ||
-        old.tintColor != tintColor ||
-        old.tintOpacity != tintOpacity;
   }
 }

@@ -26,7 +26,7 @@ class CustomButton extends StatelessWidget {
             title,
             style: TextStyle(
               fontWeight: FontWeight.w600,
-              fontFamily: 'SB',
+              fontFamily: 'A',
               color: Colors.white,
               fontSize: ws.width * 0.045, // 👈 responsive font
             ),

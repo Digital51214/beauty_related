@@ -11,8 +11,6 @@ class NotificationScreen extends StatefulWidget {
 }
 
 class _NotificationScreenState extends State<NotificationScreen> {
-
-  // ─── Notification Data ───
   final List<Map<String, dynamic>> _notifications = [
     {
       'title': 'Special Offer',
@@ -34,7 +32,6 @@ class _NotificationScreenState extends State<NotificationScreen> {
     },
   ];
 
-  // ─── Notification Card ───
   Widget _notificationCard(
       double h,
       double w,
@@ -47,7 +44,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
     return ClipRRect(
       borderRadius: BorderRadius.circular(20),
       child: BackdropFilter(
-        filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10), // ✅ blur
+        filter: ImageFilter.blur(sigmaX: 15, sigmaY: 15),
         child: Container(
           width: double.infinity,
           padding: EdgeInsets.symmetric(
@@ -55,26 +52,21 @@ class _NotificationScreenState extends State<NotificationScreen> {
             vertical: h * 0.015,
           ),
           decoration: BoxDecoration(
-            color: Colors.white.withOpacity(0.12), // ✅ glassmorphism
+            color: Colors.white.withOpacity(0.10),
             borderRadius: BorderRadius.circular(20),
             border: Border.all(
-              color: Colors.white.withOpacity(0.25),
-              width: 0.8,
+              color: Colors.white.withOpacity(0.3),
+              width: 1.2,
             ),
           ),
           child: Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-
-              // ─── Avatar ───
               CircleAvatar(
                 radius: baseSize * 0.065,
                 backgroundImage: AssetImage(image),
               ),
-
               SizedBox(width: w * 0.03),
-
-              // ─── Content ───
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -102,9 +94,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                         ),
                       ],
                     ),
-
                     SizedBox(height: h * 0.006),
-
                     Text(
                       message,
                       style: TextStyle(
@@ -154,8 +144,6 @@ class _NotificationScreenState extends State<NotificationScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-
-                // ─── Top Bar ───
                 Row(
                   children: [
                     GestureDetector(
@@ -196,10 +184,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                     ),
                   ],
                 ),
-
                 SizedBox(height: h * 0.03),
-
-                // ─── Notification Cards ───
                 Expanded(
                   child: SingleChildScrollView(
                     physics: const BouncingScrollPhysics(),

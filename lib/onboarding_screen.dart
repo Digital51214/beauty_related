@@ -89,7 +89,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
 
           /// Bottom Sheet with Blur + Black Opacity
           Positioned(
-            bottom: 70,
+            bottom: 18,
             left: 0,
             right: 0,
             child: Padding(

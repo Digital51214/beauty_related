@@ -42,7 +42,6 @@ class _ForgetPasswordState extends State<ForgetPassword> {
             ),
             child: Column(
               children: [
-                // ─── Top Bar (original same) ───
                 Row(
                   children: [
                     GestureDetector(
@@ -58,64 +57,87 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                         ),
                         child: Padding(
                           padding: EdgeInsets.only(left: w * 0.02),
-                          child: Icon(Icons.arrow_back_ios,
-                              color: Colors.white, size: baseSize * 0.055),
+                          child: Icon(
+                            Icons.arrow_back_ios,
+                            color: Colors.white,
+                            size: baseSize * 0.055,
+                          ),
                         ),
                       ),
                     ),
                     SizedBox(width: w * 0.07),
-                    const Text('Forget Password',
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 18,
-                            fontWeight: FontWeight.w700)),
+                    const Text(
+                      'Forget Password',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 18,
+                        fontWeight: FontWeight.w700,
+                      ),
+                    ),
                     const Spacer(),
-                    Image.asset('assets/images/MainLogo.png',
-                        height: baseSize * 0.15, width: baseSize * 0.15),
+                    Image.asset(
+                      'assets/images/MainLogo.png',
+                      height: baseSize * 0.15,
+                      width: baseSize * 0.15,
+                    ),
                   ],
                 ),
                 SizedBox(height: h * 0.01),
 
-                // ─── Center Image (original same) ───
-                Image.asset('assets/images/ForgetPassword.png',
-                    height: baseSize * 0.6, width: baseSize * 0.6),
+                Image.asset(
+                  'assets/images/ForgetPassword.png',
+                  height: baseSize * 0.6,
+                  width: baseSize * 0.6,
+                ),
 
                 SizedBox(height: h * 0.02),
 
-                // ─── Glass container (original structure + glass effect) ───
                 Container(
-                  decoration: BoxDecoration(
-                    image: DecorationImage(image: AssetImage('assets/images/MainLogo.png'), fit: BoxFit.contain)
+                  decoration: const BoxDecoration(
+                    image: DecorationImage(
+                      image: AssetImage('assets/images/MainLogo.png'),
+                      fit: BoxFit.contain,
+                    ),
                   ),
                   child: ClipRRect(
                     borderRadius: BorderRadius.circular(30),
                     child: BackdropFilter(
-                      filter: ImageFilter.blur(sigmaX: 7, sigmaY: 7),
+                      filter: ImageFilter.blur(sigmaX: 15, sigmaY: 15),
                       child: Container(
                         width: baseSize * 0.95,
                         decoration: BoxDecoration(
                           color: Colors.black.withOpacity(0.10),
                           borderRadius: BorderRadius.circular(30),
                           border: Border.all(
-                              color: Colors.white.withOpacity(0.25), width: 1),
+                            color: Colors.white.withOpacity(0.30),
+                            width: 1,
+                          ),
                         ),
                         child: Padding(
                           padding: EdgeInsets.symmetric(
-                              horizontal: w * 0.04, vertical: h * 0.025),
+                            horizontal: w * 0.04,
+                            vertical: h * 0.025,
+                          ),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              const Text("Enter Email",
-                                  style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 25,
-                                      fontWeight: FontWeight.w700,
-                                      fontFamily: 'A')),
-                              const Text("Enter Mail To Verify Your Identity",
-                                  style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 15,
-                                      fontWeight: FontWeight.w400)),
+                              const Text(
+                                "Enter Email",
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 25,
+                                  fontWeight: FontWeight.w700,
+                                  fontFamily: 'A',
+                                ),
+                              ),
+                              const Text(
+                                "Enter Mail To Verify Your Identity",
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 15,
+                                  fontWeight: FontWeight.w400,
+                                ),
+                              ),
                               SizedBox(height: h * 0.02),
                               CustomTextformfield(
                                 title: 'Email Address...',
@@ -126,9 +148,11 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                               CustomButton(
                                 title: 'Send Code',
                                 onPressed: () => Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (_) => const OTPVerification())),
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (_) => const OTPVerification(),
+                                  ),
+                                ),
                               ),
                               SizedBox(height: h * 0.01),
                             ],
